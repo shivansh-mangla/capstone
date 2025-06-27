@@ -1,0 +1,142 @@
+.dashboard-container {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+}
+
+.dashboard-main {
+    margin-left: 250px; /* Same as sidebar width */
+    flex: 1;
+    padding: 40px 30px;
+    background-color: #f4f6f8;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.dashboard-top-row{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items:flex-end;
+    margin: 10px;
+    box-sizing: border-box;
+        
+}
+
+/* Welcome Section */
+.dashboard-header {
+    width:100%;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    /* margin-bottom: 30px; */
+    box-sizing: border-box;
+}
+
+.welcome-text h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.welcome-text p {
+    font-size: 15px;
+    font-weight: 400;
+    color: #444;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.welcome-text h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-button {
+    background-color: white;
+    color: #a94442;
+    border: 1px solid #f0c2c2;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.logout-button .logout-icon {
+    margin-left: 8px;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: #ffe5e5;
+    border-color: #e89c9c;
+}
+
+/* Stats Cards */
+.stats-section {
+    display: flex;
+    gap: 70px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    width: 180px;
+    min-height: 140px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-icon {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.stat-info h4 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.stat-info p {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+}

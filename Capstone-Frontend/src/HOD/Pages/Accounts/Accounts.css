@@ -1,0 +1,84 @@
+.accounts-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fb;
+  }
+  
+  .accounts-container {
+    margin-left: 235px;
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .accounts-card {
+    background-color: white;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+    max-width: 700px;
+    width: 100%;
+  }
+  
+  .welcome-heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+    color: #000;
+  }
+  
+  .user-role {
+    margin-bottom: 1.5rem;
+    color: #4b4b4b;
+  }
+  
+  .change-password-heading {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #161c46;
+    margin-bottom: 1rem;
+  }
+  
+  .input-group {
+    margin-bottom: 0.8rem;
+  }
+  
+  .password-input {
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .password-input:focus {
+    border-color: #161c46;
+  }
+  
+  .save-button {
+    margin-top: 0.5rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .save-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .save-icon {
+    color: #2bc928;
+  }
+  

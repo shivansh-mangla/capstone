@@ -1,0 +1,57 @@
+.doaa-account-container {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.doaa-account-main {
+    margin-left: 250px;
+    /* Same as sidebar width */
+    flex: 1;
+    padding: 40px 30px;
+    background-color: #f4f6f8;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1300px) {
+    .doaa-account-main {
+        margin-left: 180px;
+    }
+}
+.doaa-account-details{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* keep your existing styles … */
+
+.input-row {
+    display: flex;
+    gap: 0.75rem;
+    /* space between inputs & button */
+    align-items: flex-start;
+}
+
+.input-row input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+    max-width: 20rem;
+}
+
+.input-row button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: rgb(60, 189, 60);
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-row button:hover {
+    filter: brightness(1.1);
+}

@@ -1,0 +1,29 @@
+.stat-card-main {
+    width: 220px;
+    min-height: 140px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.stat-card-main:hover {
+    transform: translateY(-4px);
+}
+
+.stat-icon-main {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.stat-info-main h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-info-main p {
+    font-size: 22px;
+    font-weight: 600;
+}

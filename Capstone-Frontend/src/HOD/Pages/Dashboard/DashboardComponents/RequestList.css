@@ -1,0 +1,70 @@
+.pending-table {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pending-table h3 {
+    margin-bottom: 0px;
+    color: #333;
+    font-size: 1.3rem;
+}
+.pending-table h4 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    color: #787878;
+}
+
+.pending-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pending-table th,
+.pending-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align:justify;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.pending-table th {
+    background-color: white;
+    color: #6F767E;
+    font-size: 15px;
+}
+.user-icon {
+    margin-right: 8px;
+    color: #db4437;
+    /* red tone or any color you like */
+    vertical-align: middle;
+}
+.sort-icon {
+    margin-left: 6px;
+    font-size: 15px;
+    color: #6c757d;
+    /* Soft gray */
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+tbody tr {
+    background-color: white;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+tbody tr:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transform: translateY(-3px);
+    cursor: pointer;
+    border:2px solid white;
+}
+
+thead th {
+    cursor: pointer;
+    user-select: none;
+}

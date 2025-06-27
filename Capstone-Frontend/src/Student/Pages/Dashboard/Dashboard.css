@@ -1,0 +1,81 @@
+.student-main-dashboard{
+  margin-left: 250px;
+  padding: 30px;
+  background-color: rgb(211, 211, 211);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.student-main-dashboard *{
+  padding: 0;
+  margin: 0;
+}
+
+.student-dashboard-top, .student-dashboard-bottom{
+  border: 1px solid white;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+.student-name{
+  color: gray;
+}
+
+.student-dashboard-info-tiles{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+
+.student-dashboard-info-tile{
+  width: 200px;
+  aspect-ratio: 1;
+  background-color: aqua;
+  border-radius: 10px;
+}
+
+
+.timetable-legend{
+  width: 100%;
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  gap: 20px;
+}
+
+.timetable-legend-inner{
+  display: flex;
+  gap: 4px;
+}
+
+.timetable-legend-circle{
+  width: 16px;
+  aspect-ratio: 1;
+  border: 0.5px solid gray;
+  border-radius: 50%;
+}
+
+
+.student-dashboard-bottom-buttons{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.student-dashboard-bottom-buttons button{
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}

@@ -1,0 +1,22 @@
+.clashing-request-container {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.clashing-request-main {
+    margin-left: 250px;
+    /* Same as sidebar width */
+    flex: 1;
+    padding: 40px 30px;
+    background-color: #f4f6f8;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1300px) {
+    .clashing-request-main {
+        margin-left: 180px;
+    }
+}

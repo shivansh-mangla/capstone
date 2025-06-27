@@ -1,0 +1,130 @@
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #e0e0e0;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 40px;
+  }
+  
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #aaa;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  .menu-item:hover {
+    background-color: #f0f0f0;
+    color: red
+  }
+
+  .menu-item:hover .icon {
+    color: red;
+  }
+  
+  
+  .menu-item .icon {
+    margin-right: 12px;
+    font-size: 18px;
+  }
+  
+  .menu-item.active {
+    color: red;
+    background-color: #ffecec;
+    font-weight: bold;
+    border-left: 4px solid red;
+  }
+  
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #e0e0e0;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 40px;
+  }
+  
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #aaa;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  .menu-item:hover {
+    background-color: #f0f0f0;
+    color: red
+  }
+
+  .menu-item:hover .icon {
+    color: red;
+  }
+  
+  
+  .menu-item .icon {
+    margin-right: 12px;
+    font-size: 18px;
+  }
+  
+  .menu-item.active {
+    color: red;
+    background-color: #ffecec;
+    font-weight: bold;
+    border-left: 4px solid red;
+  }
+
+  .sidebar::-webkit-scrollbar {
+    width: 8px; /* adjust as needed */
+  }
+  
+  .sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .sidebar::-webkit-scrollbar-thumb {
+    background-color: red;
+    border-radius: 10px;
+  }
+  
+

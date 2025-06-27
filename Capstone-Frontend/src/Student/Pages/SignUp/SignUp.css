@@ -1,0 +1,157 @@
+/* body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%;
+  }
+  
+  .background {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    backdrop-filter: blur(4 px); /* ✅ blurred background */
+    padding: 20px;
+    padding-left: 40px;
+    padding-top: 170px;
+    justify-content: flex-start;
+    padding-bottom: 100px;
+  }
+
+  .background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px); /* Adjust the blur level here */
+    z-index: 0; /* Place it behind other content */
+  }
+
+  
+  
+  .portal-title {
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    margin-bottom: 20px;
+    text-align: center;
+    z-index: 1;
+    position: relative; /* Ensure it can be positioned properly */
+    top: -120px; 
+    left: 400px;
+    -webkit-text-stroke: 1.5px rgb(250, 109, 109); /* outline thickness and color */
+    text-shadow: none; /* optional: ensure no shadows conflict */
+  
+    /* Optional: if using WebKit browsers primarily */
+    -webkit-font-smoothing: antialiased;
+    
+  }
+  
+  .logo-image {
+    position: absolute; 
+    width: 500px; /* or any size that fits well */
+    top: -80px;
+    right:-40px;
+    width: 320px;
+    z-index: 2;
+    filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.6)); /* adds subtle depth */
+    border-radius: 12px;
+   }
+
+  .form-container {
+    background: #f28c88d9; /* ✅ Red box */
+    padding: 20px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    color: white;
+    z-index: 1;
+    backdrop-filter: blur(2px);
+    border: 2px solid rgb(243, 15, 7); /* Red outline */
+    display: flex; /* Added for centering */
+    flex-direction: column; /* Ensure it's in a column layout */
+    justify-content: center;
+    margin-right: auto;
+    align-items: left; /* Center content horizontally */
+    margin-top: 20px; /* Adjust this value to move it lower */
+    position: relative; /* Optional: Set position if needed */
+    top: -5px; 
+    left: -130px;
+
+  }
+  
+  .form-container h2{
+    text-align: center;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .form-container h3 {
+    text-align: left;      /* Sign Up stays aligned left */
+    width: 100%;
+    margin-top: 10px;
+    
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  label {
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  
+  input, select {
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  button {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #fdd;
+  }
+  
+  .login-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: white;
+  }
+  
+  .login-link a {
+    color: yellow;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+   */
