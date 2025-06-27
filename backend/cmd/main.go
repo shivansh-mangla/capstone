@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"github.com/shivansh-mangla/capstone/backend/internal/database"
+	"github.com/shivansh-mangla/capstone/backend/internal/router"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	}
 	PORT := os.Getenv("PORT")
 	database.ConnectMongo()
-	
-	app := fiber.New()
+
+	app := router.SetupRoutes()
 	log.Fatal(app.Listen(PORT))
 }
