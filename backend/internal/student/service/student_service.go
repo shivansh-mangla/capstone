@@ -7,7 +7,7 @@ import (
 )
 
 func CreateStudent(c *fiber.Ctx) error {
-	fmt.Println("Workingggggggggggg")
+	fmt.Println("Workinggggggggggg")
 
 	return nil
 }
