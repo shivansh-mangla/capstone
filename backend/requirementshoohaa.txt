@@ -1,0 +1,3 @@
+fiber http://github.com/gofiber/fiber/v2
+mongodb http://go.mongodb.org/mongo-driver/mongo
+env http://github.com/joho/godotenv
