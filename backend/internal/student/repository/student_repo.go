@@ -12,6 +12,7 @@ import (
 )
 
 var studentDetails *mongo.Collection
+var subgroupDetails *mongo.Collection
 
 func CreateStudentDB(s *model.Student) error {
 	studentDetails = database.MongoDB.Collection("studentDetails")
@@ -59,4 +60,32 @@ func GetStudentByEmail(email string) (model.Student, error) {
 	}
 
 	return student, nil
+}
+
+func GetTimeTableData(subgroup string) (interface{}, error) {
+	subgroupDetails = database.MongoDB.Collection("ExcelDatabse")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{} //to get all entries in collection
+
+	var allSubgroupsTT bson.M
+	err := subgroupDetails.FindOne(ctx, filter).Decode(&allSubgroupsTT)
+	if err != nil {
+		return nil, err // Some error occurred
+	}
+
+	myTimeTable, _ := allSubgroupsTT[subgroup].(bson.M)
+	lecture := myTimeTable["lecture"].(bson.M)
+	// lab := myTimeTable["lab"]
+	// tutorial := myTimeTable["tutorial"]
+	// elective := myTimeTable["elective"]
+
+	for subCode, subData := range lecture {
+		fmt.Println(subCode)
+		fmt.Println(subData)
+	}
+
+	return myTimeTable, nil
 }

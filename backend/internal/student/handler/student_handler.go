@@ -12,3 +12,7 @@ func RegisterStudent(c *fiber.Ctx) error {
 func LoginStudent(c *fiber.Ctx) error {
 	return service.LoginStudent(c)
 }
+
+func GenerateTimeTable(c *fiber.Ctx) error {
+	return service.GetTimeTable(c)
+}

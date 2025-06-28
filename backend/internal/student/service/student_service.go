@@ -94,3 +94,10 @@ func LoginStudent(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "studentData": student})
 }
+
+func GetTimeTable(c *fiber.Ctx) error {
+	subgroup := c.Query("subgroup")
+	fmt.Println(subgroup)
+	repository.GetTimeTableData(subgroup)
+	return nil
+}
