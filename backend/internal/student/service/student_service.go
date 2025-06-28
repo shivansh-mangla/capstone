@@ -2,10 +2,14 @@ package service
 
 import (
 	"fmt"
+	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/repository"
+	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -27,6 +31,8 @@ func CreateStudent(c *fiber.Ctx) error {
 	hash, _ := bcrypt.GenerateFromPassword([]byte(student.Password), 10)
 	student.Password = string(hash)
 
+	// Send confirmation mail to the gaiven email ***************************
+
 	err = repository.CreateStudentDB(student)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Student not signed up due to some internal problem"})
@@ -36,18 +42,40 @@ func CreateStudent(c *fiber.Ctx) error {
 }
 
 func LoginStudent(c *fiber.Ctx) error {
-	fmt.Println("We are in login")
 
 	input := new(model.Student)
 	if err := c.BodyParser(input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student Login"})
 	}
 
-	//find user by roll number
+	//find student by email id
+	student, err := repository.GetStudentByEmail(input.ThaparEmail)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student doesnt exist by this email"})
+		}
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Some error occured while logging in"})
+	}
 
 	//compare password
+	err = bcrypt.CompareHashAndPassword([]byte(student.Password), []byte(input.Password))
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
+	}
 
 	//generate JWT
+	claims := jwt.MapClaims{
+		"email": student.ThaparEmail,
+		"exp":   time.Now().Add(time.Hour * 1).Unix(), // Token expires in 1 hour
+	}
 
-	return nil
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	JWT_KEY := os.Getenv("JWT_KEY")
+	tokenString, err := token.SignedString([]byte(JWT_KEY))
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token"})
+	}
+
+	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "studentData": student})
 }

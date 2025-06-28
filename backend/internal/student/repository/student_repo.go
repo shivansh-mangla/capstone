@@ -43,3 +43,20 @@ func CheckStudentExistence(rollNo string) (bool, error) {
 
 	return true, nil // Student exists
 }
+
+func GetStudentByEmail(email string) (model.Student, error) {
+	studentDetails = database.MongoDB.Collection("studentDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"thapar_email": email}
+
+	var student model.Student
+	err := studentDetails.FindOne(ctx, filter).Decode(&student)
+	if err != nil {
+		return model.Student{}, err // Some error occurred
+	}
+
+	return student, nil
+}
