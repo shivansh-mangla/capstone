@@ -9,6 +9,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/repository"
+	"github.com/shivansh-mangla/capstone/backend/internal/utils"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -32,6 +33,15 @@ func CreateStudent(c *fiber.Ctx) error {
 	student.Password = string(hash)
 
 	// Send confirmation mail to the gaiven email ***************************
+	claims := jwt.MapClaims{
+		"email": student.ThaparEmail,
+		"exp":   time.Now().Add(time.Hour * 24).Unix(), // Token expires in 24 hours
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	JWT_KEY := os.Getenv("JWT_KEY")
+	tokenString, _ := token.SignedString([]byte(JWT_KEY))
+	utils.SendVerificationEmail(student.ThaparEmail, tokenString)
 
 	err = repository.CreateStudentDB(student)
 	if err != nil {
@@ -61,6 +71,11 @@ func LoginStudent(c *fiber.Ctx) error {
 	err = bcrypt.CompareHashAndPassword([]byte(student.Password), []byte(input.Password))
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
+	}
+
+	//check if email is verified
+	if !student.Verified {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Please verify your email first"})
 	}
 
 	//generate JWT

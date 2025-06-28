@@ -11,4 +11,5 @@ type Student struct {
 	GeneralElective string `json:"general_elective" bson:"general_elective"`
 	PhoneNumber     string `json:"phone_number" bson:"phone_number"`
 	Password        string `json:"password" bson:"password"`
+	Verified        bool   `json:"verified" bson:"verified"`
 }

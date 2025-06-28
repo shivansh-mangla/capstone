@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v2"
+	authHandler "github.com/shivansh-mangla/capstone/backend/internal/auth/handler"
 	studentHandler "github.com/shivansh-mangla/capstone/backend/internal/student/handler"
 )
 
@@ -16,6 +17,10 @@ func SetupRoutes() *fiber.App {
 
 	// hod routes
 	// hod := api.Group("/hod")
+
+	//auth routes
+	auth := app.Group("/verify")
+	auth.Get("/", authHandler.VerifyStudent)
 
 	return app
 }
