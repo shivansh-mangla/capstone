@@ -15,12 +15,12 @@ func CreateStudent(c *fiber.Ctx) error {
 	if err := c.BodyParser(student); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student Signup"})
 	}
-	studentExist,err := repository.CheckStudentExistence(student.RollNo);
-	if err!= nil {
+	studentExist, err := repository.CheckStudentExistence(student.RollNo)
+	if err != nil {
 		fmt.Println("Some error occured while checking the existence of student")
 	}
 
-	if(studentExist == true){
+	if studentExist == true {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student Already exist"})
 	}
 
@@ -28,10 +28,26 @@ func CreateStudent(c *fiber.Ctx) error {
 	student.Password = string(hash)
 
 	err = repository.CreateStudentDB(student)
-	if err != nil{
+	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Student not signed up due to some internal problem"})
 	}
 
-	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"error": "Student signed up successfully"})
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"message": "Student signed up successfully"})
 }
 
+func LoginStudent(c *fiber.Ctx) error {
+	fmt.Println("We are in login")
+
+	input := new(model.Student)
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student Login"})
+	}
+
+	//find user by roll number
+
+	//compare password
+
+	//generate JWT
+
+	return nil
+}

@@ -12,6 +12,7 @@ func SetupRoutes() *fiber.App {
 	// student routes
 	student := api.Group("/student")
 	student.Post("/register", studentHandler.RegisterStudent)
+	student.Post("/login", studentHandler.LoginStudent)
 
 	// hod routes
 	// hod := api.Group("/hod")
