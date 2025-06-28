@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/repository"
@@ -13,11 +15,23 @@ func CreateStudent(c *fiber.Ctx) error {
 	if err := c.BodyParser(student); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student Signup"})
 	}
+	studentExist,err := repository.CheckStudentExistence(student.RollNo);
+	if err!= nil {
+		fmt.Println("Some error occured while checking the existence of student")
+	}
+
+	if(studentExist == true){
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student Already exist"})
+	}
 
 	hash, _ := bcrypt.GenerateFromPassword([]byte(student.Password), 10)
 	student.Password = string(hash)
 
-	repository.CreateStudentDB(student)
+	err = repository.CreateStudentDB(student)
+	if err != nil{
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Student not signed up due to some internal problem"})
+	}
 
-	return nil
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"error": "Student signed up successfully"})
 }
+
