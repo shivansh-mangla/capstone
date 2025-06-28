@@ -1,3 +1,5 @@
 fiber http://github.com/gofiber/fiber/v2
 mongodb http://go.mongodb.org/mongo-driver/mongo
 env http://github.com/joho/godotenv
+bcrypt golang.org/x/crypto/bcrypt
+jwt github.com/golang-jwt/jwt/v5
