@@ -1,6 +1,6 @@
 .timetable {
   display: grid;
-  grid-template-columns: 100px repeat(12, 1fr);
+  grid-template-columns: 0.8fr repeat(12, 1fr);
   grid-auto-rows: 60px;
   border: 1px solid #ccc;
   width: 95%;
@@ -16,7 +16,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 9px;
 }
 
 .cell p{
@@ -31,5 +31,5 @@
 .header {
   background-color: #f0f0f0;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 13px;
 }

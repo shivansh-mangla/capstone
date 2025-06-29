@@ -69,8 +69,8 @@ func GetTimeTableData(subgroup string) (interface{}, error) {
 	defer cancel()
 
 	type TimeTable struct {
-		Subgroup string      `bson:"subgroup"`
-		Data     interface{} `bson:"data"`
+		Subgroup string   `bson:"subgroup" json:"subgroup"`
+		Data     []bson.M `bson:"data" json:"data"`
 	}
 
 	filter := bson.M{"subgroup": subgroup}
