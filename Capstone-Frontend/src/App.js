@@ -4,6 +4,7 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 import StudentDashboard from './Student/Pages/Dashboard/Dashboard.js'
 import StudentAccount from './Student/Pages/Profile/Account.js'
@@ -25,6 +26,9 @@ import DOAACoordinators from './DOAA/Pages/Coordinators/Coordinators.js'
 import DOAAClashingRequest from './DOAA/Pages/ClashingRequests/ClashingRequests.js'
 import DOAAClashingStats from './DOAA/Pages/ClashingStats/ClashingStats.js'
 import DOAAAccount from './DOAA/Pages/Account/Account.js'
+import ICMPLogin from "./Student/Pages/Login/Login.js";
+import ICMPSignUp from "./Student/Pages/SignUp/SignUp.js";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -33,6 +37,8 @@ function App() {
         <Routes>
           
           {/* Student routes */}
+          <Route path="/student/signup" element={<ICMPSignUp />} />
+          <Route path="/student/login" element={<ICMPLogin />} />
           <Route path="/student/dashboard" element={<StudentDashboard />} />
           <Route path="/student/account" element={<StudentAccount />} />
           <Route path="/student/course-improvement" element={<StudentCourseImprovement />} />
@@ -59,6 +65,7 @@ function App() {
           <Route path="/doaa/account" element={<DOAAAccount />} />
 
         </Routes>
+        <ToastContainer />
       </div>
     </Router>
 
