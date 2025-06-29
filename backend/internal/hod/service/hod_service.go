@@ -21,7 +21,7 @@ func LoginHod(c *fiber.Ctx) error {
 
 	hod, err := repository.GetHodDetailsByEmail(input.Email)
 	if err != nil {
-		if err == mongo.ErrNoDocuments{
+		if err == mongo.ErrNoDocuments {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "HOD doesnt exist by this email"})
 		}
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while logging in for Hod"})
@@ -50,3 +50,23 @@ func LoginHod(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "hodData": hod})
 }
 
+func CreateCoordinator(c *fiber.Ctx) error {
+	input := new(model.Coordinator)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator creation"})
+	}
+	//check if email exist
+
+	//add tenure details and password encryption
+	hash, _ := bcrypt.GenerateFromPassword([]byte(input.Password), 10)
+	input.Password = string(hash)
+	input.TenureStart = time.Now().Format("2006-01-02") 
+    input.TenureEnd = "present"
+
+	err := repository.CreateCoordinatorDB(input)
+	if err != nil{
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot create coordinator account"})
+	}
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Coordinator account created successfully"})
+}

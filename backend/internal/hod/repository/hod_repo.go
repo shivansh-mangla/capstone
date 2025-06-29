@@ -52,3 +52,16 @@ func SetHODPassword(email string, password string) error {
     
     return nil
 }
+
+func CreateCoordinatorDB(coordinator *model.Coordinator) error{
+	coordinatorDetails := database.MongoDB.Collection("coordinatorDetails")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+	_, err := coordinatorDetails.InsertOne(ctx, coordinator)
+    if err != nil {
+        return err
+    }
+
+    return nil
+}

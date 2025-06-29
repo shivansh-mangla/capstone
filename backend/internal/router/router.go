@@ -21,6 +21,7 @@ func SetupRoutes() *fiber.App {
 	// hod routes
 	hod := api.Group("/hod")
 	hod.Post("/login", hodHandler.LoginHod)
+	hod.Post("/create-coordinator", hodHandler.CreateCoordinator)
 
 	//doaa routes
 	doaa := api.Group("/doaa")

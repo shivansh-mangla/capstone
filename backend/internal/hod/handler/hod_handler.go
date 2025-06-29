@@ -8,3 +8,7 @@ import (
 func LoginHod(c *fiber.Ctx) error {
 	return service.LoginHod(c)
 }
+
+func CreateCoordinator(c *fiber.Ctx) error {
+	return service.CreateCoordinator(c)
+}
