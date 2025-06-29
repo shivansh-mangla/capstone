@@ -13,3 +13,12 @@ type Student struct {
 	Password        string `json:"password" bson:"password"`
 	Verified        bool   `json:"verified" bson:"verified"`
 }
+
+type ElectiveBasket struct {
+    Data []string `json:"data" bson:"data"`
+}
+
+
+type Subgroup struct {
+    Data []string `json:"data" bson:"data"`
+}

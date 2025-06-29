@@ -16,3 +16,11 @@ func LoginStudent(c *fiber.Ctx) error {
 func GenerateTimeTable(c *fiber.Ctx) error {
 	return service.GetTimeTable(c)
 }
+
+func GetElectiveBasket() ([]string, error) {
+	return service.GetElectiveBasket()
+}
+
+func GetSubgroup() ([]string, error){
+	return service.GetSubgroup()
+}
