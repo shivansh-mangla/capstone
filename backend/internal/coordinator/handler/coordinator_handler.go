@@ -8,3 +8,7 @@ import (
 func LoginCoordinator(c *fiber.Ctx) error {
 	return service.LoginCoordinator(c)
 }
+
+func UpdateCoordinatorPassword(c *fiber.Ctx) error {
+	return service.UpdateCoordinatorPassword(c)
+}

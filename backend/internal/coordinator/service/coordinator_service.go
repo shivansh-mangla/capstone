@@ -49,3 +49,17 @@ func LoginCoordinator(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "coordinatorData": coordinator})
 }
+
+func UpdateCoordinatorPassword(c *fiber.Ctx) error {
+	input := new(model.Coordinator)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator Password change"})
+	}
+
+	err := repository.SetCoordinatorPassword(input.Email, input.Password)
+	if err != nil {
+		return err
+	}
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Coordinator password updated"})
+}
