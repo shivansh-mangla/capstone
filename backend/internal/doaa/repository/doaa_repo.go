@@ -51,3 +51,24 @@ func SetDoaaPassword(password string) error {
     
     return nil
 }
+
+func UpdateDoaaName(doaa *model.Doaa) error {
+    doaaDetails := database.MongoDB.Collection("doaaDetails")
+
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    filter := bson.M{}
+    update :=bson.M{"$set": bson.M{"doaa_name": doaa.Name}}
+
+    result, err := doaaDetails.UpdateOne(ctx, filter, update)
+    if err != nil {
+        return fmt.Errorf("failed to update doaa password: %v", err)
+    }
+    
+    if result.MatchedCount == 0 {
+        return fmt.Errorf("no doaa document found to update")
+    }
+    
+    return nil
+}

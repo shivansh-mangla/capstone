@@ -8,3 +8,11 @@ import (
 func LoginDoaa(c *fiber.Ctx) error {
 	return service.LoginDoaa(c)
 }
+
+func UpdateDoaaName(c *fiber.Ctx) error {
+	return service.UpdateDoaaName(c)
+}
+
+func UpdateDoaaPassword(c *fiber.Ctx) error {
+	return service.UpdateDoaaPassword(c)
+}

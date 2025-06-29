@@ -37,6 +37,8 @@ func SetupRoutes() *fiber.App {
 	//doaa routes
 	doaa := api.Group("/doaa")
 	doaa.Post("/login", doaaHandler.LoginDoaa)
+	doaa.Post("/update-name", doaaHandler.UpdateDoaaName)
+	doaa.Post("/update-password", doaaHandler.UpdateDoaaPassword)
 
 	//auth routes
 	auth := app.Group("/verify")

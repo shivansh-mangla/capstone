@@ -52,3 +52,31 @@ func LoginDoaa(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "doaaData": doaa})
 }
+
+func UpdateDoaaName(c *fiber.Ctx) error {
+	input := new(model.Doaa)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Doaa name Update"})
+	}
+
+	err := repository.UpdateDoaaName(input)
+	if err!= nil {
+		return err
+	}
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Doaa name updated"})
+}
+
+func UpdateDoaaPassword(c *fiber.Ctx) error {
+	input := new(model.Doaa)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Doaa password Update"})
+	}
+
+	err := repository.SetDoaaPassword(input.Password)
+	if err!= nil {
+		return err
+	}
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Doaa password updated"})
+}
