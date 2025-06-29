@@ -12,21 +12,21 @@ import (
 
 func main() {
 	err := godotenv.Load()
-	if err != nil{
+	if err != nil {
 		log.Fatal("Error loading the .env file")
 	}
 	PORT := os.Getenv("PORT")
 	database.ConnectMongo()
 
 	err = studentHandler.RetrieveElectiveBasket()
-	if(err != nil){
+	if err != nil {
 		log.Fatal("Elective basket list not retrieved from database")
 	}
 	err = studentHandler.RetrieveSubgroup()
-	if(err != nil){
+	if err != nil {
 		log.Fatal("Subgroup list not retrieved from database")
 	}
-	
+
 	app := router.SetupRoutes()
 
 	log.Fatal(app.Listen(PORT))

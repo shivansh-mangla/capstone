@@ -32,7 +32,7 @@ func CreateStudent(c *fiber.Ctx) error {
 	hash, _ := bcrypt.GenerateFromPassword([]byte(student.Password), 10)
 	student.Password = string(hash)
 
-	// Send confirmation mail to the gaiven email ***************************
+	// Send confirmation mail to the given email ***************************
 	claims := jwt.MapClaims{
 		"email": student.ThaparEmail,
 		"exp":   time.Now().Add(time.Hour * 24).Unix(), // Token expires in 24 hours
@@ -104,15 +104,15 @@ func GetTimeTable(c *fiber.Ctx) error {
 
 func RetrieveElectiveBasket() ([]string, error) {
 	electiveBasket, err := repository.ElectiveBasketFromDB()
-	if(err != nil){
+	if err != nil {
 		return nil, err
 	}
 	return electiveBasket.Data, nil
 }
 
-func RetrieveSubgroup() ([]string, error){
+func RetrieveSubgroup() ([]string, error) {
 	subgroupList, err := repository.SubgroupFromDB()
-	if(err != nil){
+	if err != nil {
 		return nil, err
 	}
 	return subgroupList.Data, nil

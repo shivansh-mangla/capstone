@@ -84,7 +84,7 @@ func GetTimeTableData(subgroup string) (interface{}, error) {
 	return timeTable, nil
 }
 
-func ElectiveBasketFromDB() (model.ElectiveBasket,error) {
+func ElectiveBasketFromDB() (model.ElectiveBasket, error) {
 	electiveBasketList := database.MongoDB.Collection("electiveBasketList")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -92,25 +92,27 @@ func ElectiveBasketFromDB() (model.ElectiveBasket,error) {
 
 	var basket model.ElectiveBasket
 	err := electiveBasketList.FindOne(ctx, bson.M{}).Decode(&basket)
-    if err != nil {
-        return model.ElectiveBasket{}, err
-    }
+	if err != nil {
+		return model.ElectiveBasket{}, err
+	}
 
-    return basket, nil
+	return basket, nil
 
 }
-func SubgroupFromDB() (model.Subgroup,error) {
+func SubgroupFromDB() (model.Subgroup, error) {
 	subgroupNames := database.MongoDB.Collection("subgroupNames")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	fmt.Println("hellooo")
+
 	var subgroupList model.Subgroup
 	err := subgroupNames.FindOne(ctx, bson.M{}).Decode(&subgroupList)
-    if err != nil {
-        return model.Subgroup{}, err
-    }
+	if err != nil {
+		return model.Subgroup{}, err
+	}
 
-    return subgroupList, nil
+	return subgroupList, nil
 
 }

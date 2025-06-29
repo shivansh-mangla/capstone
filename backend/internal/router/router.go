@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	authHandler "github.com/shivansh-mangla/capstone/backend/internal/auth/handler"
 	doaaHandler "github.com/shivansh-mangla/capstone/backend/internal/doaa/handler"
 	hodHandler "github.com/shivansh-mangla/capstone/backend/internal/hod/handler"
@@ -10,6 +11,14 @@ import (
 
 func SetupRoutes() *fiber.App {
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:3000",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
+		AllowCredentials: true,
+	}))
+
 	api := app.Group("/api")
 
 	// student routes
