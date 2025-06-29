@@ -12,29 +12,11 @@ const ICMPSignUp = () => {
     });
   };
 
-  useEffect(() => {
-    // getting subgroups list
-    axios.get("http://localhost:5000/api/student")
-      .then((res) => {
-        console.log("hellooo");
-      })
-      .catch((err) => {
-        toast.error('Failed to load data, plz retry!!');
-      })
-
-      //getting electives list
-      axios.get("http://localhost:5000/api/student")
-      .then((res) => {
-        console.log("hellooo");
-      })
-      .catch((err) => {
-        toast.error('Failed to load data, plz retry!!');
-      })
-
-  }, []);
-
-
+  const [subgroupList, setSubgroupList] = useState([]);
+  const [electiveBasketList, setElectiveBasketList] = useState([]);
+  const [subgroupOptions, setSubgroupOptions] = useState([]);
   const [step, setStep] = useState(1);
+
   const [formData, setFormData] = useState({
     name: "",
     roll: "",
@@ -48,7 +30,25 @@ const ICMPSignUp = () => {
     confirmPassword: "",
   });
 
-  const [subgroupOptions, setSubgroupOptions] = useState([]);
+  useEffect(() => {
+    // Get subgroups list
+    axios.get("http://localhost:5000/api/student/get-subgroup-name-list")
+      .then((res) => {
+        setSubgroupList(res.data["subgroupList"]);
+      })
+      .catch(() => {
+        toast.error('Failed to load subgroup data, please retry!');
+      });
+
+    // Get electives list
+    axios.get("http://localhost:5000/api/student/get-elective-basket-list")
+      .then((res) => {
+        setElectiveBasketList(res.data["electiveBasketList"]);
+      })
+      .catch(() => {
+        toast.error('Failed to load elective data, please retry!');
+      });
+  }, []);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -58,18 +58,17 @@ const ICMPSignUp = () => {
   };
 
   const handleNext = (currentStep, nextStep) => {
-    // Basic validation
     if (currentStep === 1) {
       if (!formData.name || !formData.roll || !formData.year) {
         alert("Please fill all fields.");
         return;
       }
 
-      // Populate dynamic subgroup options
+      // Filter subgroups based on year
       const yearValue = formData.year.trim();
       if (yearValue >= 1 && yearValue <= 4) {
-        const options = Array.from({ length: 35 }, (_, i) => `${yearValue}CO${i + 1}`);
-        setSubgroupOptions(options);
+        const filteredOptions = subgroupList.filter(item => item.startsWith(`${yearValue}CO`));
+        setSubgroupOptions(filteredOptions);
       }
     }
 
@@ -92,13 +91,11 @@ const ICMPSignUp = () => {
       return;
     }
 
-    // Email domain validation
     if (!/^[a-zA-Z0-9._%+-]+@thapar\.edu$/.test(thaparid)) {
       alert("Please enter a valid Thapar email ending with @thapar.edu.");
       return;
     }
 
-    // Phone number validation
     if (!/^\d{10}$/.test(phone)) {
       alert("Please enter a valid 10-digit phone number.");
       return;
@@ -109,19 +106,29 @@ const ICMPSignUp = () => {
       return;
     }
 
-    // Final collected data
-    const data = { ...formData };
-    delete data.confirmPassword; // remove confirmPassword before sending
+    const data = {
+      name: formData.name,
+      roll_no: formData.roll,
+      academic_year: formData.year,
+      branch: formData.branch,
+      subgroup: formData.subgroup,
+      thapar_email: formData.thaparid,
+      elective_basket: formData.elective,
+      general_elective: "",
+      phone_number: formData.phone,
+      password: formData.password,
+      verified: false,
+    };
 
-    console.log("Collected Data:", data);
-    try{
-      const response = await axios.post("http://localhost:5000/api/student", data);
+    console.log("Collected Data:", JSON.stringify(data, null, 2));
+
+    try {
+      await axios.post("http://localhost:5000/api/student/register", data);
       notifySuccess();
-    } catch (error){
+    } catch {
       toast.error('Submission failed');
     }
   };
-
 
   return (
     <>
@@ -219,10 +226,13 @@ const ICMPSignUp = () => {
                   required
                 />
                 <datalist id="subgroup-options">
-                  {subgroupOptions.map((option) => (
-                    <option key={option} value={option} />
-                  ))}
+                  {subgroupList
+                    .filter((option) => option[0] === formData.year)
+                    .map((option, index) => (
+                      <option key={index} value={option} />
+                    ))}
                 </datalist>
+
 
                 <label htmlFor="elective">Elective Basket</label>
                 <input
@@ -235,11 +245,9 @@ const ICMPSignUp = () => {
                   required
                 />
                 <datalist id="elective-options">
-                  <option value="Cyber Security" />
-                  <option value="Conversational AI" />
-                  <option value="Financial Derivative" />
-                  <option value="Full Stack" />
-                  <option value="DevOps" />
+                  {electiveBasketList.map((option) => (
+                    <option key={option} value={option} />
+                  ))}
                 </datalist>
 
                 <button type="button" onClick={() => handleNext(2, 3)}>
@@ -307,7 +315,6 @@ const ICMPSignUp = () => {
           </p>
         </div>
       </div>
-      
     </>
   );
 };
