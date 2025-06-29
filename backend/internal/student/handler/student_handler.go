@@ -43,3 +43,7 @@ func GetSubgroup(c *fiber.Ctx) error {
 func UploadFeeReciept(c *fiber.Ctx) error {
 	return service.UploadReceipt(c)
 }
+
+func UpdateDetails(c *fiber.Ctx) error {
+	return service.UpdateDetails(c)
+}

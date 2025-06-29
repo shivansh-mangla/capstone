@@ -20,7 +20,7 @@ func CreateStudent(c *fiber.Ctx) error {
 	if err := c.BodyParser(student); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student Signup"})
 	}
-	studentExist, err := repository.CheckStudentExistence(student.RollNo)
+	studentExist, err := repository.CheckStudentExistence(student.ThaparEmail)
 	if err != nil {
 		fmt.Println("Some error occured while checking the existence of student")
 	}
@@ -142,4 +142,30 @@ func UploadReceipt(c *fiber.Ctx) error {
 		"applicationID": appID,
 		"url":           url,
 	})
+}
+
+func UpdateDetails(c *fiber.Ctx) error {
+	input := new(model.Student)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student details update"})
+	}
+	studentExist, err := repository.CheckStudentExistence(input.ThaparEmail)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while checking the existence of student"})
+	}
+
+	if studentExist == false {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student does not exist"})
+	}
+
+	hash, _ := bcrypt.GenerateFromPassword([]byte(input.Password), 10)
+	input.Password = string(hash)
+
+	err = repository.UpdateDetailsDB(input)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+	}
+
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"message": "Student details changedp successfully"})
 }
