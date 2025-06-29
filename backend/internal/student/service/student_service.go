@@ -117,3 +117,29 @@ func RetrieveSubgroup() ([]string, error) {
 	}
 	return subgroupList.Data, nil
 }
+
+// NEED TO CHECK JWT, APPLICATION ID AND RANDOMIZE THE FILE NAME ***************
+func UploadReceipt(c *fiber.Ctx) error {
+	appID := c.FormValue("applicationID")
+	fileHeader, err := c.FormFile("pdf")
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "PDF file not received")
+	}
+
+	file, err := fileHeader.Open()
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, "Failed to open file")
+	}
+	defer file.Close()
+
+	// Upload to Cloudinary with random filename
+	url, err := utils.UploadToCloudinary(file, "helloo123.pdf")
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, "Upload failed")
+	}
+
+	return c.JSON(fiber.Map{
+		"applicationID": appID,
+		"url":           url,
+	})
+}

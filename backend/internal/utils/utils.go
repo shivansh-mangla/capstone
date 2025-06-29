@@ -1,10 +1,14 @@
 package utils
 
 import (
+	"context"
 	"fmt"
 	"log"
+	"mime/multipart"
 	"os"
 
+	"github.com/cloudinary/cloudinary-go"
+	"github.com/cloudinary/cloudinary-go/api/uploader"
 	"gopkg.in/mail.v2"
 )
 
@@ -37,4 +41,31 @@ func SendVerificationEmail(recipientEmail, token string) error {
 
 	fmt.Println("Verification email sent to:", recipientEmail)
 	return nil
+}
+
+func UploadToCloudinary(file multipart.File, filename string) (string, error) {
+	cloudName := os.Getenv("CLOUDINARY_URL")
+
+	cld, err := cloudinary.NewFromURL(cloudName)
+	if err != nil {
+		return "", err
+	}
+
+	ctx := context.Background()
+
+	uploadResult, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{
+		PublicID:       filename,
+		ResourceType:   "raw", // important for PDFs
+		Folder:         "receipts",
+		UseFilename:    true,
+		UniqueFilename: false,
+		Overwrite:      true,
+	})
+
+	if err != nil {
+		fmt.Println(err)
+		return "", err
+	}
+
+	return uploadResult.SecureURL, nil
 }
