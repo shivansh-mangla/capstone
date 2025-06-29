@@ -53,6 +53,28 @@ func SetHODPassword(email string, password string) error {
     return nil
 }
 
+
+func UpdateHodName(email string, name string) error {
+    hodDetails := database.MongoDB.Collection("hodDetails")
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    filter := bson.M{"hod_email": email}
+    update := bson.M{"$set": bson.M{"hod_name": name}}
+    
+    result, err := hodDetails.UpdateOne(ctx, filter, update)
+    if err != nil {
+        return fmt.Errorf("failed to update name for hod: %v", err)
+    }
+    
+    if result.MatchedCount == 0 {
+        return fmt.Errorf("no hod document found to update")
+    }
+    
+    return nil
+}
+
+
 func CreateCoordinatorDB(coordinator *model.Coordinator) error{
 	coordinatorDetails := database.MongoDB.Collection("coordinatorDetails")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)

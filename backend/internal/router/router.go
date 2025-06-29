@@ -33,6 +33,8 @@ func SetupRoutes() *fiber.App {
 	hod := api.Group("/hod")
 	hod.Post("/login", hodHandler.LoginHod)
 	hod.Post("/create-coordinator", hodHandler.CreateCoordinator)
+	hod.Post("/update-name", hodHandler.UpdateHodName)
+	hod.Post("/update-password", hodHandler.UpdateHodPassword)
 
 	//doaa routes
 	doaa := api.Group("/doaa")

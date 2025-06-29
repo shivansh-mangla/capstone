@@ -12,3 +12,12 @@ func LoginHod(c *fiber.Ctx) error {
 func CreateCoordinator(c *fiber.Ctx) error {
 	return service.CreateCoordinator(c)
 }
+
+
+func UpdateHodName(c *fiber.Ctx) error {
+	return service.UpdateHodName(c)
+}
+
+func UpdateHodPassword(c *fiber.Ctx) error {
+	return service.UpdateHodPassword(c)
+}

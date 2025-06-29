@@ -70,3 +70,32 @@ func CreateCoordinator(c *fiber.Ctx) error {
 	}
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Coordinator account created successfully"})
 }
+
+
+func UpdateHodName(c *fiber.Ctx) error {
+	input := new(model.Hod)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Hod name Update"})
+	}
+
+	err := repository.UpdateHodName(input.Email, input.Name)
+	if err!= nil {
+		return err
+	}
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Hod name updated"})
+}
+
+func UpdateHodPassword(c *fiber.Ctx) error {
+	input := new(model.Hod)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Hod password Update"})
+	}
+
+	err := repository.SetHODPassword(input.Email, input.Password)
+	if err!= nil {
+		return err
+	}
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Hod password updated"})
+}
