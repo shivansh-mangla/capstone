@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUp.css"; // reuse your existing styles
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 
 const ICMPSignUp = () => {
 
@@ -10,6 +11,27 @@ const ICMPSignUp = () => {
       autoClose: 4000,
     });
   };
+
+  useEffect(() => {
+    // getting subgroups list
+    axios.get("http://localhost:5000/api/student")
+      .then((res) => {
+        console.log("hellooo");
+      })
+      .catch((err) => {
+        toast.error('Failed to load data, plz retry!!');
+      })
+
+      //getting electives list
+      axios.get("http://localhost:5000/api/student")
+      .then((res) => {
+        console.log("hellooo");
+      })
+      .catch((err) => {
+        toast.error('Failed to load data, plz retry!!');
+      })
+
+  }, []);
 
 
   const [step, setStep] = useState(1);
@@ -61,7 +83,7 @@ const ICMPSignUp = () => {
     setStep(nextStep);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { thaparid, phone, password, confirmPassword } = formData;
 
@@ -92,7 +114,12 @@ const ICMPSignUp = () => {
     delete data.confirmPassword; // remove confirmPassword before sending
 
     console.log("Collected Data:", data);
-    notifySuccess();
+    try{
+      const response = await axios.post("http://localhost:5000/api/student", data);
+      notifySuccess();
+    } catch (error){
+      toast.error('Submission failed');
+    }
   };
 
 
