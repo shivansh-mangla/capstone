@@ -1,0 +1,54 @@
+package repository
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"github.com/shivansh-mangla/capstone/backend/internal/database"
+	"github.com/shivansh-mangla/capstone/backend/internal/hod/model"
+	"go.mongodb.org/mongo-driver/bson"
+	"golang.org/x/crypto/bcrypt"
+)
+
+func GetHodDetailsByEmail(email string) (model.Hod, error){
+	hodDetails := database.MongoDB.Collection("hodDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+	fmt.Println(email)
+	var hod model.Hod
+	filter := bson.M{"hod_email":email}
+	
+	err := hodDetails.FindOne(ctx, filter).Decode(&hod)
+	if err != nil {
+		return model.Hod{}, err
+	}
+	
+	return hod, nil
+}
+
+func SetHODPassword(email string, password string) error {
+    hodDetails := database.MongoDB.Collection("hodDetails")
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+    if err != nil {
+        return fmt.Errorf("Failed to generate hash for password: %v", err)
+    }
+    
+	filter := bson.M{"hod_email": email}
+    update := bson.M{"$set": bson.M{"hod_password": string(hash)}}
+    
+    result, err := hodDetails.UpdateOne(ctx, filter, update)
+    if err != nil {
+        return fmt.Errorf("failed to update password for hod: %v", err)
+    }
+    
+    if result.MatchedCount == 0 {
+        return fmt.Errorf("no hod document found to update")
+    }
+    
+    return nil
+}

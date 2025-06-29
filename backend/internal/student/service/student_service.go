@@ -64,7 +64,7 @@ func LoginStudent(c *fiber.Ctx) error {
 		if err == mongo.ErrNoDocuments {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student doesnt exist by this email"})
 		}
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Some error occured while logging in"})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while logging in"})
 	}
 
 	//compare password
@@ -89,7 +89,7 @@ func LoginStudent(c *fiber.Ctx) error {
 	tokenString, err := token.SignedString([]byte(JWT_KEY))
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token"})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token for student"})
 	}
 
 	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "studentData": student})

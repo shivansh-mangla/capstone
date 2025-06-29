@@ -18,5 +18,6 @@ func main() {
 	database.ConnectMongo()
 
 	app := router.SetupRoutes()
+
 	log.Fatal(app.Listen(PORT))
 }

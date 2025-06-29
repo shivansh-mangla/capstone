@@ -3,6 +3,8 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 	authHandler "github.com/shivansh-mangla/capstone/backend/internal/auth/handler"
+	doaaHandler "github.com/shivansh-mangla/capstone/backend/internal/doaa/handler"
+	hodHandler "github.com/shivansh-mangla/capstone/backend/internal/hod/handler"
 	studentHandler "github.com/shivansh-mangla/capstone/backend/internal/student/handler"
 )
 
@@ -17,7 +19,12 @@ func SetupRoutes() *fiber.App {
 	student.Get("/gettimetable", studentHandler.GenerateTimeTable)
 
 	// hod routes
-	// hod := api.Group("/hod")
+	hod := api.Group("/hod")
+	hod.Post("/login", hodHandler.LoginHod)
+
+	//doaa routes
+	doaa := api.Group("/doaa")
+	doaa.Post("/login", doaaHandler.LoginDoaa)
 
 	//auth routes
 	auth := app.Group("/verify")
