@@ -1,0 +1,51 @@
+package service
+
+import (
+	"os"
+	"time"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt"
+	"github.com/shivansh-mangla/capstone/backend/internal/coordinator/model"
+	"github.com/shivansh-mangla/capstone/backend/internal/coordinator/repository"
+	"go.mongodb.org/mongo-driver/mongo"
+	"golang.org/x/crypto/bcrypt"
+)
+
+func LoginCoordinator(c *fiber.Ctx) error {
+	input := new(model.Coordinator)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator Login"})
+	}
+
+	coordinator, err := repository.GetCoordinatorDetailsByEmail(input.Email)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Coordinator doesnt exist by this email"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while logging in for coordinator"})
+	}
+
+	//compare password
+	err = bcrypt.CompareHashAndPassword([]byte(coordinator.Password), []byte(input.Password))
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for coordinator"})
+	}
+
+	//generating JWT token
+	claims := jwt.MapClaims{
+		"email": input.Email,
+		"exp":   time.Now().Add(time.Hour * 1).Unix(), // Token expires in 1 hour
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	JWT_KEY := os.Getenv("JWT_KEY")
+	tokenString, err := token.SignedString([]byte(JWT_KEY))
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token for coordinator"})
+	}
+
+	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "coordinatorData": coordinator})
+}

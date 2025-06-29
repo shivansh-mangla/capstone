@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	authHandler "github.com/shivansh-mangla/capstone/backend/internal/auth/handler"
+	coordinatorHandler "github.com/shivansh-mangla/capstone/backend/internal/coordinator/handler"
 	doaaHandler "github.com/shivansh-mangla/capstone/backend/internal/doaa/handler"
 	hodHandler "github.com/shivansh-mangla/capstone/backend/internal/hod/handler"
 	studentHandler "github.com/shivansh-mangla/capstone/backend/internal/student/handler"
@@ -37,6 +38,10 @@ func SetupRoutes() *fiber.App {
 	hod.Post("/create-coordinator", hodHandler.CreateCoordinator)
 	hod.Post("/update-name", hodHandler.UpdateHodName)
 	hod.Post("/update-password", hodHandler.UpdateHodPassword)
+
+	//coordinator routes
+	coordinator := api.Group("/coordinator")
+	coordinator.Post("/login", coordinatorHandler.LoginCoordinator)
 
 	//doaa routes
 	doaa := api.Group("/doaa")
