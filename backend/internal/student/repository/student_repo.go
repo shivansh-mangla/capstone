@@ -63,29 +63,23 @@ func GetStudentByEmail(email string) (model.Student, error) {
 }
 
 func GetTimeTableData(subgroup string) (interface{}, error) {
-	subgroupDetails = database.MongoDB.Collection("ExcelDatabse")
+	subgroupDetails = database.MongoDB.Collection("timeTableData2")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	filter := bson.M{} //to get all entries in collection
+	type TimeTable struct {
+		Subgroup string      `bson:"subgroup"`
+		Data     interface{} `bson:"data"`
+	}
 
-	var allSubgroupsTT bson.M
-	err := subgroupDetails.FindOne(ctx, filter).Decode(&allSubgroupsTT)
+	filter := bson.M{"subgroup": subgroup}
+
+	var timeTable TimeTable
+	err := subgroupDetails.FindOne(ctx, filter).Decode(&timeTable)
 	if err != nil {
-		return nil, err // Some error occurred
+		fmt.Println("Subgroup not found:", err)
 	}
 
-	myTimeTable, _ := allSubgroupsTT[subgroup].(bson.M)
-	lecture := myTimeTable["lecture"].(bson.M)
-	// lab := myTimeTable["lab"]
-	// tutorial := myTimeTable["tutorial"]
-	// elective := myTimeTable["elective"]
-
-	for subCode, subData := range lecture {
-		fmt.Println(subCode)
-		fmt.Println(subData)
-	}
-
-	return myTimeTable, nil
+	return timeTable, nil
 }

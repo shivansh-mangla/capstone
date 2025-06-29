@@ -98,6 +98,6 @@ func LoginStudent(c *fiber.Ctx) error {
 func GetTimeTable(c *fiber.Ctx) error {
 	subgroup := c.Query("subgroup")
 	fmt.Println(subgroup)
-	repository.GetTimeTableData(subgroup)
-	return nil
+	timeTable, _ := repository.GetTimeTableData(subgroup)
+	return c.JSON(timeTable)
 }
