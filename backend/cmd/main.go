@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -11,9 +10,6 @@ import (
 	studentHandler "github.com/shivansh-mangla/capstone/backend/internal/student/handler"
 )
 
-var electiveBasketList []string
-var subgroupList []string
-
 func main() {
 	err := godotenv.Load()
 	if err != nil{
@@ -22,18 +18,14 @@ func main() {
 	PORT := os.Getenv("PORT")
 	database.ConnectMongo()
 
-	electiveBasketList, err = studentHandler.GetElectiveBasket()
+	err = studentHandler.RetrieveElectiveBasket()
 	if(err != nil){
 		log.Fatal("Elective basket list not retrieved from database")
 	}
-	subgroupList, err = studentHandler.GetSubgroup()
+	err = studentHandler.RetrieveSubgroup()
 	if(err != nil){
 		log.Fatal("Subgroup list not retrieved from database")
 	}
-
-
-	fmt.Println(electiveBasketList)
-	fmt.Println(subgroupList)
 	
 	app := router.SetupRoutes()
 

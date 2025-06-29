@@ -102,7 +102,7 @@ func GetTimeTable(c *fiber.Ctx) error {
 	return c.JSON(timeTable)
 }
 
-func GetElectiveBasket() ([]string, error) {
+func RetrieveElectiveBasket() ([]string, error) {
 	electiveBasket, err := repository.ElectiveBasketFromDB()
 	if(err != nil){
 		return nil, err
@@ -110,7 +110,7 @@ func GetElectiveBasket() ([]string, error) {
 	return electiveBasket.Data, nil
 }
 
-func GetSubgroup() ([]string, error){
+func RetrieveSubgroup() ([]string, error){
 	subgroupList, err := repository.SubgroupFromDB()
 	if(err != nil){
 		return nil, err

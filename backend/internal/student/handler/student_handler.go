@@ -5,6 +5,10 @@ import (
 	"github.com/shivansh-mangla/capstone/backend/internal/student/service"
 )
 
+
+var electiveBasketList []string
+var subgroupList []string
+
 func RegisterStudent(c *fiber.Ctx) error {
 	return service.CreateStudent(c)
 }
@@ -17,10 +21,22 @@ func GenerateTimeTable(c *fiber.Ctx) error {
 	return service.GetTimeTable(c)
 }
 
-func GetElectiveBasket() ([]string, error) {
-	return service.GetElectiveBasket()
+func RetrieveElectiveBasket() (error) {
+	var err error
+	electiveBasketList, err = service.RetrieveElectiveBasket()
+	return err
 }
 
-func GetSubgroup() ([]string, error){
-	return service.GetSubgroup()
+func RetrieveSubgroup() (error){
+	var err error
+	subgroupList, err = service.RetrieveSubgroup()
+	return err
+}
+
+func GetElectiveBasket(c *fiber.Ctx) error {
+    return c.JSON(fiber.Map{"electiveBasketList": electiveBasketList})
+}
+
+func GetSubgroup(c *fiber.Ctx) error {
+    return c.JSON(fiber.Map{"subgroupList": subgroupList})
 }

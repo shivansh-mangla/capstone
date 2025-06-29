@@ -17,6 +17,8 @@ func SetupRoutes() *fiber.App {
 	student.Post("/register", studentHandler.RegisterStudent)
 	student.Post("/login", studentHandler.LoginStudent)
 	student.Get("/gettimetable", studentHandler.GenerateTimeTable)
+	student.Get("/get-elective-basket-list", studentHandler.GetElectiveBasket)
+	student.Get("/get-subgroup-name-list", studentHandler.GetSubgroup)
 
 	// hod routes
 	hod := api.Group("/hod")
