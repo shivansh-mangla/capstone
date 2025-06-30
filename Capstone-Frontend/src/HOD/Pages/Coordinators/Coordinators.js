@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Coordinators.css';
 import Sidebar from '../../Components/Sidebar';
-
+import Logout from '../../Components/Logout'
 
 const Coordinators = () => {
   const [coordinators, setCoordinators] = useState([
@@ -10,16 +10,26 @@ const Coordinators = () => {
   ]);
 
   const [showPopup, setShowPopup] = useState(false);
-  const [newFaculty, setNewFaculty] = useState({ name: '', thaparId: '' });
+  const [newFaculty, setNewFaculty] = useState({
+    name: '',
+    thaparId: '',
+    designation: '',
+    password: '',
+  });
 
   const handleAddFaculty = () => {
-    if (!newFaculty.name || !newFaculty.thaparId) return;
+    if (!newFaculty.name || !newFaculty.thaparId || !newFaculty.designation || !newFaculty.password) return;
 
     const email = `${newFaculty.thaparId}@thapar.edu`;
-    const newEntry = { name: newFaculty.name, tenure: '2024-present', designation: 'Coordinator', email };
+    const newEntry = {
+      name: newFaculty.name,
+      tenure: '2024-present',
+      designation: newFaculty.designation,
+      email,
+    };
 
     setCoordinators([...coordinators, newEntry]);
-    setNewFaculty({ name: '', thaparId: '' });
+    setNewFaculty({ name: '', thaparId: '', designation: '', password: '' });
     setShowPopup(false);
   };
 
@@ -29,59 +39,78 @@ const Coordinators = () => {
   };
 
   return (
-    <div className="coordinators-page">
-    <Sidebar />
-    <div className="main-content">
-      <div className="coordinator-table">
-        <h3>Coordinators</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Name </th>
-              <th>Tenure </th>
-              <th>Designation </th>
-              <th>Mail ID </th>
-              <th>Access</th>
-            </tr>
-          </thead>
-          <tbody>
-            {coordinators.map((coord, index) => (
-              <tr key={index}>
-                <td><img src={`https://i.pravatar.cc/30?u=${index}`} alt="profile" /> {coord.name}</td>
-                <td>{coord.tenure}</td>
-                <td>{coord.designation}</td>
-                <td>{coord.email}</td>
-                <td><button className="remove-btn" onClick={() => handleRemoveFaculty(index)}>Remove</button></td>
+    <div className="hod-coordinators-page">
+      <Sidebar />
+      <div className="hod-coordinators-main-content">
+        <Logout />
+        <div className="hod-coordinator-table">
+          <h3>Coordinators</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Tenure</th>
+                <th>Designation</th>
+                <th>Mail ID</th>
+                <th>Access</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {coordinators.map((coord, index) => (
+                <tr key={index}>
+                  <td><img src={`https://i.pravatar.cc/30?u=${index}`} alt="profile" /> {coord.name}</td>
+                  <td>{coord.tenure}</td>
+                  <td>{coord.designation}</td>
+                  <td>{coord.email}</td>
+                  <td><button className="hod-coordinators-remove-btn" onClick={() => handleRemoveFaculty(index)}>Remove</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-        <button className="add-btn" onClick={() => setShowPopup(true)}>Add Faculty ➕</button>
+          <button className="hod-coordinators-add-btn" onClick={() => setShowPopup(true)}>Add Faculty ➕</button>
 
-        {showPopup && (
-          <div className="popup-box">
-            <input
-              type="text"
-              placeholder="Faculty Name"
-              value={newFaculty.name}
-              onChange={(e) => setNewFaculty({ ...newFaculty, name: e.target.value })}
-              className="popup-input"
-            />
-            <input
-              type="text"
-              placeholder="Thapar ID"
-              value={newFaculty.thaparId}
-              onChange={(e) => setNewFaculty({ ...newFaculty, thaparId: e.target.value })}
-              className="popup-input"
-            />
-            <button onClick={handleAddFaculty} className="save-btn">Save Changes <span className="icon">➕</span></button>
-          </div>
-        )}
+          {showPopup && (
+            <div className="hod-coordinators-popup-box">
+              <div className="hod-coordinators-popup-grid">
+                  <input
+                    type="text"
+                    placeholder="Faculty Name"
+                    value={newFaculty.name}
+                    onChange={(e) => setNewFaculty({ ...newFaculty, name: e.target.value })}
+                  className="hod-coordinators-popup-input"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Thapar ID"
+                    value={newFaculty.thaparId}
+                    onChange={(e) => setNewFaculty({ ...newFaculty, thaparId: e.target.value })}
+                  className="hod-coordinators-popup-input"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Designation"
+                    value={newFaculty.designation}
+                    onChange={(e) => setNewFaculty({ ...newFaculty, designation: e.target.value })}
+                  className="hod-coordinators-popup-input"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={newFaculty.password}
+                    onChange={(e) => setNewFaculty({ ...newFaculty, password: e.target.value })}
+                  className="hod-coordinators-popup-input"
+                  />
+                </div>
+              <button onClick={handleAddFaculty} className="hod-coordinators-save-btn">
+                Save Changes <span className="hod-coordinators-icon">➕</span>
+                </button>
+              </div>
+            )}
+
+        </div>
       </div>
     </div>
-    </div>
-
   );
 };
 

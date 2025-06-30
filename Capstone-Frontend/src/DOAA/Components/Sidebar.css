@@ -1,4 +1,4 @@
-.sidebar {
+.doaa-sidebar {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,20 +12,20 @@
     box-sizing: border-box;
 }
 
-.logo {
+.doaa-sidebar-logo {
     font-size: 32px;
     font-weight: bold;
     color: #000;
     margin-bottom: 40px;
 }
 
-.menu {
+.doaa-sidebar-menu {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.menu-item {
+.doaa-sidebar-menu-item {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -37,22 +37,22 @@
     transition: all 0.2s;
 }
 
-.menu-item:hover {
+.doaa-sidebar-menu-item:hover {
     background-color: #f0f0f0;
     color: red
 }
 
-.menu-item:hover .icon {
+.doaa-sidebar-menu-item:hover .icon {
     color: red;
 }
 
 
-.menu-item .icon {
+.doaa-sidebar-menu-item .icon {
     margin-right: 12px;
     font-size: 18px;
 }
 
-.menu-item.active {
+.doaa-sidebar-menu-item.active {
     color: red;
     background-color: #ffecec;
     font-weight: bold;
@@ -61,24 +61,24 @@
 
 @media(max-width: 1300px)
 {
-    .sidebar{
+    .doaa-sidebar{
         max-width: 180px;
         padding: 30px 10px
     }
-    .logo {
+    .doaa-sidebar-logo {
         font-size: 25px;
         font-weight: bold;
         color: #000;
         margin-bottom: 30px;
     }
 
-    .menu {
+    .doaa-sidebar-menu {
         display: flex;
         flex-direction: column;
         gap: 20px;
     }
 
-    .menu-item {
+    .doaa-sidebar-menu-item {
         display: flex;
         align-items: center;
         text-decoration: none;
@@ -90,22 +90,22 @@
         transition: all 0.2s;
     }
 
-    .menu-item:hover {
+    .doaa-sidebar-menu-item:hover {
         background-color: #f0f0f0;
         color: red
     }
 
-    .menu-item:hover .icon {
+    .doaa-sidebar-menu-item:hover .icon {
         color: red;
     }
 
 
-    .menu-item .icon {
+    .doaa-sidebar-menu-item .icon {
         margin-right: 12px;
         font-size: 18px;
     }
 
-    .menu-item.active {
+    .doaa-sidebar-menu-item.active {
         color: red;
         background-color: #ffecec;
         font-weight: bold;
