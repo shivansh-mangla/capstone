@@ -170,3 +170,11 @@ func UpdateDetails(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"message": "Student details changedp successfully"})
 }
+
+func GetElectiveData(c *fiber.Ctx) error {
+	data, err := repository.GetElectiveData()
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
+	}
+	return c.Status(fiber.StatusAccepted).JSON(data)
+}

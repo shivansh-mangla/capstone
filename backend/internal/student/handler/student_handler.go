@@ -47,3 +47,7 @@ func UploadFeeReciept(c *fiber.Ctx) error {
 func UpdateDetails(c *fiber.Ctx) error {
 	return service.UpdateDetails(c)
 }
+
+func GetElectiveData(c *fiber.Ctx) error {
+	return service.GetElectiveData(c)
+}

@@ -3,8 +3,10 @@ import "./Login.css";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { UserContext } from "../../../UserContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const ICMPLogin = () => {
+  const navigate = useNavigate();
   const {setStudent} = useContext(UserContext);
 
   const [email, setEmail] = useState("");
@@ -39,6 +41,7 @@ const ICMPLogin = () => {
         notifySuccess();
         localStorage.setItem("ICMPtoken", res.data["token"]);
         setStudent(res.data["studentData"]);
+        navigate("/student/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -84,7 +87,8 @@ const ICMPLogin = () => {
             <button type="submit">Sign in</button>
           </form>
           <p>
-            Don't have an account yet? <a href="SignUp">Register Here</a>
+            Don't have an account yet? 
+            <Link to="/student/signup">Register Here</Link>
           </p>
         </div>
       </div>

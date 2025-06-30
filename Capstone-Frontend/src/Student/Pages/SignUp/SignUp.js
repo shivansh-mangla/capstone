@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./SignUp.css"; // reuse your existing styles
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const ICMPSignUp = () => {
+  const navigate = useNavigate();
 
   const notifySuccess = () => {
     toast.success('Successfully Signed Up! Now go to mail and click verification link!', {
@@ -136,13 +137,14 @@ const ICMPSignUp = () => {
 
     try {
       const res = await axios.post("http://localhost:5000/api/student/register", data);
-      if(res.status == 202){
+      if(res.status === 202){
         notifySuccess();
+        navigate("/student/login");
       }
     } catch(error) {
       console.log(error);
       if(error.response){
-        if(error.response.status == 400)
+        if(error.response.status === 400)
           toast.error(error.response.data.error);
       }
       else
@@ -331,7 +333,8 @@ const ICMPSignUp = () => {
           )}
 
           <p>
-            Do you have an account? <a href="login">Login Here</a>
+            Do you have an account? 
+            <Link to="/student/login">Login Here</Link>
           </p>
         </div>
       </div>

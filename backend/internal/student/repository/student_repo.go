@@ -135,3 +135,18 @@ func UpdateDetailsDB(student *model.Student) error {
 
 	return nil
 }
+
+func GetElectiveData() (bson.M, error) {
+	electiveDetails := database.MongoDB.Collection("electiveDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	data := bson.M{}
+
+	err := electiveDetails.FindOne(ctx, bson.M{}).Decode(&data)
+	if err != nil {
+		return bson.M{}, err
+	}
+	return data, err
+}

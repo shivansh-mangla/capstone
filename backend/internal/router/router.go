@@ -32,6 +32,7 @@ func SetupRoutes() *fiber.App {
 	student.Get("/get-subgroup-name-list", studentHandler.GetSubgroup)
 	student.Post("/upload-fee", authHandler.JWTMiddleware, studentHandler.UploadFeeReciept)
 	student.Post("/update-details", authHandler.JWTMiddleware, studentHandler.UpdateDetails)
+	student.Get("/get-elective-data", studentHandler.GetElectiveData)
 
 	// hod routes
 	hod := api.Group("/hod")

@@ -7,15 +7,26 @@ import { UserContext } from '../../../UserContext'
 
 const Dashboard = () => {
   const {student} = useContext(UserContext);
-  console.log(student);
   const [ttData, setTtData] = useState(null);
+  const [electiveData, setElectiveData] = useState(null);
 
   useEffect(() => {
+    if (!student) return; 
+
+    const fetchElectiveData = async () => {
+      try{
+        const res = await axios.get("http://localhost:5000/api/student/get-elective-data");
+        setElectiveData(res.data);
+      } catch (err) {
+        console.error("Failed to fetch data:", err.response?.data || err.message);
+      } 
+    }
+
     const fetchTimeTableData = async () => {
       try {
         const token = localStorage.getItem("ICMPtoken");
 
-        const res = await axios.get("http://localhost:5000/api/student/gettimetable?subgroup=1A1A", {
+        const res = await axios.get("http://localhost:5000/api/student/gettimetable?subgroup="+student.subgroup, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -28,7 +39,12 @@ const Dashboard = () => {
     }
 
     fetchTimeTableData();
-  }, []);
+    fetchElectiveData();
+  }, [student]);
+
+  if (!student || !electiveData) return <p>Loading...</p>; 
+
+  const ed = electiveData[student.elective_basket];
 
   return (
     <div>
@@ -56,7 +72,7 @@ const Dashboard = () => {
           <h4 className='student-name'>
             {student.subgroup}
           </h4>
-          <Timetable data={ttData} />
+          <Timetable data={ttData} ed= {ed}/>
           <div className="timetable-legend">
             <div className='timetable-legend-inner'>
               <div className='timetable-legend-circle' style={{backgroundColor: 'white'}}></div>
