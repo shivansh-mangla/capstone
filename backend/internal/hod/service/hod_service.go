@@ -123,3 +123,18 @@ func GetAllCoordinatorsDetails( c *fiber.Ctx) error {
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"data": allCoordinators})
 }
+
+func DeleteCoordinator(c *fiber.Ctx) error {
+	input := new(model.Coordinator)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator deletion"})
+	}
+
+	err := repository.DeleteCoordinatorInDB(input.Email)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":err.Error()})
+	}
+
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Coordinator successfulle deleted"})
+}

@@ -114,3 +114,21 @@ func AllCoordinatorsInDB() ([]model.Coordinator, error) {
 
     return coordinators, nil
 }
+
+func DeleteCoordinatorInDB(email string) error {
+    coordinatorDetails := database.MongoDB.Collection("coordinatorDetails")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    filter := bson.M{"email": email}
+    result, err := coordinatorDetails.DeleteOne(ctx, filter)
+    if err != nil {
+        return fmt.Errorf("failed to delete coordinator: %v", err)
+    }
+
+    if result.DeletedCount == 0 {
+        return fmt.Errorf("no coordinator found with email: %s", email)
+    }
+
+    return nil
+}

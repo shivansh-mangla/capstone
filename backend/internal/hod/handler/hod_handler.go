@@ -25,3 +25,7 @@ func UpdateHodPassword(c *fiber.Ctx) error {
 func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
 	return service.GetAllCoordinatorsDetails(c)
 }
+
+func DeleteCoordinator(c *fiber.Ctx) error {
+	return service.DeleteCoordinator(c)
+}
