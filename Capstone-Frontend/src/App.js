@@ -30,45 +30,47 @@ import ICMPLogin from "./Student/Pages/Login/Login.js";
 import ICMPSignUp from "./Student/Pages/SignUp/SignUp.js";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import { UserProvider } from "./UserContext.js";
 
 function App() {
   return (
-    <Router>
-      <div className='App'>
-        <Routes>
-          {/* Student routes */}
-          <Route path="/student/signup" element={<ICMPSignUp />} />
-          <Route path="/student/login" element={<ICMPLogin />} />
-          <Route path="/student/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
-          <Route path="/student/account" element={<ProtectedRoute><StudentAccount /></ProtectedRoute>} />
-          <Route path="/student/course-improvement" element={<StudentCourseImprovement />} />
-          <Route path="/student/fees" element={<StudentFees />} />
-          <Route path="/student/status" element={<StudentStatus />} />
+    <UserProvider>
+      <Router>
+        <div className='App'>
+          <Routes>
+            {/* Student routes */}
+            <Route path="/student/signup" element={<ICMPSignUp />} />
+            <Route path="/student/login" element={<ICMPLogin />} />
+            <Route path="/student/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
+            <Route path="/student/account" element={<ProtectedRoute><StudentAccount /></ProtectedRoute>} />
+            <Route path="/student/course-improvement" element={<StudentCourseImprovement />} />
+            <Route path="/student/fees" element={<StudentFees />} />
+            <Route path="/student/status" element={<StudentStatus />} />
 
 
-          {/* Coordinator routes  */}
-          <Route path="/coordinator/dashboard" element={<CoordinatorDashboard />} />
-          <Route path="/coordinator/account" element={<CoordinatorAccount/>} />
-          <Route path="/coordinator/academic-information" element={<CoordinatorAcademicInformation />} />
-          <Route path="/coordinator/time-table" element={<CoordinatorTimeTable />} />
+            {/* Coordinator routes  */}
+            <Route path="/coordinator/dashboard" element={<CoordinatorDashboard />} />
+            <Route path="/coordinator/account" element={<CoordinatorAccount/>} />
+            <Route path="/coordinator/academic-information" element={<CoordinatorAcademicInformation />} />
+            <Route path="/coordinator/time-table" element={<CoordinatorTimeTable />} />
 
-          {/* HOD routes  */}
-          <Route path="/hod/dashboard" element={<HODDashboard />} />
-          <Route path="/hod/coordinators" element={<HODCoordinators />} />
-          <Route path="/hod/account" element={<HODAccount />} />
-          
-          {/* DOAA routes   */}
-          <Route path="/doaa/dashboard" element={<DOAADashboard />} />
-          <Route path="/doaa/coordinators" element={<DOAACoordinators />} />
-          <Route path="/doaa/clashing-requests" element={<DOAAClashingRequest />} />
-          <Route path="/doaa/clashing-stats" element={<DOAAClashingStats />} />
-          <Route path="/doaa/account" element={<DOAAAccount />} />
+            {/* HOD routes  */}
+            <Route path="/hod/dashboard" element={<HODDashboard />} />
+            <Route path="/hod/coordinators" element={<HODCoordinators />} />
+            <Route path="/hod/account" element={<HODAccount />} />
+            
+            {/* DOAA routes   */}
+            <Route path="/doaa/dashboard" element={<DOAADashboard />} />
+            <Route path="/doaa/coordinators" element={<DOAACoordinators />} />
+            <Route path="/doaa/clashing-requests" element={<DOAAClashingRequest />} />
+            <Route path="/doaa/clashing-stats" element={<DOAAClashingStats />} />
+            <Route path="/doaa/account" element={<DOAAAccount />} />
 
-        </Routes>
-        <ToastContainer />
-      </div>
-    </Router>
-
+          </Routes>
+          <ToastContainer />
+        </div>
+      </Router>
+    </UserProvider>
   );
 }
 

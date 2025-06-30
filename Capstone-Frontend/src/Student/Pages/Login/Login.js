@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { UserContext } from "../../../UserContext";
 
 const ICMPLogin = () => {
+  const {setStudent} = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -32,14 +35,15 @@ const ICMPLogin = () => {
 
     try {
       const res = await axios.post("http://localhost:5000/api/student/login", data);
-      if(res.status == 202){
+      if(res.status === 202){
         notifySuccess();
         localStorage.setItem("ICMPtoken", res.data["token"]);
+        setStudent(res.data["studentData"]);
       }
     } catch (error) {
       console.log(error);
       if(error.response){
-        if(error.response.status == 400)
+        if(error.response.status === 400)
           toast.error(error.response.data.error);
       }
       else
