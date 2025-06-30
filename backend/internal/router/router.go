@@ -8,6 +8,7 @@ import (
 	doaaHandler "github.com/shivansh-mangla/capstone/backend/internal/doaa/handler"
 	hodHandler "github.com/shivansh-mangla/capstone/backend/internal/hod/handler"
 	studentHandler "github.com/shivansh-mangla/capstone/backend/internal/student/handler"
+	"github.com/shivansh-mangla/capstone/backend/internal/utils"
 )
 
 func SetupRoutes() *fiber.App {
@@ -53,6 +54,9 @@ func SetupRoutes() *fiber.App {
 	//auth routes
 	auth := app.Group("/verify")
 	auth.Get("/", authHandler.VerifyStudent)
+
+	//util routes
+	api.Get("/get-course-list", utils.GetCourseList)
 
 	return app
 }

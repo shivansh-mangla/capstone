@@ -105,8 +105,6 @@ func SubgroupFromDB() (model.Subgroup, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	fmt.Println("hellooo")
-
 	var subgroupList model.Subgroup
 	err := subgroupNames.FindOne(ctx, bson.M{}).Decode(&subgroupList)
 	if err != nil {
@@ -127,13 +125,13 @@ func UpdateDetailsDB(student *model.Student) error {
 	update := bson.M{"$set": student}
 
 	result, err := studentDetails.UpdateOne(ctx, filter, update)
-    if err != nil {
-        return fmt.Errorf("failed to update student details: %v", err)
-    }
+	if err != nil {
+		return fmt.Errorf("failed to update student details: %v", err)
+	}
 
-    if result.MatchedCount == 0 {
-        return fmt.Errorf("no student found with email: %s", student.ThaparEmail)
-    }
+	if result.MatchedCount == 0 {
+		return fmt.Errorf("no student found with email: %s", student.ThaparEmail)
+	}
 
-    return nil
+	return nil
 }

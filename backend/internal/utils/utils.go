@@ -9,6 +9,8 @@ import (
 
 	"github.com/cloudinary/cloudinary-go"
 	"github.com/cloudinary/cloudinary-go/api/uploader"
+	"github.com/gofiber/fiber/v2"
+	"github.com/shivansh-mangla/capstone/backend/internal/database"
 	"gopkg.in/mail.v2"
 )
 
@@ -68,4 +70,8 @@ func UploadToCloudinary(file multipart.File, filename string) (string, error) {
 	}
 
 	return uploadResult.SecureURL, nil
+}
+
+func GetCourseList(c *fiber.Ctx) error {
+	return c.JSON(database.GetCourseList())
 }
