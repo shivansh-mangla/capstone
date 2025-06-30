@@ -39,6 +39,7 @@ func SetupRoutes() *fiber.App {
 	hod.Post("/create-coordinator", hodHandler.CreateCoordinator)
 	hod.Post("/update-name", hodHandler.UpdateHodName)
 	hod.Post("/update-password", hodHandler.UpdateHodPassword)
+	hod.Get("/all-coordinators-details", hodHandler.GetAllCoordinatorsDetails)
 
 	//coordinator routes
 	coordinator := api.Group("/coordinator")

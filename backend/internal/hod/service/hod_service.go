@@ -113,3 +113,13 @@ func UpdateHodPassword(c *fiber.Ctx) error {
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Hod password updated"})
 }
+
+
+func GetAllCoordinatorsDetails( c *fiber.Ctx) error {
+	allCoordinators, err := repository.AllCoordinatorsInDB()
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"Error": err})
+	}
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"data": allCoordinators})
+}

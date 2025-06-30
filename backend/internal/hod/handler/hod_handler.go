@@ -21,3 +21,7 @@ func UpdateHodName(c *fiber.Ctx) error {
 func UpdateHodPassword(c *fiber.Ctx) error {
 	return service.UpdateHodPassword(c)
 }
+
+func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
+	return service.GetAllCoordinatorsDetails(c)
+}
