@@ -1,18 +1,49 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import StudentSidebar from '../../Components/Sidebar'
 import './Dashboard.css'
 import Timetable from '../../Components/TimeTable'
+import axios from 'axios'
+import { UserContext } from '../../../UserContext'
 
 const Dashboard = () => {
+  const {student} = useContext(UserContext);
+  console.log(student);
+  const [ttData, setTtData] = useState(null);
+
+  useEffect(() => {
+    const fetchTimeTableData = async () => {
+      try {
+        const token = localStorage.getItem("ICMPtoken");
+
+        const res = await axios.get("http://localhost:5000/api/student/gettimetable?subgroup=1A1A", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setTtData(res.data.data);
+      } catch (err) {
+        console.error("Failed to fetch data:", err.response?.data || err.message);
+      } 
+    }
+
+    fetchTimeTableData();
+  }, []);
+
   return (
     <div>
       <StudentSidebar />
       <div className="student-main-dashboard">
         <div className="student-dashboard-top">
           <h1>Welcome</h1>
-          <h4 className='student-name'>Arnam Chaurasiya</h4>
+          <h4 className='student-name'>
+            {student.name}
+          </h4>
           <div className="student-dashboard-info-tiles">
-            <div className="student-dashboard-info-tile"></div>
+            <div className="student-dashboard-info-tile">
+              <h1>Roll Number</h1>
+              <p>{student.roll_no}</p>
+            </div>
             <div className="student-dashboard-info-tile"></div>
             <div className="student-dashboard-info-tile"></div>
             <div className="student-dashboard-info-tile"></div>
@@ -22,8 +53,10 @@ const Dashboard = () => {
 
         <div className="student-dashboard-bottom">
           <h1>Your Time Table</h1>
-          <h4 className='student-name'>3C75</h4>
-          <Timetable />
+          <h4 className='student-name'>
+            {student.subgroup}
+          </h4>
+          <Timetable data={ttData} />
           <div className="timetable-legend">
             <div className='timetable-legend-inner'>
               <div className='timetable-legend-circle' style={{backgroundColor: 'white'}}></div>
