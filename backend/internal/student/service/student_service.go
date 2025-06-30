@@ -81,6 +81,7 @@ func LoginStudent(c *fiber.Ctx) error {
 	//generate JWT
 	claims := jwt.MapClaims{
 		"email": student.ThaparEmail,
+		"role":  "student",
 		"exp":   time.Now().Add(time.Hour * 1).Unix(), // Token expires in 1 hour
 	}
 

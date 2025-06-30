@@ -7,6 +7,12 @@ type Hod struct {
 	Department string `json:"hod_department" bson:"hod_department"`
 }
 
+type PasswordUpdation struct {
+	Email      string `json:"hod_email" bson:"hod_email"`
+	OldPassword   string `json:"hod_old_password" bson:"hod_old_password"`
+	NewPassword   string `json:"hod_new_password" bson:"hod_new_password"`
+}
+
 type Coordinator struct {
 	Name        string `json:"name" bson:"name"`
 	Email       string `json:"email" bson:"email"`

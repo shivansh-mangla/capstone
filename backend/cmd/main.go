@@ -17,6 +17,7 @@ func main() {
 	}
 	PORT := os.Getenv("PORT")
 	database.ConnectMongo()
+	database.GetCourseList()
 
 	err = studentHandler.RetrieveElectiveBasket()
 	if err != nil {

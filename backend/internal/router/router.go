@@ -8,6 +8,7 @@ import (
 	doaaHandler "github.com/shivansh-mangla/capstone/backend/internal/doaa/handler"
 	hodHandler "github.com/shivansh-mangla/capstone/backend/internal/hod/handler"
 	studentHandler "github.com/shivansh-mangla/capstone/backend/internal/student/handler"
+	"github.com/shivansh-mangla/capstone/backend/internal/utils"
 )
 
 func SetupRoutes() *fiber.App {
@@ -29,8 +30,8 @@ func SetupRoutes() *fiber.App {
 	student.Get("/gettimetable", studentHandler.GenerateTimeTable)
 	student.Get("/get-elective-basket-list", studentHandler.GetElectiveBasket)
 	student.Get("/get-subgroup-name-list", studentHandler.GetSubgroup)
-	student.Post("/upload-fee", studentHandler.UploadFeeReciept)
-	student.Post("/update-details", studentHandler.UpdateDetails)
+	student.Post("/upload-fee", authHandler.JWTMiddleware, studentHandler.UploadFeeReciept)
+	student.Post("/update-details", authHandler.JWTMiddleware, studentHandler.UpdateDetails)
 
 	// hod routes
 	hod := api.Group("/hod")
@@ -53,6 +54,9 @@ func SetupRoutes() *fiber.App {
 	//auth routes
 	auth := app.Group("/verify")
 	auth.Get("/", authHandler.VerifyStudent)
+
+	//util routes
+	api.Get("/get-course-list", utils.GetCourseList)
 
 	return app
 }

@@ -8,3 +8,7 @@ import (
 func VerifyStudent(c *fiber.Ctx) error {
 	return service.VerifyStudent(c)
 }
+
+func JWTMiddleware(c *fiber.Ctx) error {
+	return service.JWTMiddleware(c)
+}

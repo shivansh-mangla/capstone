@@ -16,7 +16,7 @@ func GetHodDetailsByEmail(email string) (model.Hod, error){
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
     defer cancel()
-	fmt.Println(email)
+	// fmt.Println(email)
 	var hod model.Hod
 	filter := bson.M{"hod_email":email}
 	

@@ -36,6 +36,7 @@ func LoginHod(c *fiber.Ctx) error {
 	//generating JWT token
 	claims := jwt.MapClaims{
 		"email": input.Email,
+		"role":  "hod",
 		"exp":   time.Now().Add(time.Hour * 1).Unix(), // Token expires in 1 hour
 	}
 
@@ -61,16 +62,15 @@ func CreateCoordinator(c *fiber.Ctx) error {
 	//add tenure details and password encryption
 	hash, _ := bcrypt.GenerateFromPassword([]byte(input.Password), 10)
 	input.Password = string(hash)
-	input.TenureStart = time.Now().Format("2006-01-02") 
-    input.TenureEnd = "present"
+	input.TenureStart = time.Now().Format("2006-01-02")
+	input.TenureEnd = "present"
 
 	err := repository.CreateCoordinatorDB(input)
-	if err != nil{
+	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot create coordinator account"})
 	}
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Coordinator account created successfully"})
 }
-
 
 func UpdateHodName(c *fiber.Ctx) error {
 	input := new(model.Hod)
@@ -80,21 +80,35 @@ func UpdateHodName(c *fiber.Ctx) error {
 	}
 
 	err := repository.UpdateHodName(input.Email, input.Name)
-	if err!= nil {
+	if err != nil {
 		return err
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Hod name updated"})
 }
 
 func UpdateHodPassword(c *fiber.Ctx) error {
-	input := new(model.Hod)
+	input := new(model.PasswordUpdation)
 
 	if err := c.BodyParser(input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Hod password Update"})
 	}
 
-	err := repository.SetHODPassword(input.Email, input.Password)
-	if err!= nil {
+	hod, err := repository.GetHodDetailsByEmail(input.Email)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "HOD doesnt exist by this email"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while password updation for Hod"})
+	}
+
+	//compare password
+	err = bcrypt.CompareHashAndPassword([]byte(hod.Password), []byte(input.OldPassword))
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for Hod"})
+	}
+
+	err = repository.SetHODPassword(input.Email, input.NewPassword)
+	if err != nil {
 		return err
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Hod password updated"})
