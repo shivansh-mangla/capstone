@@ -36,6 +36,7 @@ func LoginCoordinator(c *fiber.Ctx) error {
 	//generating JWT token
 	claims := jwt.MapClaims{
 		"email": input.Email,
+		"role":  "coordinator",
 		"exp":   time.Now().Add(time.Hour * 1).Unix(), // Token expires in 1 hour
 	}
 

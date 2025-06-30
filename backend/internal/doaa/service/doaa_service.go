@@ -13,7 +13,7 @@ import (
 )
 
 func LoginDoaa(c *fiber.Ctx) error {
-	input := new(model.Doaa);
+	input := new(model.Doaa)
 
 	if err := c.BodyParser(input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Doaa Login"})
@@ -37,6 +37,7 @@ func LoginDoaa(c *fiber.Ctx) error {
 	//generating JWT token
 	claims := jwt.MapClaims{
 		"email": input.Email,
+		"role":  "doaa",
 		"exp":   time.Now().Add(time.Hour * 1).Unix(), // Token expires in 1 hour
 	}
 
@@ -61,7 +62,7 @@ func UpdateDoaaName(c *fiber.Ctx) error {
 	}
 
 	err := repository.UpdateDoaaName(input)
-	if err!= nil {
+	if err != nil {
 		return err
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Doaa name updated"})
@@ -86,7 +87,7 @@ func UpdateDoaaPassword(c *fiber.Ctx) error {
 	}
 
 	err = repository.SetDoaaPassword(input.NewPassword)
-	if err!= nil {
+	if err != nil {
 		return err
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Doaa password updated"})
