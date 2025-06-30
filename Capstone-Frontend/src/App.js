@@ -29,18 +29,18 @@ import DOAAAccount from './DOAA/Pages/Account/Account.js'
 import ICMPLogin from "./Student/Pages/Login/Login.js";
 import ICMPSignUp from "./Student/Pages/SignUp/SignUp.js";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {
   return (
     <Router>
       <div className='App'>
         <Routes>
-          
           {/* Student routes */}
           <Route path="/student/signup" element={<ICMPSignUp />} />
           <Route path="/student/login" element={<ICMPLogin />} />
-          <Route path="/student/dashboard" element={<StudentDashboard />} />
-          <Route path="/student/account" element={<StudentAccount />} />
+          <Route path="/student/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
+          <Route path="/student/account" element={<ProtectedRoute><StudentAccount /></ProtectedRoute>} />
           <Route path="/student/course-improvement" element={<StudentCourseImprovement />} />
           <Route path="/student/fees" element={<StudentFees />} />
           <Route path="/student/status" element={<StudentStatus />} />

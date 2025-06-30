@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./SignUp.css"; // reuse your existing styles
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { Navigate } from "react-router-dom";
 
 const ICMPSignUp = () => {
 
@@ -120,13 +121,32 @@ const ICMPSignUp = () => {
       verified: false,
     };
 
-    console.log("Collected Data:", JSON.stringify(data, null, 2));
+    setFormData({
+    name: "",
+    roll: "",
+    year: "",
+    branch: "",
+    subgroup: "",
+    elective: "",
+    thaparid: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
 
     try {
-      await axios.post("http://localhost:5000/api/student/register", data);
-      notifySuccess();
-    } catch {
-      toast.error('Submission failed');
+      const res = await axios.post("http://localhost:5000/api/student/register", data);
+      if(res.status == 202){
+        notifySuccess();
+      }
+    } catch(error) {
+      console.log(error);
+      if(error.response){
+        if(error.response.status == 400)
+          toast.error(error.response.data.error);
+      }
+      else
+        toast.error('Submission failed');
     }
   };
 

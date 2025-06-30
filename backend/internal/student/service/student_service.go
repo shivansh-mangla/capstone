@@ -18,15 +18,15 @@ func CreateStudent(c *fiber.Ctx) error {
 	student := new(model.Student)
 
 	if err := c.BodyParser(student); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student Signup"})
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for student Signup"})
 	}
 	studentExist, err := repository.CheckStudentExistence(student.ThaparEmail)
 	if err != nil {
-		fmt.Println("Some error occured while checking the existence of student")
+		return c.Status(400).JSON(fiber.Map{"error": "Some error occured while checking the existence of student"})
 	}
 
-	if studentExist == true {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student Already exist"})
+	if studentExist {
+		return c.Status(400).JSON(fiber.Map{"error": "Student Already exist"})
 	}
 
 	hash, _ := bcrypt.GenerateFromPassword([]byte(student.Password), 10)
@@ -45,7 +45,7 @@ func CreateStudent(c *fiber.Ctx) error {
 
 	err = repository.CreateStudentDB(student)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Student not signed up due to some internal problem"})
+		return c.Status(400).JSON(fiber.Map{"error": "Student not signed up due to some internal problem"})
 	}
 
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"message": "Student signed up successfully"})
@@ -55,27 +55,27 @@ func LoginStudent(c *fiber.Ctx) error {
 
 	input := new(model.Student)
 	if err := c.BodyParser(input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student Login"})
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for student Login"})
 	}
 
 	//find student by email id
 	student, err := repository.GetStudentByEmail(input.ThaparEmail)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student doesnt exist by this email"})
+			return c.Status(400).JSON(fiber.Map{"error": "Student doesnt exist by this email"})
 		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while logging in"})
+		return c.Status(400).JSON(fiber.Map{"error": "Some error occured while logging in"})
 	}
 
 	//compare password
 	err = bcrypt.CompareHashAndPassword([]byte(student.Password), []byte(input.Password))
 	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid credentials"})
 	}
 
 	//check if email is verified
 	if !student.Verified {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Please verify your email first"})
+		return c.Status(400).JSON(fiber.Map{"error": "Please verify your email first"})
 	}
 
 	//generate JWT
@@ -89,10 +89,10 @@ func LoginStudent(c *fiber.Ctx) error {
 	tokenString, err := token.SignedString([]byte(JWT_KEY))
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token for student"})
+		return c.Status(400).JSON(fiber.Map{"error": "Could not create JWT token for student"})
 	}
 
-	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "studentData": student})
+	return c.Status(202).JSON(fiber.Map{"token": tokenString, "studentData": student})
 }
 
 func GetTimeTable(c *fiber.Ctx) error {
