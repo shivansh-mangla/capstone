@@ -72,3 +72,31 @@ func UpdateDoaaName(doaa *model.Doaa) error {
     
     return nil
 }
+
+
+func AllCoordinatorsInDB() ([]model.Coordinator, error) {
+    coordinatorDetails := database.MongoDB.Collection("coordinatorDetails")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    cursor, err := coordinatorDetails.Find(ctx, bson.M{})
+    if err != nil {
+        return nil, fmt.Errorf("failed to fetch coordinators: %v", err)
+    }
+    defer cursor.Close(ctx)
+
+    var coordinators []model.Coordinator
+    for cursor.Next(ctx) {
+        var coordinator model.Coordinator
+        if err := cursor.Decode(&coordinator); err != nil {
+            return nil, fmt.Errorf("failed to decode coordinator: %v", err)
+        }
+        coordinators = append(coordinators, coordinator)
+    }
+
+    if err := cursor.Err(); err != nil {
+        return nil, fmt.Errorf("error iterating over coordinators: %v", err)
+    }
+
+    return coordinators, nil
+}

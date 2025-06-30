@@ -16,3 +16,7 @@ func UpdateDoaaName(c *fiber.Ctx) error {
 func UpdateDoaaPassword(c *fiber.Ctx) error {
 	return service.UpdateDoaaPassword(c)
 }
+
+func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
+	return service.GetAllCoordinatorsDetails(c)
+}
