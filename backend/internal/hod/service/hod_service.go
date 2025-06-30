@@ -87,13 +87,28 @@ func UpdateHodName(c *fiber.Ctx) error {
 }
 
 func UpdateHodPassword(c *fiber.Ctx) error {
-	input := new(model.Hod)
+	input := new(model.PasswordUpdation)
 
 	if err := c.BodyParser(input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Hod password Update"})
 	}
 
-	err := repository.SetHODPassword(input.Email, input.Password)
+	hod, err := repository.GetHodDetailsByEmail(input.Email)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "HOD doesnt exist by this email"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while password updation for Hod"})
+	}
+
+	//compare password
+	err = bcrypt.CompareHashAndPassword([]byte(hod.Password), []byte(input.OldPassword))
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for Hod"})
+	}
+
+
+	err = repository.SetHODPassword(input.Email, input.NewPassword)
 	if err!= nil {
 		return err
 	}
