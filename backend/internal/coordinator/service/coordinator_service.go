@@ -51,13 +51,27 @@ func LoginCoordinator(c *fiber.Ctx) error {
 }
 
 func UpdateCoordinatorPassword(c *fiber.Ctx) error {
-	input := new(model.Coordinator)
+	input := new(model.PasswordUpdation)
 
 	if err := c.BodyParser(input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator Password change"})
 	}
 
-	err := repository.SetCoordinatorPassword(input.Email, input.Password)
+	coordinator, err := repository.GetCoordinatorDetailsByEmail(input.Email)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Coordinator doesnt exist by this email"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while password updation for coordinator"})
+	}
+
+	//compare password
+	err = bcrypt.CompareHashAndPassword([]byte(coordinator.Password), []byte(input.OldPassword))
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for coordinator"})
+	}
+
+	err = repository.SetCoordinatorPassword(input.Email, input.NewPassword)
 	if err != nil {
 		return err
 	}

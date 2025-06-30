@@ -10,3 +10,9 @@ type Coordinator struct {
 	TenureStart string `json:"tenureStart" bson:"tenureStart"`
 	TenureEnd   string `json:"tenureEnd" bson:"tenureEnd"`
 }
+
+type PasswordUpdation struct{
+	Email       string `json:"email" bson:"email"`
+	OldPassword    string `json:"old_password" bson:"old_password"`
+	NewPassword    string `json:"new_password" bson:"new_password"`
+}
