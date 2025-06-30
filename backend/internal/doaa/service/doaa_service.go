@@ -68,13 +68,24 @@ func UpdateDoaaName(c *fiber.Ctx) error {
 }
 
 func UpdateDoaaPassword(c *fiber.Ctx) error {
-	input := new(model.Doaa)
+	input := new(model.PasswordUpdation)
 
 	if err := c.BodyParser(input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Doaa password Update"})
 	}
 
-	err := repository.SetDoaaPassword(input.Password)
+	doaa, err := repository.GetDoaaDetails()
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Some error occured while password updation for Doaa"})
+	}
+
+	//compare password
+	err = bcrypt.CompareHashAndPassword([]byte(doaa.Password), []byte(input.OldPassword))
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for Doaa"})
+	}
+
+	err = repository.SetDoaaPassword(input.NewPassword)
 	if err!= nil {
 		return err
 	}
