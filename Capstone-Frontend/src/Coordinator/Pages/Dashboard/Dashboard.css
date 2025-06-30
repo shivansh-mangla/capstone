@@ -1,0 +1,362 @@
+.coordinator-main-dashboard{
+  margin-left: 250px;
+  padding: 30px;
+  background-color: #f9f9fb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.coordinator-main-dashboard *{
+  padding: 0;
+  margin: 0;
+}
+
+.coordinator-dashboard-top {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 30px 20px 30px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.04);
+  margin-bottom: 20px;
+}
+
+.coordinator-welcome {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.coordinator-name {
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
+.coordinator-applications-section {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.coordinator-donut-card {
+  background: #f5f5fa;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+}
+
+.coordinator-donut-legend {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.coordinator-stats-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.coordinator-stats-card {
+  min-width: 140px;
+  min-height: 120px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.04);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.coordinator-stats-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.coordinator-stats-label {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.coordinator-stats-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.coordinator-dashboard-bottom {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.04);
+}
+
+.coordinator-approved-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+}
+
+.coordinator-approved-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.04);
+}
+
+.coordinator-approved-table th,
+.coordinator-approved-table td {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.coordinator-approved-table th {
+  color: #222;
+  font-weight: bold;
+  background: #f9f9fb;
+}
+
+.coordinator-approved-table tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.coordinator-approved-avatar-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.coordinator-approved-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: inline-block;
+}
+
+.coordinator-dashboard-info-tiles{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+
+.coordinator-dashboard-info-tile{
+  width: 200px;
+  aspect-ratio: 1;
+  background-color: aqua;
+  border-radius: 10px;
+}
+
+.coordinator-dashboard-bottom-buttons{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.coordinator-dashboard-bottom-buttons button{
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.status-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.status-btn.accept {
+  background: #4be37b;
+  color: #fff;
+}
+.status-btn.reject {
+  background: #ffb3c6;
+  color: #fff;
+}
+.status-btn.accept:hover {
+  background: #2ecc40;
+}
+.status-btn.reject:hover {
+  background: #ff4d6d;
+}
+
+.timetable-status.implemented {
+  background: #4be37b;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-block;
+}
+.timetable-upload-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
+  margin-top: 30px;
+}
+.timetable-upload-box {
+  flex: 1;
+  min-height: 120px;
+  border: 2px dashed #d0d0d0;
+  border-radius: 16px;
+  background: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border 0.2s;
+}
+.timetable-upload-box:hover {
+  border: 2px solid #a259e6;
+}
+.timetable-upload-text {
+  color: #888;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.timetable-upload-icon {
+  font-size: 2.5rem;
+  color: #a259e6;
+}
+.timetable-update-btn {
+  background: #a259e6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.timetable-update-btn:hover {
+  background: #6c47b6;
+}
+
+@media (max-width: 1200px) {
+  .coordinator-main-dashboard {
+    margin-left: 0;
+    padding: 16px;
+    gap: 16px;
+  }
+  .sidebar {
+    width: 180px;
+    min-width: 0;
+    padding: 10px 4px;
+  }
+  .logo {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+  .menu {
+    gap: 8px;
+  }
+  .menu-item {
+    font-size: 15px;
+    padding: 8px 8px;
+  }
+  .coordinator-dashboard-top,
+  .coordinator-dashboard-bottom {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .coordinator-applications-section {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .coordinator-stats-cards {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .coordinator-stats-card {
+    min-width: 100px;
+    min-height: 80px;
+    font-size: 1rem;
+  }
+  .coordinator-donut-card {
+    min-width: 120px;
+    padding: 10px;
+  }
+  .coordinator-approved-table {
+    font-size: 0.95rem;
+  }
+  .timetable-upload-area {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .timetable-upload-box {
+    min-height: 80px;
+    padding: 10px;
+  }
+  .timetable-update-btn {
+    width: 100%;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .coordinator-main-dashboard {
+    padding: 8px;
+    gap: 8px;
+  }
+  .sidebar {
+    width: 100px;
+    padding: 6px 2px;
+  }
+  .menu-item {
+    font-size: 13px;
+    padding: 6px 4px;
+  }
+  .coordinator-dashboard-top,
+  .coordinator-dashboard-bottom {
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .coordinator-applications-section {
+    gap: 8px;
+  }
+  .coordinator-stats-card {
+    min-width: 80px;
+    min-height: 60px;
+    font-size: 0.9rem;
+  }
+  .coordinator-donut-card {
+    min-width: 80px;
+    padding: 4px;
+  }
+  .coordinator-approved-table {
+    font-size: 0.85rem;
+  }
+  .timetable-upload-area {
+    gap: 6px;
+  }
+  .timetable-upload-box {
+    min-height: 50px;
+    padding: 4px;
+  }
+  .timetable-update-btn {
+    width: 100%;
+    padding: 8px 0;
+  }
+}

@@ -3,11 +3,14 @@ import './Sidebar.css';
 import { Link, useLocation } from 'react-router-dom';
 import {
   FaHome,
+  FaBook,
   FaUser,
+  FaMoneyCheckAlt
 } from 'react-icons/fa';
 
-export default function HODSidebar() {
+export default function Sidebar() {
   const location = useLocation();
+
 
   const menuItems = [
     { name: 'Dashboard', path: '/hod/dashboard', icon: <FaHome /> },
@@ -16,21 +19,21 @@ export default function HODSidebar() {
   ];
 
   return (
-    <div className="sidebar">
-      <div className="logo">ICMP</div>
-      <nav className="menu">
+    <div className="hod-sidebar">
+      <div className="hod-sidebar-logo">ICMP</div>
+      <nav className="hod-sidebar-menu">
         {menuItems.map((item, index) => (
           <Link
             to={item.path}
             key={index}
-            className={`menu-item ${location.pathname === item.path ? 'active' : ''}`}
+            className={`hod-sidebar-menu-item ${location.pathname === item.path ? 'active' : ''}`}
           >
-            <span className="icon">{item.icon}</span>
-            <span className="label">{item.name}</span>
+            <span className="hod-sidebar-icon">{item.icon}</span>
+            <span className="hod-sidebar-label">{item.name}</span>
           </Link>
         ))}
-        
       </nav>
     </div>
   );
 }
+

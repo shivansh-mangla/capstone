@@ -3,9 +3,9 @@ import Sidebar from '../../Components/Sidebar';
 import StatCard from './DashboardComponents/StatCard';
 import StatCardMain from './DashboardComponents/StatCardMain';
 import RequestList from './DashboardComponents/RequestList';
+import Logout from '../../Components/Logout'
 import './Dashboard.css';
 
-// ✅ Use arrays instead of invalid objects
 const approvedData = [
   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
@@ -55,24 +55,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="hod-dashboard-container">
       <Sidebar />
-      <div className="dashboard-main">
-        <div className="dashboard-top-row">
-          <button className="logout-button" onClick={handleLogout}>
-            Log Out <span className="logout-icon">➡️</span>
-          </button>
+      <div className="hod-dashboard-main">
+        <Logout />
 
-          <div className="dashboard-header">
-            <div className="header-top">
-              <div className="welcome-text">
+          <div className="hod-dashboard-header">
+            <div className="hod-header-top">
+              <div className="hod-welcome-text">
                 <h4>Welcome!</h4>
                 <p>Mr. Shalini Batra</p>
                 <h3>Applications</h3>
               </div>
             </div>
 
-             <div className="stats-section">
+            <div className="hod-stats-section">
               <StatCardMain 
               type="Approved" 
               count="126" 
@@ -103,8 +100,7 @@ const Dashboard = () => {
               />
             </div>
           </div>
-        </div>
-
+     
         {/* ✅ Just pass the whole array once */}
         <RequestList
           data={getDataByType()}

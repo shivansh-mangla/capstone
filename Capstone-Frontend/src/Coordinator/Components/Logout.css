@@ -1,0 +1,40 @@
+.coordinator-top-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 10px;
+    /* margin-bottom: 0px; */
+    box-sizing: border-box;
+}
+
+.coordinator-logout-button {
+    background-color: white;
+    color: #a94442;
+    border: 1px solid #f0c2c2;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.coordinator-logout-button .coordinator-logout-icon {
+    margin-left: 8px;
+    font-size: 16px;
+}
+
+.coordinator-logout-button:hover {
+    background-color: #ffe5e5;
+    border-color: #e89c9c;
+}
+
+@media (max-width: 1400px) {
+    .coordinator-top-row {
+        margin: 0px;
+    }
+}

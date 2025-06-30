@@ -27,16 +27,16 @@ const PendingTable = ({ data, requestType, department }) => {
     });
 
     const getSortIcon = (key) => {
-        if (sortConfig.key !== key) return <FaSort className="sort-icon" />;
+        if (sortConfig.key !== key) return <FaSort className="hod-sort-icon" />;
         return sortConfig.direction === 'asc' ? (
-            <FaSortUp className="sort-icon" />
+            <FaSortUp className="hod-sort-icon" />
         ) : (
-            <FaSortDown className="sort-icon" />
+                <FaSortDown className="hod-sort-icon" />
         );
     };
 
     return (
-        <div className="pending-table">
+        <div className="hod-pending-table">
             <h3>{requestType}</h3>
             <h4>{department}</h4>
             <table>
@@ -60,7 +60,7 @@ const PendingTable = ({ data, requestType, department }) => {
                     {sortedData.map((row, idx) => (
                         <tr key={idx}>
                             <td>
-                                <FaUser className="user-icon" /> {row.name}
+                                <FaUser className="hod-user-icon" /> {row.name}
                             </td>
                             <td>{row.year}</td>
                             <td>{row.courses}</td>

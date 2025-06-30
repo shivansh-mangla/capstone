@@ -1,0 +1,187 @@
+.coordinator-main-timetable {
+  margin-left: 250px;
+  padding: 30px;
+  background-color: #f9f9fb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.coordinator-timetable-section {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.04);
+}
+
+.coordinator-timetable-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+}
+
+.coordinator-timetable-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.04);
+  margin-bottom: 30px;
+}
+
+.coordinator-timetable-table th,
+.coordinator-timetable-table td {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.coordinator-timetable-table th {
+  color: #222;
+  font-weight: bold;
+  background: #f9f9fb;
+}
+
+.coordinator-timetable-table tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.timetable-status.implemented {
+  background: #4be37b;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-block;
+}
+.timetable-upload-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
+  margin-top: 30px;
+}
+.timetable-upload-box {
+  flex: 1;
+  min-height: 120px;
+  border: 2px dashed #d0d0d0;
+  border-radius: 16px;
+  background: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border 0.2s;
+}
+.timetable-upload-box:hover {
+  border: 2px solid #a259e6;
+}
+.timetable-upload-text {
+  color: #888;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.timetable-upload-icon {
+  font-size: 2.5rem;
+  color: #a259e6;
+}
+.timetable-update-btn {
+  background: #a259e6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.timetable-update-btn:hover {
+  background: #6c47b6;
+}
+
+@media (max-width: 1200px) {
+  .coordinator-main-timetable {
+    margin-left: 0;
+    padding: 16px;
+    gap: 16px;
+  }
+  .sidebar {
+    width: 180px;
+    min-width: 0;
+    padding: 10px 4px;
+  }
+  .logo {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+  .menu {
+    gap: 8px;
+  }
+  .menu-item {
+    font-size: 15px;
+    padding: 8px 8px;
+  }
+  .coordinator-timetable-section {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .coordinator-timetable-title {
+    font-size: 1.1rem;
+  }
+  .coordinator-timetable-table {
+    font-size: 0.95rem;
+  }
+  .timetable-upload-area {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .timetable-upload-box {
+    min-height: 80px;
+    padding: 10px;
+  }
+  .timetable-update-btn {
+    width: 100%;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .coordinator-main-timetable {
+    padding: 8px;
+    gap: 8px;
+  }
+  .sidebar {
+    width: 100px;
+    padding: 6px 2px;
+  }
+  .menu-item {
+    font-size: 13px;
+    padding: 6px 4px;
+  }
+  .coordinator-timetable-section {
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .coordinator-timetable-title {
+    font-size: 1rem;
+  }
+  .coordinator-timetable-table {
+    font-size: 0.85rem;
+  }
+  .timetable-upload-area {
+    gap: 6px;
+  }
+  .timetable-upload-box {
+    min-height: 50px;
+    padding: 4px;
+  }
+  .timetable-update-btn {
+    width: 100%;
+    padding: 8px 0;
+  }
+}

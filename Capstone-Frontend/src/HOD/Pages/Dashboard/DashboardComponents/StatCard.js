@@ -3,9 +3,9 @@ import './StatCard.css';
 
 const StatCard = ({ type, count, color, icon, onClick }) => {
     return (
-        <div className="stat-card" style={{ backgroundColor: color }} onClick={onClick}>
-            <div className="stat-icon">{icon}</div>
-            <div className="stat-info">
+        <div className="hod-stat-card" style={{ backgroundColor: color }} onClick={onClick}>
+            <div className="hod-stat-icon">{icon}</div>
+            <div className="hod-stat-info">
                 <h4>{type}</h4>
                 <p>{count}</p>
             </div>

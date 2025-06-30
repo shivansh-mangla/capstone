@@ -21,17 +21,17 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="sidebar">
-      <div className="logo">ICMP</div>
-      <nav className="menu">
+    <div className="doaa-sidebar">
+      <div className="doaa-sidebar-logo">ICMP</div>
+      <nav className="doaa-sidebar-menu">
         {menuItems.map((item, index) => (
           <Link
             to={item.path}
             key={index}
-            className={`menu-item ${location.pathname === item.path ? 'active' : ''}`}
+            className={`doaa-sidebar-menu-item ${location.pathname === item.path ? 'active' : ''}`}
           >
-            <span className="icon">{item.icon}</span>
-            <span className="label">{item.name}</span>
+            <span className="doaa-sidebar-icon">{item.icon}</span>
+            <span className="doaa-sidebar-label">{item.name}</span>
           </Link>
         ))}
       </nav>
