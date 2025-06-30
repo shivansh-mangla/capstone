@@ -3,6 +3,8 @@ import './RequestList.css';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
 
 const PendingTable = ({ data, requestType, department }) => {
+
+    console.log(data);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
     const handleSort = (key) => {
