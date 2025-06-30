@@ -1,0 +1,114 @@
+.coordinator-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #e0e0e0;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.coordinator-sidebar-logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 40px;
+}
+
+.coordinator-sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.coordinator-sidebar-menu-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #aaa;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.coordinator-sidebar-menu-item:hover {
+    background-color: #f0f0f0;
+    color: red
+}
+
+.coordinator-sidebar-menu-item:hover .icon {
+    color: red;
+}
+
+
+.coordinator-sidebar-menu-item .icon {
+    margin-right: 12px;
+    font-size: 18px;
+}
+
+.coordinator-sidebar-menu-item.active {
+    color: red;
+    background-color: #ffecec;
+    font-weight: bold;
+    border-left: 4px solid red;
+}
+
+@media(max-width: 1300px)
+{
+    .coordinator-sidebar{
+        max-width: 180px;
+        padding: 30px 10px
+    }
+    .coordinator-sidebar-logo {
+        font-size: 25px;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 30px;
+    }
+
+    .coordinator-sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .coordinator-sidebar-menu-item {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #aaa;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 10px 5px;
+        border-radius: 8px;
+        transition: all 0.2s;
+    }
+
+    .coordinator-sidebar-menu-item:hover {
+        background-color: #f0f0f0;
+        color: red
+    }
+
+    .coordinator-sidebar-menu-item:hover .icon {
+        color: red;
+    }
+
+
+    .coordinator-sidebar-menu-item .icon {
+        margin-right: 12px;
+        font-size: 18px;
+    }
+
+    .coordinator-sidebar-menu-item.active {
+        color: red;
+        background-color: #ffecec;
+        font-weight: bold;
+        border-left: 4px solid red;
+    }
+}
