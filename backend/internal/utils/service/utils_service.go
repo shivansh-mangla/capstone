@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"mime/multipart"
 	"os"
@@ -73,18 +74,37 @@ func UploadToCloudinary(file multipart.File, filename string) (string, error) {
 	return uploadResult.SecureURL, nil
 }
 
+func UploadToCloudinary2(file io.Reader, filename string) (string, error) {
+	CLOUDINARY_API_KEY := os.Getenv("CLOUDINARY_API_KEY")
+	CLOUDINARY_API_SECRET := os.Getenv("CLOUDINARY_API_SECRET")
+	CLOUDINARY_CLOUD := os.Getenv("CLOUDINARY_CLOUD")
+
+	cld, err := cloudinary.NewFromParams(CLOUDINARY_CLOUD, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET)
+	if err != nil {
+		return "", err
+	}
+
+	uploadRes, err := cld.Upload.Upload(context.Background(), file, uploader.UploadParams{
+		PublicID: filename,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return uploadRes.SecureURL, nil
+}
+
 func GetCourseList(c *fiber.Ctx) error {
 	return c.JSON(database.GetCourseList())
 }
 
-
-func GetApplicationDetails(c *fiber.Ctx) error{
-	var input struct{
-		ApplicationId string     `json:"application_id" bson:"application_id"`
+func GetApplicationDetails(c *fiber.Ctx) error {
+	var input struct {
+		ApplicationId string `json:"application_id" bson:"application_id"`
 	}
-	
+
 	if err := c.BodyParser(&input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":err.Error()})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 	}
 
 	if input.ApplicationId == "" {
