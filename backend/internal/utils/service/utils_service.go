@@ -1,4 +1,4 @@
-package utils
+package service
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	"github.com/cloudinary/cloudinary-go/api/uploader"
 	"github.com/gofiber/fiber/v2"
 	"github.com/shivansh-mangla/capstone/backend/internal/database"
+	"github.com/shivansh-mangla/capstone/backend/internal/utils/repository"
 	"gopkg.in/mail.v2"
 )
 
@@ -74,4 +75,26 @@ func UploadToCloudinary(file multipart.File, filename string) (string, error) {
 
 func GetCourseList(c *fiber.Ctx) error {
 	return c.JSON(database.GetCourseList())
+}
+
+
+func GetApplicationDetails(c *fiber.Ctx) error{
+	var input struct{
+		ApplicationId string     `json:"application_id" bson:"application_id"`
+	}
+	
+	if err := c.BodyParser(&input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":err.Error()})
+	}
+
+	if input.ApplicationId == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Missing required field: application_id"})
+	}
+
+	application, err := repository.GetApplicationDetailsByID(input.ApplicationId)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Application Data": application})
 }

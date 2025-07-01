@@ -9,7 +9,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/repository"
-	"github.com/shivansh-mangla/capstone/backend/internal/utils"
+	"github.com/shivansh-mangla/capstone/backend/internal/utils/service"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -41,7 +41,7 @@ func CreateStudent(c *fiber.Ctx) error {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	JWT_KEY := os.Getenv("JWT_KEY")
 	tokenString, _ := token.SignedString([]byte(JWT_KEY))
-	utils.SendVerificationEmail(student.ThaparEmail, tokenString)
+	service.SendVerificationEmail(student.ThaparEmail, tokenString)
 
 	err = repository.CreateStudentDB(student)
 	if err != nil {
@@ -134,7 +134,7 @@ func UploadReceipt(c *fiber.Ctx) error {
 	defer file.Close()
 
 	// Upload to Cloudinary with random filename
-	url, err := utils.UploadToCloudinary(file, "helloo123.pdf")
+	url, err := service.UploadToCloudinary(file, "helloo123.pdf")
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, "Upload failed")
 	}
@@ -179,7 +179,6 @@ func GetElectiveData(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusAccepted).JSON(data)
 }
 
-
 func CreateApplication(c *fiber.Ctx) error {
 	input := new(model.ApplicationRequest)
 
@@ -193,7 +192,7 @@ func CreateApplication(c *fiber.Ctx) error {
 	}
 
 	utilitiesData, err := repository.GetUtilities()
-	if(err != nil) {
+	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot get utilities details for student application request"})
 	}
 
