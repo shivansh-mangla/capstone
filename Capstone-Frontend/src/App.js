@@ -6,6 +6,8 @@ import {
 import './App.css'; 
 import 'react-toastify/dist/ReactToastify.css';
 
+import ICMPLogin from "./Student/Pages/Login/Login.js";
+import ICMPSignUp from "./Student/Pages/SignUp/SignUp.js";
 import StudentDashboard from './Student/Pages/Dashboard/Dashboard.js'
 import StudentAccount from './Student/Pages/Profile/Account.js'
 import StudentCourseImprovement from './Student/Pages/CourseImprovement/CourseImprovement.js'
@@ -26,8 +28,7 @@ import DOAACoordinators from './DOAA/Pages/Coordinators/Coordinators.js'
 import DOAAClashingRequest from './DOAA/Pages/ClashingRequests/ClashingRequests.js'
 import DOAAClashingStats from './DOAA/Pages/ClashingStats/ClashingStats.js'
 import DOAAAccount from './DOAA/Pages/Account/Account.js'
-import ICMPLogin from "./Student/Pages/Login/Login.js";
-import ICMPSignUp from "./Student/Pages/SignUp/SignUp.js";
+
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import { UserProvider } from "./UserContext.js";
