@@ -26,17 +26,17 @@ export default function StudentSidebar() {
   ];
 
   return (
-    <div className="sidebar">
-      <div className="logo">ICMP</div>
-      <nav className="menu">
+    <div className="student-sidebar">
+      <div className="student-sidebar-logo">ICMP</div>
+      <nav className="student-sidebar-menu">
         {menuItems.map((item, index) => (
           <Link
             to={item.path}
             key={index}
-            className={`menu-item ${location.pathname === item.path ? 'active' : ''}`}
+            className={`student-sidebar-menu-item ${location.pathname === item.path ? 'active' : ''}`}
           >
-            <span className="icon">{item.icon}</span>
-            <span className="label">{item.name}</span>
+            <span className="student-sidebar-icon">{item.icon}</span>
+            <span className="student-sidebar-label">{item.name}</span>
           </Link>
         ))}
       </nav>

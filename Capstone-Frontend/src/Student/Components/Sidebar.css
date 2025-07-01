@@ -1,5 +1,5 @@
 
-.sidebar {
+.student-sidebar {
     width: 250px;
     height: 100vh;
     background-color: #fff;
@@ -9,20 +9,20 @@
     flex-direction: column;
   }
   
-  .logo {
+  .student-sidebar-logo {
     font-size: 32px;
     font-weight: bold;
     color: #000;
     margin-bottom: 40px;
   }
   
-  .menu {
+  .student-sidebar-menu {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
   
-  .menu-item {
+  .student-sidebar-menu-item {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -34,22 +34,22 @@
     transition: all 0.2s;
   }
   
-  .menu-item:hover {
+  .student-sidebar-menu-item:hover {
     background-color: #f0f0f0;
     color: red
   }
 
-  .menu-item:hover .icon {
+  .student-sidebar-menu-item:hover .icon {
     color: red;
   }
   
   
-  .menu-item .icon {
+  .student-sidebar-menu-item .icon {
     margin-right: 12px;
     font-size: 18px;
   }
   
-  .menu-item.active {
+  .student-sidebar-menu-item.active {
     color: red;
     background-color: #ffecec;
     font-weight: bold;
@@ -57,7 +57,7 @@
   }
   
 
-.sidebar {
+.student-sidebar-sidebar {
     width: 250px;
     height: 100vh;
     background-color: #fff;
@@ -67,20 +67,20 @@
     flex-direction: column;
   }
   
-  .logo {
+  .student-sidebar-logo {
     font-size: 32px;
     font-weight: bold;
     color: #000;
     margin-bottom: 40px;
   }
   
-  .menu {
+  .student-sidebar-menu {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
   
-  .menu-item {
+  .student-sidebar-menu-item {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -92,37 +92,37 @@
     transition: all 0.2s;
   }
   
-  .menu-item:hover {
+  .student-sidebar-menu-item:hover {
     background-color: #f0f0f0;
     color: red
   }
 
-  .menu-item:hover .icon {
+  .student-sidebar-menu-item:hover .student-sidebar-icon {
     color: red;
   }
   
   
-  .menu-item .icon {
+  .student-sidebar-menu-item .student-sidebar-icon {
     margin-right: 12px;
     font-size: 18px;
   }
   
-  .menu-item.active {
+  .student-sidebar-menu-item.active {
     color: red;
     background-color: #ffecec;
     font-weight: bold;
     border-left: 4px solid red;
   }
 
-  .sidebar::-webkit-scrollbar {
+  .student-sidebar::-webkit-scrollbar {
     width: 8px; /* adjust as needed */
   }
   
-  .sidebar::-webkit-scrollbar-track {
+  .student-sidebar::-webkit-scrollbar-track {
     background: transparent;
   }
   
-  .sidebar::-webkit-scrollbar-thumb {
+  .student-sidebar::-webkit-scrollbar-thumb {
     background-color: red;
     border-radius: 10px;
   }
