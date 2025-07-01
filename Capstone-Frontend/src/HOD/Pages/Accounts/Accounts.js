@@ -1,63 +1,67 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Accounts.css';
-
 import Sidebar from '../../Components/Sidebar';
-import Logout from '../../Components/Logout';
+import { FaSave } from 'react-icons/fa';
 
-export default function Account() {
-  const [displayName, setDisplayName] = useState('Dr. Shalini Batra');
-  const [nameDraft, setNameDraft] = useState('');
-  const [oldPw, setOldPw] = useState('');
-  const [newPw, setNewPw] = useState('');
-
-  const handleSaveName = () => {
-    if (nameDraft.trim()) {
-      setDisplayName(nameDraft.trim());
-      setNameDraft('');
-      /* TODO: call API → save name on server */
-    }
-  };
-
-  const handleSavePassword = () => {
-    if (oldPw && newPw) {
-      /* TODO: call API → update password */
-      setOldPw('');
-      setNewPw('');
-    }
-  };
-
+const Accounts = () => {
   return (
-    <div className="hod-account-container">
+    <div className="accounts-layout">
       <Sidebar />
 
-      <div className="hod-account-main">
-        <Logout />
+      <div className="accounts-container">
+        <div className="accounts-namechange-card">
+          <h2 className="welcome-heading">Welcome !</h2>
+          <p className="user-role">Mr. HOD Ji</p>
 
-        <div className="hod-account-details">
-          <h3>Welcome !</h3>
-          <h2>{displayName}</h2>
-          <br />
+          <h3 className="change-name-heading">Edit your Name</h3>
 
-          <h3>Name</h3>
-          <div className="hod-input-row">
-            <input type="text" placeholder="Enter new name" value={nameDraft} onChange={e =>
-              setNameDraft(e.target.value)}
+          <div className="input-group-name">
+            <input
+              type="text"
+              placeholder="Enter your name"
+              className="name-input"
+              
             />
-            <button onClick={handleSaveName}>Save </button>
           </div>
 
-          <br />
+          
 
-          <h3>Password</h3>
-          <div className="hod-input-row">
-            <input type="password" placeholder="Old password" value={oldPw} onChange={e => setOldPw(e.target.value)}
+          <button className="save-button-name">
+            Save Changes <FaSave className="save-icon" />
+          </button>
+        </div>
+
+
+        <div className="accounts-password-card">
+          
+
+          <h3 className="change-password-heading">Change Password</h3>
+
+          <div className="input-group-oldpassword">
+            <input
+              type="password"
+              placeholder="Old Password"
+              className="password-input"
+              
             />
-            <input type="password" placeholder="New password" value={newPw} onChange={e => setNewPw(e.target.value)}
-            />
-            <button onClick={handleSavePassword}>Save</button>
           </div>
+
+          <div className="input-group-newpassword">
+            <input
+              type="password"
+              placeholder="New Password"
+              className="password-input"
+              
+            />
+          </div>
+
+          <button className="save-button-password">
+            Save Changes <FaSave className="save-icon" />
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Accounts;

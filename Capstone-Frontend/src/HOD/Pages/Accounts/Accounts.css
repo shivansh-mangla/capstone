@@ -1,59 +1,122 @@
-.hod-account-container {
-  display: flex;
-  width: 100vw;
-  min-height: 100vh;
-  overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.hod-account-main {
-  margin-left: 250px;
-  /* Same as sidebar width */
-  flex: 1;
-  padding: 40px 30px;
-  background-color: #f4f6f8;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
-@media (max-width: 1300px) {
-  .hod-account-main {
-    margin-left: 180px;
+.accounts-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fb;
   }
-}
-
-.hod-account-details {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* keep your existing styles … */
-
-.hod-input-row {
-  display: flex;
-  gap: 0.75rem;
-  /* space between inputs & button */
-  align-items: flex-start;
-}
-
-.hod-input-row input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  
+ .accounts-container {
+  margin-left: 235px;
   flex: 1;
-  max-width: 20rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2rem;
 }
 
-.hod-input-row button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background: rgb(60, 189, 60);
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-}
+    .accounts-namechange-card{
+    background-color: white;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+    max-width: 700px;
+    width: 100%;
+  }
+  
+  
+  .accounts-password-card {
+    background-color: white;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+    max-width: 700px;
+    width: 100%;
+  }
+  
+  .welcome-heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+    color: #000;
+  }
+  
+  .user-role {
+    margin-bottom: 1.5rem;
+    color: #4b4b4b;
+  }
 
-.hod-input-row button:hover {
-  filter: brightness(1.1);
-}
+    .change-name-heading {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #161c46;
+    margin-bottom: 1rem;
+  }
+  
+  .change-password-heading {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #161c46;
+    margin-bottom: 1rem;
+  }
+    .input-group-name{
+    margin-bottom: 0.8rem;
+  }
+  .input-group-oldpassword {
+    margin-bottom: 0.8rem;
+  }
+  .input-group-newpassword {
+    margin-bottom: 0.8rem;
+  }
+  
+  .password-input {
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .password-input:focus {
+    border-color: #161c46;
+  }
+  
+  .save-button {
+    margin-top: 0.5rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .save-button {
+    margin-top: 0.5rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+
+  .save-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .save-icon {
+    color: #2bc928;
+  }
