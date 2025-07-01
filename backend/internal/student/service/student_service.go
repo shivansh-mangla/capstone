@@ -178,3 +178,53 @@ func GetElectiveData(c *fiber.Ctx) error {
 	}
 	return c.Status(fiber.StatusAccepted).JSON(data)
 }
+
+
+func CreateApplication(c *fiber.Ctx) error {
+	input := new(model.ApplicationRequest)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student application request"})
+	}
+
+	student, err := repository.GetStudentByEmail(input.Email)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot get students details for student application request"})
+	}
+
+	utilitiesData, err := repository.GetUtilities()
+	if(err != nil) {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot get utilities details for student application request"})
+	}
+
+	application := new(model.Application)
+
+	if id, ok := utilitiesData["latest_application_id"].(int64); ok {
+		application.ApplicationId = fmt.Sprintf("%d", id+1)
+		utilitiesData["latest_application_id"] = id + 1
+
+		err = repository.UpdateUtilities(utilitiesData)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot create application id for student application request"})
+		}
+	} else {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot get utilities application id for student application request"})
+	}
+	application.Email = student.ThaparEmail
+	application.RollNo = student.RollNo
+	application.Department = "CSED"
+	application.Subgroup = student.Subgroup
+	application.ElectiveBasket = student.ElectiveBasket
+	application.GeneralElective = student.GeneralElective
+	application.OptedCourses = input.OptedCourses
+	application.Clashing = input.Clashing
+	application.Message = input.Message
+	application.Stage = 1
+
+	err = repository.CreateApplicationInDB(application)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate application for student "})
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Student Application successfully created"})
+}

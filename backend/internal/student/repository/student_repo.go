@@ -150,3 +150,41 @@ func GetElectiveData() (bson.M, error) {
 	}
 	return data, err
 }
+func GetUtilities() (bson.M, error) {
+	utilities := database.MongoDB.Collection("utilities")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	data := bson.M{}
+
+	err := utilities.FindOne(ctx, bson.M{}).Decode(&data)
+	if err != nil {
+		return bson.M{}, err
+	}
+
+	return data, nil
+}
+func UpdateUtilities(updatedUtilities bson.M) error {
+	utilities := database.MongoDB.Collection("utilities")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{}
+
+	_, err := utilities.ReplaceOne(ctx, filter, updatedUtilities)
+    if err != nil {
+        return err
+    }
+	return nil
+}
+func CreateApplicationInDB(application *model.Application) error {
+	applicationDetails := database.MongoDB.Collection("applicationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	
+	_, err := applicationDetails.InsertOne(ctx, application)
+	return err
+}
