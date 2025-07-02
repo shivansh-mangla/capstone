@@ -51,3 +51,7 @@ func UpdateDetails(c *fiber.Ctx) error {
 func GetElectiveData(c *fiber.Ctx) error {
 	return service.GetElectiveData(c)
 }
+
+func CreateApplication(c *fiber.Ctx) error {
+	return service.CreateApplication(c)
+}

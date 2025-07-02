@@ -1,15 +1,18 @@
 package service
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
+	"github.com/jung-kurt/gofpdf"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/repository"
-	"github.com/shivansh-mangla/capstone/backend/internal/utils"
+	"github.com/shivansh-mangla/capstone/backend/internal/utils/service"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -41,7 +44,7 @@ func CreateStudent(c *fiber.Ctx) error {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	JWT_KEY := os.Getenv("JWT_KEY")
 	tokenString, _ := token.SignedString([]byte(JWT_KEY))
-	utils.SendVerificationEmail(student.ThaparEmail, tokenString)
+	service.SendVerificationEmail(student.ThaparEmail, tokenString)
 
 	err = repository.CreateStudentDB(student)
 	if err != nil {
@@ -134,7 +137,7 @@ func UploadReceipt(c *fiber.Ctx) error {
 	defer file.Close()
 
 	// Upload to Cloudinary with random filename
-	url, err := utils.UploadToCloudinary(file, "helloo123.pdf")
+	url, err := service.UploadToCloudinary2(file, "helloo123.pdf")
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, "Upload failed")
 	}
@@ -177,4 +180,127 @@ func GetElectiveData(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 	}
 	return c.Status(fiber.StatusAccepted).JSON(data)
+}
+
+func GenerateAndSaveApplication(d *model.Application) string {
+
+	pdf := gofpdf.New("P", "mm", "A4", "")
+	pdf.AddPage()
+
+	pdf.SetFont("Arial", "B", 16)
+	pdf.CellFormat(190, 10, "Backlog/ Add and Drop Proforma", "", 1, "C", false, 0, "")
+	pdf.SetFont("Arial", "", 11)
+	pdf.Ln(4)
+	pdf.Cell(70, 8, "Student Name: "+d.Name)
+	pdf.Cell(70, 8, "Roll. No.: "+d.RollNo)
+	pdf.Cell(70, 8, "Date: "+time.Now().Format("02/01/2006"))
+	pdf.Ln(8)
+	pdf.Cell(70, 8, "Branch and Year: "+d.Branch+" "+d.AcademicYear)
+	pdf.Cell(70, 8, "Group: "+d.Subgroup)
+	pdf.Cell(70, 8, "Mobile No.: "+d.PhoneNumber)
+	pdf.Ln(12)
+
+	pdf.SetFont("Arial", "B", 11)
+	pdf.Cell(190, 6, "Preference wise detail of Backlog Courses:")
+	pdf.Ln(12)
+
+	headers := []string{"Course Code", "Course Title", "Lecture", "Tutorial", "Practical"}
+	widths := []float64{30, 90, 20, 25, 25}
+	pdf.SetFont("Arial", "B", 10)
+	for i, h := range headers {
+		pdf.CellFormat(widths[i], 8, h, "1", 0, "C", false, 0, "")
+	}
+	pdf.Ln(8)
+
+	pdf.SetFont("Arial", "", 10)
+	for _, course := range d.OptedCourses {
+		pdf.CellFormat(30, 8, course[0], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(90, 8, course[1], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(20, 8, course[2], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(25, 8, course[2], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(25, 8, course[2], "1", 0, "C", false, 0, "")
+		pdf.Ln(8)
+	}
+
+	pdf.Ln(80)
+	pdf.SetFont("Arial", "B", 10)
+	pdf.CellFormat(190, 6, "I hereby certify that:", "", 1, "", false, 0, "")
+	pdf.SetFont("Arial", "", 10)
+	pdf.MultiCell(0, 6, "1. Total credits of all the courses in the current semester (including both regular and backlog/added courses) do not exceed 30.0 cr.", "", "", false)
+	pdf.Ln(1)
+	pdf.MultiCell(0, 6, "2. I am not undergoing the training in an industry/any other institute for project semester.", "", "", false)
+	pdf.Ln(1)
+	pdf.MultiCell(0, 6, "3. I will maintain minimum 75% attendance in the course.", "", "", false)
+
+	// Generate PDF in memory buffer
+	var buf bytes.Buffer
+	if err := pdf.Output(&buf); err != nil {
+		return ""
+	}
+
+	// Upload to Cloudinary
+	filename := "student_application_" + uuid.New().String()
+	uploadURL, err := service.UploadToCloudinary2(bytes.NewReader(buf.Bytes()), filename)
+	if err != nil {
+		return ""
+	}
+
+	return uploadURL
+}
+
+func CreateApplication(c *fiber.Ctx) error {
+	input := new(model.ApplicationRequest)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student application request"})
+	}
+
+	student, err := repository.GetStudentByEmail(input.Email)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot get students details for student application request"})
+	}
+
+	utilitiesData, err := repository.GetUtilities()
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot get utilities details for student application request"})
+	}
+
+	application := new(model.Application)
+
+	if id, ok := utilitiesData["latest_application_id"].(int64); ok {
+		application.ApplicationId = fmt.Sprintf("%d", id+1)
+		utilitiesData["latest_application_id"] = id + 1
+
+		err = repository.UpdateUtilities(utilitiesData)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot create application id for student application request"})
+		}
+	} else {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot get utilities application id for student application request"})
+	}
+
+	application.Email = student.ThaparEmail
+	application.RollNo = student.RollNo
+	application.Name = student.Name
+	application.Branch = student.Branch
+	application.AcademicYear = student.AcademicYear
+	application.PhoneNumber = student.PhoneNumber
+	application.Department = "CSED"
+	application.Subgroup = student.Subgroup
+	application.ElectiveBasket = student.ElectiveBasket
+	application.GeneralElective = student.GeneralElective
+	application.OptedCourses = input.OptedCourses
+	application.Clashing = input.Clashing
+	application.Message = input.Message
+	application.Stage = 1
+
+	url := GenerateAndSaveApplication(application)
+	application.URL = url
+
+	err = repository.CreateApplicationInDB(application)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate application for student "})
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Student Application successfully created", "url": url})
 }
