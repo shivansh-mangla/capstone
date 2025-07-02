@@ -16,21 +16,21 @@ func LoginHod(c *fiber.Ctx) error {
 	input := new(model.Hod)
 
 	if err := c.BodyParser(input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Hod Login"})
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for Hod Login"})
 	}
 
 	hod, err := repository.GetHodDetailsByEmail(input.Email)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "HOD doesnt exist by this email"})
+			return c.Status(400).JSON(fiber.Map{"error": "HOD doesnt exist by this email"})
 		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while logging in for Hod"})
+		return c.Status(400).JSON(fiber.Map{"error": "Some error occured while logging in for Hod"})
 	}
 
 	//compare password
 	err = bcrypt.CompareHashAndPassword([]byte(hod.Password), []byte(input.Password))
 	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for Hod"})
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid password for Hod"})
 	}
 
 	//generating JWT token
@@ -45,10 +45,10 @@ func LoginHod(c *fiber.Ctx) error {
 	tokenString, err := token.SignedString([]byte(JWT_KEY))
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token for Hod"})
+		return c.Status(400).JSON(fiber.Map{"error": "Could not create JWT token for Hod"})
 	}
 
-	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "hodData": hod})
+	return c.Status(202).JSON(fiber.Map{"token": tokenString, "hodData": hod})
 }
 
 func CreateCoordinator(c *fiber.Ctx) error {
@@ -114,8 +114,7 @@ func UpdateHodPassword(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Hod password updated"})
 }
 
-
-func GetAllCoordinatorsDetails( c *fiber.Ctx) error {
+func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
 	allCoordinators, err := repository.AllCoordinatorsInDB()
 
 	if err != nil {
@@ -133,7 +132,7 @@ func DeleteCoordinator(c *fiber.Ctx) error {
 
 	err := repository.DeleteCoordinatorInDB(input.Email)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":err.Error()})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 	}
 
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Coordinator successfulle deleted"})

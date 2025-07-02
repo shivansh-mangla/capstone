@@ -5,7 +5,7 @@ import axios from "axios";
 import { UserContext } from "../../../UserContext";
 import { Link, useNavigate } from "react-router-dom";
 
-const ICMPLogin = () => {
+const ICMPLogin2 = () => {
   const navigate = useNavigate();
   const {setStudent} = useContext(UserContext);
 
@@ -96,4 +96,4 @@ const ICMPLogin = () => {
   );
 };
 
-export default ICMPLogin;
+export default ICMPLogin2;

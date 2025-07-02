@@ -6,7 +6,7 @@ import {
 import './App.css'; 
 import 'react-toastify/dist/ReactToastify.css';
 
-import ICMPLogin from "./Student/Pages/Login/Login.js";
+
 import ICMPSignUp from "./Student/Pages/SignUp/SignUp.js";
 import StudentDashboard from './Student/Pages/Dashboard/Dashboard.js'
 import StudentAccount from './Student/Pages/Profile/Account.js'
@@ -30,8 +30,14 @@ import DOAAClashingStats from './DOAA/Pages/ClashingStats/ClashingStats.js'
 import DOAAAccount from './DOAA/Pages/Account/Account.js'
 
 import { ToastContainer } from "react-toastify";
-import ProtectedRoute from "./ProtectedRoute.jsx";
 import { UserProvider } from "./UserContext.js";
+
+
+import ICMPLogin from "./Login/Login.js";
+import ProtectedRouteStudent from "./ProtectedRouteStudent.jsx";
+import ProtectedRouteCoordinator from "./ProtectedRouteCoordinator.jsx";
+import ProtectedRouteHod from "./ProtectedRouteHod.jsx";
+import ProtectedRouteDoaa from "./ProtectedRouteDoaa.jsx";
 
 function App() {
   return (
@@ -39,29 +45,31 @@ function App() {
       <Router>
         <div className='App'>
           <Routes>
+
+            <Route path="/login" element={<ICMPLogin />} />
+
             {/* Student routes */}
             <Route path="/student/signup" element={<ICMPSignUp />} />
-            <Route path="/student/login" element={<ICMPLogin />} />
-            <Route path="/student/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
-            <Route path="/student/account" element={<ProtectedRoute><StudentAccount /></ProtectedRoute>} />
+            <Route path="/student/dashboard" element={<ProtectedRouteStudent><StudentDashboard /></ProtectedRouteStudent>} />
+            <Route path="/student/account" element={<ProtectedRouteStudent><StudentAccount /></ProtectedRouteStudent>} />
             <Route path="/student/course-improvement" element={<StudentCourseImprovement />} />
             <Route path="/student/fees" element={<StudentFees />} />
             <Route path="/student/status" element={<StudentStatus />} />
 
 
             {/* Coordinator routes  */}
-            <Route path="/coordinator/dashboard" element={<CoordinatorDashboard />} />
+            <Route path="/coordinator/dashboard" element={<ProtectedRouteCoordinator><CoordinatorDashboard /></ProtectedRouteCoordinator>} />
             <Route path="/coordinator/account" element={<CoordinatorAccount/>} />
             <Route path="/coordinator/academic-information" element={<CoordinatorAcademicInformation />} />
             <Route path="/coordinator/time-table" element={<CoordinatorTimeTable />} />
 
             {/* HOD routes  */}
-            <Route path="/hod/dashboard" element={<HODDashboard />} />
+            <Route path="/hod/dashboard" element={<ProtectedRouteHod><HODDashboard /></ProtectedRouteHod>} />
             <Route path="/hod/coordinators" element={<HODCoordinators />} />
             <Route path="/hod/account" element={<HODAccount />} />
             
             {/* DOAA routes   */}
-            <Route path="/doaa/dashboard" element={<DOAADashboard />} />
+            <Route path="/doaa/dashboard" element={<ProtectedRouteDoaa><DOAADashboard /></ProtectedRouteDoaa>} />
             <Route path="/doaa/coordinators" element={<DOAACoordinators />} />
             <Route path="/doaa/clashing-requests" element={<DOAAClashingRequest />} />
             <Route path="/doaa/clashing-stats" element={<DOAAClashingStats />} />

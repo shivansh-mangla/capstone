@@ -16,22 +16,22 @@ func LoginDoaa(c *fiber.Ctx) error {
 	input := new(model.Doaa)
 
 	if err := c.BodyParser(input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Doaa Login"})
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for Doaa Login"})
 	}
 
 	doaa, err := repository.GetDoaaDetails()
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Some error occured while logging in for Doaa"})
+		return c.Status(400).JSON(fiber.Map{"error": "Some error occured while logging in for Doaa"})
 	}
 
 	if doaa.Email != input.Email {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid email for Doaa"})
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid email for Doaa"})
 	}
 
 	//compare password
 	err = bcrypt.CompareHashAndPassword([]byte(doaa.Password), []byte(input.Password))
 	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for Doaa"})
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid password for Doaa"})
 	}
 
 	//generating JWT token
@@ -48,10 +48,10 @@ func LoginDoaa(c *fiber.Ctx) error {
 
 	if err != nil {
 		fmt.Print(err)
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token for Doaa"})
+		return c.Status(400).JSON(fiber.Map{"error": "Could not create JWT token for Doaa"})
 	}
 
-	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "doaaData": doaa})
+	return c.Status(202).JSON(fiber.Map{"token": tokenString, "doaaData": doaa})
 }
 
 func UpdateDoaaName(c *fiber.Ctx) error {
@@ -93,8 +93,7 @@ func UpdateDoaaPassword(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Doaa password updated"})
 }
 
-
-func GetAllCoordinatorsDetails( c *fiber.Ctx) error {
+func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
 	allCoordinators, err := repository.AllCoordinatorsInDB()
 
 	if err != nil {

@@ -16,21 +16,21 @@ func LoginCoordinator(c *fiber.Ctx) error {
 	input := new(model.Coordinator)
 
 	if err := c.BodyParser(input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator Login"})
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator Login"})
 	}
 
 	coordinator, err := repository.GetCoordinatorDetailsByEmail(input.Email)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Coordinator doesnt exist by this email"})
+			return c.Status(400).JSON(fiber.Map{"error": "Coordinator doesnt exist by this email"})
 		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while logging in for coordinator"})
+		return c.Status(400).JSON(fiber.Map{"error": "Some error occured while logging in for coordinator"})
 	}
 
 	//compare password
 	err = bcrypt.CompareHashAndPassword([]byte(coordinator.Password), []byte(input.Password))
 	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid password for coordinator"})
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid password for coordinator"})
 	}
 
 	//generating JWT token
@@ -45,10 +45,10 @@ func LoginCoordinator(c *fiber.Ctx) error {
 	tokenString, err := token.SignedString([]byte(JWT_KEY))
 
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not create JWT token for coordinator"})
+		return c.Status(400).JSON(fiber.Map{"error": "Could not create JWT token for coordinator"})
 	}
 
-	return c.Status(fiber.StatusFound).JSON(fiber.Map{"token": tokenString, "coordinatorData": coordinator})
+	return c.Status(202).JSON(fiber.Map{"token": tokenString, "coordinatorData": coordinator})
 }
 
 func UpdateCoordinatorPassword(c *fiber.Ctx) error {
