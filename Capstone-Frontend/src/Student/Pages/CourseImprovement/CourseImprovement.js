@@ -1,11 +1,67 @@
-import React from 'react'
-import './CourseImprovement.css'
-import StudentSidebar from '../../Components/Sidebar'
+import React, { useEffect, useState } from 'react';
+import './CourseImprovement.css';
+import StudentSidebar from '../../Components/Sidebar';
 import { ProgressBar } from 'react-bootstrap';
-
-
+import axios from 'axios'
+import { toast } from 'react-toastify';
 
 const CourseImprovement = () => {
+  const [courseData, setCourseData] = useState([]);
+  const [selectedCourseCode, setSelectedCourseCode] = useState('');
+  const [selectedCourseName, setSelectedCourseName] = useState('');
+  const [selectedCourseData, setSelectedCourseData] = useState([]);
+
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/get-course-list")
+      .then((res) => {
+        setCourseData(res.data);
+      })
+      .catch(() => {
+        toast.error("Failed to fetch data");
+      })
+  }, [])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (selectedCourseCode) {
+      const foundCourse = courseData.find(
+        (course) => course.subjectCode.toLowerCase() === selectedCourseCode.toLowerCase()
+      );
+      if (foundCourse) {
+        console.log(foundCourse.subjectCode);
+        setSelectedCourseData(selectedCourseData.append({
+          subjectCode: foundCourse.subjectCode,
+          subjectName: foundCourse.data["course name"],
+          subjectCredits: foundCourse.data["Credit"],
+          subjectL: foundCourse.data["L"],
+          subjectT: foundCourse.data["T"],
+          subjectP: foundCourse.data["P"],
+        }));
+      }
+    } else if (selectedCourseName) {
+      const foundCourse = courseData.find(
+        (course) => course.data["course name"].toLowerCase() === selectedCourseName.toLowerCase()
+      );
+      if (foundCourse) {
+        setSelectedCourseData(prevData => [
+          ...prevData,
+          {
+            subjectCode: foundCourse.subjectCode,
+            subjectName: foundCourse.data["course name"],
+            subjectCredits: foundCourse.data["Credit"],
+            subjectL: foundCourse.data["L"],
+            subjectT: foundCourse.data["T"],
+            subjectP: foundCourse.data["P"],
+          }
+        ]);
+
+      }
+    }
+  };
+
+
   return (
     <div>
       <StudentSidebar />
@@ -18,54 +74,82 @@ const CourseImprovement = () => {
           </div>
           <div className="student-main-course-improvement-top-t1">
             <p>Total Credits 23/30</p>
-            <ProgressBar now={23*100/30} variant="success" />
+            <ProgressBar now={(23 * 100) / 30} variant="success" />
           </div>
           <div className="student-main-course-improvement-top-t1">
             <p>Credits Remaining 7/30</p>
-            <ProgressBar now={7*100/30} variant="danger" />
+            <ProgressBar now={(7 * 100) / 30} variant="danger" />
           </div>
         </div>
+
         <div className="student-main-course-improvement-bottom">
           <div className="student-main-course-improvement-bottom-left">
             <h5>Selected Courses for Improvement</h5>
             <div className="student-main-course-improvement-bottom-left-t1">
-              <div className="student-main-course-improvement-bottom-left-t2">
-                <h6>Numerical Analysis</h6>
-                <p>UCS 809</p>
-                <p>Course Credits: 4</p>
-                <p>X</p>
-              </div>
-              <div className="student-main-course-improvement-bottom-left-t2">
-                <h6>Numerical Analysis</h6>
-                <p>UCS 809</p>
-                <p>Course Credits: 4</p>
-                <p>X</p>
-              </div>
+              {selectedCourseData.map((course) =>(
+                <div className="student-main-course-improvement-bottom-left-t2" key={course.subjectCode}>
+                  <h6>{course.subjectName}</h6>
+                  <p>{course.subjectCode}</p>
+                  <p>Course Credits: {course.subjectCredits}</p>
+                  <p>L: {course.subjectL} T: {course.subjectT} P: {course.subjectP}</p>
+                  <p>X</p>
+                </div>
+              ))}
             </div>
             <form>
               <p>Present CGPA</p>
-              <input type="text"/>
+              <input type="text" />
 
               <p>Upload IEE Signed Document</p>
-              <input type="file"/>
+              <input type="file" />
             </form>
           </div>
+
           <div className="student-main-course-improvement-bottom-right">
-            <form>
-              <select>
-                <option value="">Search Course For Improvement</option>
-                <option value="UCS907">Computer Networks</option>
-                <option value="UCS907">Computer Networks</option>
-              </select>
+            <form onSubmit={handleSubmit}>
+              <label style={{ color: 'red' }}>Search by Course Code</label>
+              <input
+                list="courseCodes"
+                value={selectedCourseCode}
+                onChange={(e) => {
+                  setSelectedCourseCode(e.target.value);
+                  setSelectedCourseName('');
+                }}
+                placeholder="Enter Course Code"
+              />
+              <datalist id="courseCodes">
+                {courseData.map((course) => (
+                  <option key={course.subjectCode} value={course.subjectCode} />
+                ))}
+              </datalist>
+
+              <div style={{ textAlign: 'center', color: 'red', fontWeight: 'bold', margin: '10px 0' }}>OR</div>
+
+              <label style={{ color: 'red' }}>Search by Course Name</label>
+              <input
+                list="courseNames"
+                value={selectedCourseName}
+                onChange={(e) => {
+                  setSelectedCourseName(e.target.value);
+                  setSelectedCourseCode('');
+                }}
+                placeholder="Enter Course Name"
+              />
+              <datalist id="courseNames">
+                {courseData.map((course) => (
+                  <option key={course.subjectCode} value={course.data["course name"]} />
+                ))}
+              </datalist>
+
+              <button type="submit" style={{ marginTop: '10px' }}>Submit</button>
             </form>
-            <h6>Quick Select</h6>
           </div>
         </div>
 
         <button>Generate</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CourseImprovement
+export default CourseImprovement;

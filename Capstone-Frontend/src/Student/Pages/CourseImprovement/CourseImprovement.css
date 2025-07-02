@@ -79,3 +79,55 @@
   padding: 5px;
   font-size: 13px;
 }
+/* Beautify only the new form inputs section */
+.student-main-course-improvement-bottom-right form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.student-main-course-improvement-bottom-right label {
+  font-weight: bold;
+  color: #e60000;
+  margin-bottom: 5px;
+}
+
+.student-main-course-improvement-bottom-right input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.student-main-course-improvement-bottom-right input[type="text"]:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.student-main-course-improvement-bottom-right input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.student-main-course-improvement-bottom-right input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.student-main-course-improvement-bottom-right p {
+  font-weight: bold;
+  color: #e60000;
+  margin: 10px 0 5px;
+  font-size: 14px;
+}
+
+.student-main-course-improvement-bottom-right {
+  gap: 10px; /* Slightly smaller gap for tighter form layout */
+}
