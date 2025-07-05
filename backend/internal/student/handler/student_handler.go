@@ -55,3 +55,7 @@ func GetElectiveData(c *fiber.Ctx) error {
 func CreateApplication(c *fiber.Ctx) error {
 	return service.CreateApplication(c)
 }
+
+func GetAllApplicationsByEmail(c *fiber.Ctx) error {
+	return service.GetAllApplicationsByEmail(c)
+}

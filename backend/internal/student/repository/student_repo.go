@@ -188,3 +188,32 @@ func CreateApplicationInDB(application *model.Application) error {
 	_, err := applicationDetails.InsertOne(ctx, application)
 	return err
 }
+
+func AllApplicationsByEmailInDB(email string) ([]model.Application, error){
+	applicationDetails := database.MongoDB.Collection("applicationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filer := bson.M{"email": email}
+	cursor, err := applicationDetails.Find(ctx, filer)
+	if err != nil{
+		return nil, fmt.Errorf("Failed to fetch applications of student")
+	}
+	defer cursor.Close(ctx)
+
+	var applications []model.Application
+	for cursor.Next(ctx){
+		var application model.Application
+		if err := cursor.Decode(&application); err != nil {
+			return nil, fmt.Errorf("failed to decode application: %v", err)
+		}
+		applications = append(applications, application)
+	}
+
+	if err:= cursor.Err(); err!= nil {
+		return nil, fmt.Errorf("error iterating over applications: %v", err)
+	}
+
+	return applications, nil
+}

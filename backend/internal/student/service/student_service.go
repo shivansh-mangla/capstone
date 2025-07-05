@@ -304,3 +304,21 @@ func CreateApplication(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Student Application successfully created", "url": url})
 }
+
+func GetAllApplicationsByEmail(c *fiber.Ctx) error {
+	input := new(model.Student)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student application historyrequest"})
+	}
+
+	if input.ThaparEmail == "" {
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot get student email to get all his applications "})
+	}
+
+	allApplications, err := repository.AllApplicationsByEmailInDB(input.ThaparEmail)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot get all application for student "})
+	}
+	return c.Status(200).JSON(fiber.Map{"Applications": allApplications})
+}
