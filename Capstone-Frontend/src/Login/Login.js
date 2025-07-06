@@ -177,7 +177,7 @@ const ICMPLogin = () => {
             <button type="submit">Sign in</button>
           </form>
           <p>
-            Don't have an account yet? <a href="SignUp">Register Here</a>
+            Don't have an account yet? <a onClick={()=> {navigate("/student/signup")}}>Register Here</a>
           </p>
         </div>
       </div>

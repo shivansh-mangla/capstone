@@ -3,20 +3,19 @@ import './Logout.css'
 import { useNavigate } from 'react-router-dom';
 
 export default function Logout() {
-
     const navigate = useNavigate();
 
 
 
     const handleLogout = () => {
-        localStorage.removeItem("ICMPTokenCoordinator");
+        localStorage.removeItem("ICMPTokenStudent");
         navigate("/login");
     };
     
   return (
-      <div className="coordinator-top-row" >
-          <button className="coordinator-logout-button" onClick={handleLogout}>
-              Log Out <span className="coordinator-logout-icon">➡️</span>
+      <div className="student-top-row" >
+          <button className="student-logout-button" onClick={handleLogout}>
+              Log Out <span className="logout-icon">➡️</span>
           </button>
       </div>
   )
