@@ -13,6 +13,7 @@ import StudentAccount from './Student/Pages/Profile/Account.js'
 import StudentCourseImprovement from './Student/Pages/CourseImprovement/CourseImprovement.js'
 import StudentFees from './Student/Pages/Fees/Fees.js'
 import StudentStatus from './Student/Pages/Status/Status.js'
+import StudentHistory from './Student/Pages/Hsitory/History.js'
 
 import CoordinatorDashboard from './Coordinator/Pages/Dashboard/Dashboard.js'
 import CoordinatorAccount from './Coordinator/Pages/Account/Account.js'
@@ -55,6 +56,7 @@ function App() {
             <Route path="/student/course-improvement" element={<StudentCourseImprovement />} />
             <Route path="/student/fees" element={<StudentFees />} />
             <Route path="/student/status" element={<StudentStatus />} />
+            <Route path="/student/history" element={<StudentHistory />} />
 
 
             {/* Coordinator routes  */}

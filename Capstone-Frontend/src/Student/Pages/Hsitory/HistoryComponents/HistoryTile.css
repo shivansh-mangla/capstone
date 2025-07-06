@@ -1,0 +1,13 @@
+.student-application-tile{
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.student-application-tile-elemnt{
+    padding: 25px 80px;
+    flex: 1;
+    border: 1px solid rgb(126, 123, 123);
+    box-sizing: border-box;
+}
