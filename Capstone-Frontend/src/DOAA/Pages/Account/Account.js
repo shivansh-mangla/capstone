@@ -20,7 +20,7 @@ setNameDraft('');
 
 const handleSavePassword = () => {
 if (oldPw && newPw) {
-/* TODO: call API → update password */
+    
 setOldPw('');
 setNewPw('');
 }

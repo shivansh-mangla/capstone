@@ -163,8 +163,8 @@ func UpdateDetails(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Student does not exist"})
 	}
 
-	hash, _ := bcrypt.GenerateFromPassword([]byte(input.Password), 10)
-	input.Password = string(hash)
+	// hash, _ := bcrypt.GenerateFromPassword([]byte(input.Password), 10)
+	// input.Password = string(hash)
 
 	err = repository.UpdateDetailsDB(input)
 	if err != nil {
