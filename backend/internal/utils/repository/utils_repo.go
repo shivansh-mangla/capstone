@@ -8,6 +8,7 @@ import (
 	"github.com/shivansh-mangla/capstone/backend/internal/database"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func GetApplicationDetailsByID(applicationId string) (model.Application, error) {
@@ -45,4 +46,24 @@ func RejectApplicationById(id string) error {
     }
 
     return nil
+}
+
+func GetApplicationStatusByID(applicationId string) (int, error) {
+	applicationDetails := database.MongoDB.Collection("applicationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"application_id": applicationId}
+	projection := bson.M{"status": 1, "_id": 0}
+
+	var result struct {
+		Status int `bson:"status"`
+	}
+	
+	err := applicationDetails.FindOne(ctx, filter, options.FindOne().SetProjection(projection)).Decode(&result)
+	if err != nil {
+		return -1, err
+	}
+	return result.Status, nil
 }

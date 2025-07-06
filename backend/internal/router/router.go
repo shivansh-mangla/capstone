@@ -64,5 +64,6 @@ func SetupRoutes() *fiber.App {
 	api.Get("/get-course-list", utilsHandler.GetCourseList)
 	api.Post("/get-application-details", utilsHandler.GetApplicationDetails)
 	api.Post("reject-application", utilsHandler.RejectApplicationById)
+	api.Post("/get-application-status", utilsHandler.GetApplicationStatusById)
 	return app
 }

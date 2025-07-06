@@ -138,3 +138,24 @@ func RejectApplicationById(c *fiber.Ctx) error {
 
 	return c.Status(200).JSON(fiber.Map{"Status": "Application successfully rejected", "application_id": input.ApplicationId,})
 }
+
+func GetApplicationStatusById(c * fiber.Ctx) error {
+	var input struct {
+		ApplicationId string `json:"application_id" bson:"application_id"`
+	}
+
+	if err := c.BodyParser(&input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	if input.ApplicationId == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Missing required field: application_id"})
+	}
+
+	status, err := repository.GetApplicationStatusByID(input.ApplicationId)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	return c.Status(200).JSON(fiber.Map{"Status": status})
+}
