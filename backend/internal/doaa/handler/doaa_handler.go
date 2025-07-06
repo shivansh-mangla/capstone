@@ -20,3 +20,7 @@ func UpdateDoaaPassword(c *fiber.Ctx) error {
 func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
 	return service.GetAllCoordinatorsDetails(c)
 }
+
+func GetAllApplications( c *fiber.Ctx) error {
+	return service.GetAllApplications(c);
+}

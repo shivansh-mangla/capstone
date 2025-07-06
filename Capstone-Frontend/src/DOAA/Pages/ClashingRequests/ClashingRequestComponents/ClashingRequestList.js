@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../Dashboard/DashboardComponents/RequestList.css';
 import './ClashingRequestList.css';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
@@ -61,6 +61,10 @@ const ClashingRequestList = ({ data, department }) => {
         );
     };
 
+    useEffect(()=>{
+        console.log(data);
+    })
+
     return (
         <div className="doaa-classing-request-table">
             <h3>Clashing Requests</h3>
@@ -78,7 +82,7 @@ const ClashingRequestList = ({ data, department }) => {
                             Courses {getSortIcon('courses')}
                         </th>
                         <th onClick={() => handleSort('date')}>
-                            Applied Date {getSortIcon('date')}
+                            Branch {getSortIcon('date')}
                         </th>
                         <th>Action</th>
                     </tr>
@@ -90,8 +94,8 @@ const ClashingRequestList = ({ data, department }) => {
                                 <div>{row.name}</div>
                             </td>
                             <td>{row.year}</td>
-                            <td>{row.courses}</td>
-                            <td>{row.date}</td>
+                            <td>{row.opted_courses.length}</td>
+                            <td>{row.branch}</td>
                             <td className='doaa-classing-request-button-area'>
                                 <button
                                     className="action-btn accept"

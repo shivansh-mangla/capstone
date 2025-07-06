@@ -23,9 +23,9 @@ export default function CoordinatorList({data, department}) {
                       <FaUser className="doaa-coordinator-user-icon" /> 
                       <div>{row.name}</div>
                       </td>
-                        <td>{row.tenure}</td>
+                        <td>{row.tenureStart} - {row.tenureEnd}</td>
                         <td>{row.designation}</td>
-                        <td>{row.mail}</td>
+                        <td>{row.email}</td>
                     </tr>
                 ))}
             </tbody>

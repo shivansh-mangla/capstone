@@ -100,3 +100,32 @@ func AllCoordinatorsInDB() ([]model.Coordinator, error) {
 
     return coordinators, nil
 }
+
+func GetAllApplicationsinDB() ([]model.Application, error) {
+    applicationDetails := database.MongoDB.Collection("applicationDetails")
+
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    cursor, err := applicationDetails.Find(ctx, bson.M{})
+    if err != nil {
+        return nil, err
+    }
+    defer cursor.Close(ctx)
+
+    var applications []model.Application
+
+    for cursor.Next(ctx) {
+        var app model.Application
+        if err := cursor.Decode(&app); err != nil {
+            return nil, err
+        }
+        applications = append(applications, app)
+    }
+
+    if err := cursor.Err(); err != nil {
+        return nil, err
+    }
+
+    return applications, nil
+}
