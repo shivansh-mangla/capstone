@@ -229,7 +229,7 @@ const ICMPSignUp = () => {
                   required
                 />
                 <datalist id="branch-options">
-                  <option value="COE" />
+                  <option value="COE/CSE" />
                   <option value="MECH" />
                   <option value="CIVIL" />
                   <option value="ECE" />
