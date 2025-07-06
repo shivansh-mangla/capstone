@@ -4,6 +4,7 @@ import './Dashboard.css'
 import Timetable from '../../Components/TimeTable'
 import axios from 'axios'
 import { UserContext } from '../../../UserContext'
+import Logout from '../../Components/Logout'
 
 const Dashboard = () => {
   const {student} = useContext(UserContext);
@@ -50,6 +51,7 @@ const Dashboard = () => {
     <div>
       <StudentSidebar />
       <div className="student-main-dashboard">
+        <Logout />
         <div className="student-dashboard-top">
           <h1>Welcome</h1>
           <h4 className='student-name'>

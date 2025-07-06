@@ -334,7 +334,7 @@ const ICMPSignUp = () => {
 
           <p>
             Do you have an account? 
-            <Link to="/student/login">Login Here</Link>
+            <Link to="/login">Login Here</Link>
           </p>
         </div>
       </div>

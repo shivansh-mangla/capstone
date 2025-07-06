@@ -59,6 +59,9 @@ const CourseImprovement = () => {
 
       }
     }
+
+    setSelectedCourseCode('');
+    setSelectedCourseName('');
   };
 
 

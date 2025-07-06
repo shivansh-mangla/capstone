@@ -12,6 +12,7 @@ import {
   InputLabel
 } from '@mui/material';
 
+import StudentSidebar from '../../Components/Sidebar';
 import SaveIcon from '@mui/icons-material/CheckCircle'; //icons import kiya hai mui se
 
 export default function Account() {
@@ -20,40 +21,33 @@ export default function Account() {
   const [fields, setFields] = React.useState([
 
       // Yeh ek simple text input hai
-    { label: 'Name', value: 'Arnam Chaurasiya' },
-    { label: 'Roll Number', value: '102203698' },
+    { label: 'Name', value: 'Type Your Name here..' },
+    { label: 'Roll Number', value: '10220xxx' },
     {
-
-      // Yeh ek dropdown hai (select input)
-      label: 'Academic Year',
-      value: '3',
+      label: 'Academic Year', value: '1',
       type: 'select',
       options: ['1', '2', '3', '4']
     },
     {
-      label: 'Branch',
-      value: 'COE',
+      label: 'Branch', value: 'COE',
       type: 'select',
       options: ['COE', 'ECE', 'ME', 'CE', 'EE']
     },
-    { label: 'Sub Group', 
-      value: '3 C41',
+    { label: 'Sub Group', value: '3C41',
       type:'select',
       options:['3C41','3C42','3C43']
      },
     {
-      label: 'Elective Basket 1',
-      value: 'None',
+      label: 'Elective Basket 1', value: 'None',
       type: 'select',
       options: ['None','Cloud Computing', 'Data Science', 'COnvo AI', 'UI/UX']
     },
     {
-      label: 'Elective Basket 2',
-      value: 'None',
+      label: 'Elective Basket 2', value: 'None',
       type: 'select',
       options: ['None','Cyber Security', 'EDS', 'French', 'Graph Theoru']
     },
-    { label: 'Phone Number', value: '9501503324' }
+    { label: 'Phone Number', value: '9878xxxxx' }
   ]);
 
 
@@ -68,8 +62,13 @@ export default function Account() {
 // to yeh function call hota hai.
 
 const handleSave = () => {
-  // Jo bhi fields ka current data hai, usko console mein print kar diya.
-  console.log('Saved Values:', fields);
+  const result = {};
+
+  fields.forEach(field => {
+    result[field.label] = field.value;
+  });
+
+  console.log('Saved Values:', result);
 };
 
 
@@ -83,7 +82,10 @@ const handleSave = () => {
 
   return (
     <Box alignItems="flex-start">
-
+      <StudentSidebar/>
+      <Container >
+        
+      </Container>
     <Container maxWidth="md">
       <Box sx={{ textAlign: 'left', mt: 4 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'blue' }}>
