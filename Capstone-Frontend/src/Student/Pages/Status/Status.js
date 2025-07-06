@@ -7,19 +7,19 @@ import Logout from "../../Components/Logout";
 const Status = () => {
   // const fileInputRef = useRef(null);
   // const [uploadedFile, setUploadedFile] = useState(null);
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(-1);
 
-  useEffect( () =>{
-      const getApplicationStatus = async () =>{
-      try{
-        const res = await axios.get("http://localhost:5000/api/student/get-application-status")
-        setStatus(res.Status)
-      } catch( err) {
-        console.log("Failed to fetch application status")
-      }
-    }
-  }, [])
-  
+  // useEffect( () =>{
+  //     const getApplicationStatus = async () =>{
+  //     try{
+  //       const res = await axios.get("http://localhost:5000/api/student/get-application-status")
+  //       setStatus(res.Status)
+  //     } catch( err) {
+  //       console.log("Failed to fetch application status")
+  //     }
+  //   }
+  // }, [])
+
   // useEffect(() => {
   //   const onStorage = () => {
   //     setStatus(localStorage.getItem('studentApplicationStatus') || 'not_sent');
