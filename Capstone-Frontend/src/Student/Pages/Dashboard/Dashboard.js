@@ -13,6 +13,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!student) return; 
+    console.log(student);
 
     const fetchElectiveData = async () => {
       try{
@@ -25,7 +26,7 @@ const Dashboard = () => {
 
     const fetchTimeTableData = async () => {
       try {
-        const token = localStorage.getItem("ICMPtoken");
+        const token = localStorage.getItem("ICMPStudentToken");
 
         const res = await axios.get("http://localhost:5000/api/student/gettimetable?subgroup="+student.subgroup, {
           headers: {
@@ -62,10 +63,23 @@ const Dashboard = () => {
               <h1>Roll Number</h1>
               <p>{student.roll_no}</p>
             </div>
-            <div className="student-dashboard-info-tile"></div>
-            <div className="student-dashboard-info-tile"></div>
-            <div className="student-dashboard-info-tile"></div>
-            <div className="student-dashboard-info-tile"></div>
+            <div className="student-dashboard-info-tile">
+              <h1>Academic Year</h1>
+              <p>{student.academic_year}</p>
+            </div>
+            <div className="student-dashboard-info-tile">
+              <h1>Branch</h1>
+              <p>{student.branch}</p>
+            </div>
+            <div className="student-dashboard-info-tile">
+              <h1>Subgroup</h1>
+              <p>{student.subgroup}</p>
+            </div>
+            <div className="student-dashboard-info-tile">
+              <h1>Electives</h1>
+              <p>{student.elective_basket}</p>
+              <p>{student.general_elective}</p>
+            </div>
           </div>
         </div>
 

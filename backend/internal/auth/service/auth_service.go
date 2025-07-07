@@ -48,7 +48,7 @@ func JWTMiddleware(c *fiber.Ctx) error {
 	}
 
 	tokenStr = strings.Replace(tokenStr, "Bearer ", "", 1)
-	secret := os.Getenv("JWT_SECRET")
+	secret := os.Getenv("JWT_KEY")
 
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		return []byte(secret), nil

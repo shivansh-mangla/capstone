@@ -26,7 +26,12 @@ export default function Account() {
 
   //Objects ki array banayi hai, setField update karta hai field array ko
   const [fields, setFields] = React.useState([]);
-  const generateFields = (subgroups, electives) => ([
+  const generateFields = (subgroups, electives) => {
+    console.log(student);
+    if (!student) 
+      return [];
+
+    return [
     { label: 'Name', value: student.name },
     { label: 'Roll Number', value: student.roll_no },
     { label: 'Academic Year', value: student.academic_year, type: 'select', options: ['1', '2', '3', '4'] },
@@ -35,10 +40,9 @@ export default function Account() {
     { label: 'Elective Basket 1', value: student.elective_basket, type: 'select', options: electives },
     { label: 'Elective Basket 2', value: 'None', type: 'select', options: ['None', 'Cyber Security', 'EDS', 'French', 'Graph Theory'] },
     { label: 'Phone Number', value: student.phone_number }
-  ]);
+  ]};
 
   React.useEffect(() => {
-    console.log(student);
     var subgroups = [];
     var electives = [];
     // Get subgroups list
@@ -63,7 +67,7 @@ export default function Account() {
       .catch(() => {
         toast.error('Failed to load elective data, please retry!');
       });
-  }, []);
+  }, [student]);
 
 
 
@@ -102,11 +106,18 @@ const handleSave = () => {
   // Update context
   setStudent(updatedStudent);
 
-  axios.post("http://localhost:5000/api/student/update-details", updatedStudent)
+  const token = localStorage.getItem("ICMPTokenStudent");
+  axios.post("http://localhost:5000/api/student/update-details", updatedStudent, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+        })
   .then(() => {
     toast.success("Details updated successfully!");
   })
-  .catch(() => {
+  .catch((error) => {
+    console.log(error);
     toast.error("Failed to update details. Please try again.");
   });
 
@@ -133,7 +144,7 @@ const handleSave = () => {
           Welcome !
         </Typography>
         <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-          Arnam Chaurasiya
+          {student?.name || "Loading..."}
         </Typography>
         <Typography variant="body2" sx={{ mt: 0.5, color: 'gray' }}>
           Edit Your Info Here

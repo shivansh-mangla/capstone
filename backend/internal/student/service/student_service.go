@@ -149,6 +149,7 @@ func UploadReceipt(c *fiber.Ctx) error {
 }
 
 func UpdateDetails(c *fiber.Ctx) error {
+	fmt.Println("Helloooo")
 	input := new(model.Student)
 
 	if err := c.BodyParser(input); err != nil {
@@ -309,7 +310,7 @@ func GetAllApplicationsByEmail(c *fiber.Ctx) error {
 	input := new(model.Student)
 
 	if err := c.BodyParser(input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student application historyrequest"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for student application history request"})
 	}
 
 	if input.ThaparEmail == "" {

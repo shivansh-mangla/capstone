@@ -11,6 +11,8 @@ const CourseImprovement = () => {
   const [selectedCourseName, setSelectedCourseName] = useState('');
   const [selectedCourseData, setSelectedCourseData] = useState([]);
 
+  const [timeTableOptionsData, setTimeTableOptionsData] = useState([]);
+
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/get-course-list")
@@ -22,7 +24,7 @@ const CourseImprovement = () => {
       })
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit1 = (e) => {
     e.preventDefault();
 
     if (selectedCourseCode) {
@@ -63,6 +65,15 @@ const CourseImprovement = () => {
     setSelectedCourseCode('');
     setSelectedCourseName('');
   };
+
+  const handleSubmit2 = () => {
+    console.log(selectedCourseData);
+
+    axios.post("http://localhost:5000/api/student/njjk", selectedCourseData)
+      .then((res) =>{
+        console.log(res);
+      })
+  }
 
 
   return (
@@ -109,7 +120,7 @@ const CourseImprovement = () => {
           </div>
 
           <div className="student-main-course-improvement-bottom-right">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit1}>
               <label style={{ color: 'red' }}>Search by Course Code</label>
               <input
                 list="courseCodes"
@@ -149,7 +160,7 @@ const CourseImprovement = () => {
           </div>
         </div>
 
-        <button>Generate</button>
+        <button onClick={handleSubmit2}>Generate Options</button>
       </div>
     </div>
   );
