@@ -61,9 +61,9 @@ const ClashingRequestList = ({ data, department }) => {
         );
     };
 
-    useEffect(()=>{
-        console.log(data);
-    })
+    // useEffect(()=>{
+    //     console.log(data);
+    // })
 
     return (
         <div className="doaa-classing-request-table">

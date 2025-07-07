@@ -101,16 +101,16 @@ const Dashboard = () => {
                     <div className="doaa-header-top">
                         <div className="doaa-welcome-text">
                             <h4>Welcome !</h4>
-                            <p>Mr. Shalini Batra</p>
+                            <p>DR. Maninder Singh</p>
                             <h3>Applications</h3>
                         </div>
                     </div>
 
                     <div className="doaa-stats-section">
-                        <StatCardMain type="Approved" count="126" color="#D9FCE3" icon="✅" onClick={() => {setSelectedType('Approved'); setSelectedData(approvedData)}} />
-                        <StatCard type="Approved" count="126" color="#D9FCE3" icon="✅" onClick={() => {setSelectedType('Approved'); setSelectedData(approvedData)}} />
-                        <StatCard type="Pending" count="123" color="#F3E9FF" icon="⏸️" onClick={() => {setSelectedType('Pending'); setSelectedData(pendingData)}} />
-                        <StatCard type="Rejected" count="23" color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
+                        <StatCardMain type="Approved" count="{}" color="#D9FCE3" icon="✅" onClick={() => {setSelectedType('Approved'); setSelectedData(approvedData)}} />
+                        <StatCard type="Approved" count={approvedData.length} color="#D9FCE3" icon="✅" onClick={() => {setSelectedType('Approved'); setSelectedData(approvedData)}} />
+                        <StatCard type="Pending" count={pendingData.length} color="#F3E9FF" icon="⏸️" onClick={() => {setSelectedType('Pending'); setSelectedData(pendingData)}} />
+                        <StatCard type="Rejected" count={rejectedData.length} color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
                     </div>
                 </div>
 

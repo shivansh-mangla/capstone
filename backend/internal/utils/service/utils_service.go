@@ -159,3 +159,11 @@ func GetApplicationStatusById(c * fiber.Ctx) error {
 
 	return c.Status(200).JSON(fiber.Map{"Status": status})
 }
+
+func GetAllApplications(c *fiber.Ctx) error {
+	allApplications, err := repository.GetAllApplicationsinDB();
+	if err!= nil{
+		return c.Status(400).JSON(fiber.Map{"Error": err})
+	}
+	return c.Status(200).JSON(fiber.Map{"data": allApplications})
+}
