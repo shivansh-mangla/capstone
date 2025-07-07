@@ -3,28 +3,94 @@ import './Account.css';
 
 import Sidebar from '../../Components/Sidebar';
 import Logout from '../../Components/Logout';
+import { toast } from 'react-toastify';
+
+
+const notifySuccessName = () => {
+    toast.success('Successfully Name Changed!!', {
+        position: 'top-right',
+        autoClose: 4000,
+    });
+};
+const notifySuccessPassword = () => {
+    toast.success('Successfully Password Changed!!', {
+        position: 'top-right',
+        autoClose: 4000,
+    });
+};
+const notifyFailureName = () => {
+    toast.warning('Name Change Failed!!', {
+        position: 'top-right',
+        autoClose: 4000,
+    });
+};
+const notifyFailurePassword = () => {
+    toast.warning('Password Change Failed!!', {
+        position: 'top-right',
+        autoClose: 4000,
+    });
+};
 
 export default function Account() {
 const [displayName, setDisplayName] = useState('Dr. Anjula Mehta');
-const [nameDraft, setNameDraft] = useState('');
+// const [nameDraft, setNameDraft] = useState('');
 const [oldPw, setOldPw] = useState('');
 const [newPw, setNewPw] = useState('');
 
-const handleSaveName = () => {
-if (nameDraft.trim()) {
-setDisplayName(nameDraft.trim());
-setNameDraft('');
-/* TODO: call API → save name on server */
-}
-};
+    // const handleSaveName = async () => {
+    //     if (nameDraft.trim()) {
+    //         try {
+    //             const response = await fetch('http://localhost:5000/api/coordinator/update-name', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify({ doaa_name: nameDraft.trim() })
+    //             });
 
-const handleSavePassword = () => {
-if (oldPw && newPw) {
-/* TODO: call API → update password */
-setOldPw('');
-setNewPw('');
-}
-};
+    //             if (!response.ok)
+    //                 {
+    //                     notifyFailureName();
+    //                     throw new Error('Failed to update name');
+    //                 }
+
+    //             setDisplayName(nameDraft.trim());
+    //             setNameDraft('');
+    //             notifySuccessName();
+    //         } catch (error) {
+    //             notifyFailureName();
+    //             console.error('Error updating name:', error);
+    //         }
+    //     }
+    // };
+
+    const handleSavePassword = async () => {
+        if (oldPw && newPw) {
+            try {
+                const response = await fetch('http://localhost:5000/api/coordinator/update-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ old_password: oldPw, new_password: newPw })
+                });
+
+                if (!response.ok)
+                    {
+                        console.log(response);
+                        notifyFailurePassword();
+                        throw new Error('Failed to update password');
+                    }
+
+                setOldPw('');
+                setNewPw('');
+                notifySuccessPassword();
+            } catch (error) {
+                notifyFailurePassword();
+                console.error('Error updating password:', error);
+            }
+        }
+    };
 
 return (
 <div className="coordinator-account-container">
@@ -38,7 +104,7 @@ return (
             <h2>{displayName}</h2>
             <br />
 
-            <h3>Name</h3>
+            {/* <h3>Name</h3>
                 <div className="coordinator-input-row">
                 <input type="text" placeholder="Enter new name" value={nameDraft} onChange={e=>
                 setNameDraft(e.target.value)}
@@ -46,7 +112,7 @@ return (
                 <button onClick={handleSaveName}>Save </button>
             </div>
 
-            <br />
+            <br /> */}
 
             <h3>Password</h3>
                 <div className="coordinator-input-row">
