@@ -55,13 +55,13 @@ func UpdateCoordinatorPassword(c *fiber.Ctx) error {
 	input := new(model.PasswordUpdation)
 
 	if err := c.BodyParser(input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator Password change"})
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for Coordinator Password change"})
 	}
 
 	coordinator, err := repository.GetCoordinatorDetailsByEmail(input.Email)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Coordinator doesnt exist by this email"})
+			return c.Status(400).JSON(fiber.Map{"error": "Coordinator doesnt exist by this email"})
 		}
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Some error occured while password updation for coordinator"})
 	}

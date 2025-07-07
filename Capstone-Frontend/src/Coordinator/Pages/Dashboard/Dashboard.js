@@ -40,7 +40,7 @@ const Dashboard = () => {
       <div className="coordinator-main-dashboard">
         <div className="coordinator-dashboard-top">
           <h2 className="coordinator-welcome">Welcome !</h2>
-          <h4 className="coordinator-name">Mr. Doaa Ji</h4>
+          <h4 className="coordinator-name">Name</h4>
           <div className="coordinator-applications-section">
             <div className="coordinator-donut-card">
               {/* Placeholder for donut chart */}

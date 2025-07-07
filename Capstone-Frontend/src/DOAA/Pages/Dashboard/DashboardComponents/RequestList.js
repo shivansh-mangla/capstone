@@ -51,8 +51,8 @@ const PendingTable = ({ data, requestType, department }) => {
                         <th onClick={() => handleSort('courses')}>
                             Courses {getSortIcon('courses')}
                         </th>
-                        <th onClick={() => handleSort('date')}>
-                            Applied Date {getSortIcon('date')}
+                        <th onClick={() => handleSort('branch')}>
+                            Branch {getSortIcon('branch')}
                         </th>
                     </tr>
                 </thead>
@@ -63,8 +63,8 @@ const PendingTable = ({ data, requestType, department }) => {
                                 <FaUser className="user-icon" /> {row.name}
                             </td>
                             <td>{row.year}</td>
-                            <td>{row.courses}</td>
-                            <td>{row.date}</td>
+                            <td>{row.opted_courses.length}</td>
+                            <td>{row.branch}</td>
                         </tr>
                     ))}
                 </tbody>

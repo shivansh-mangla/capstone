@@ -101,3 +101,11 @@ func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"data": allCoordinators})
 }
+
+func GetAllApplications(c *fiber.Ctx) error {
+	allApplications, err := repository.GetAllApplicationsinDB();
+	if err!= nil{
+		return c.Status(400).JSON(fiber.Map{"Error": err})
+	}
+	return c.Status(200).JSON(fiber.Map{"data": allApplications})
+}
