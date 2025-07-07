@@ -1,0 +1,89 @@
+.coordinator-pending-table {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.coordinator-pending-table h3 {
+    margin-bottom: 0px;
+    color: #333;
+    font-size: 1.3rem;
+}
+.coordinator-pending-table h4 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    color: #787878;
+}
+
+.coordinator-pending-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.coordinator-pending-table th,
+.coordinator-pending-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align:justify;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.coordinator-pending-table th {
+    background-color: white;
+    color: #6F767E;
+    font-size: 15px;
+}
+.coordinator-user-icon {
+    margin-right: 8px;
+    color: #db4437;
+    /* red tone or any color you like */
+    vertical-align: middle;
+}
+.coordinator-sort-icon {
+    margin-left: 6px;
+    font-size: 15px;
+    color: #6c757d;
+    /* Soft gray */
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+tbody tr {
+    background-color: white;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+tbody tr:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transform: translateY(-3px);
+    cursor: pointer;
+    border:2px solid white;
+}
+
+thead th {
+    cursor: pointer;
+    user-select: none;
+}
+
+@media (max-width: 1600px)
+{
+    .coordinator-pending-table h3 {
+        font-size: 1rem;
+    }
+
+    .coordinator-pending-table h4 {
+       font-size: 0.8rem;
+    }
+    .coordinator-pending-table th,
+    .coordinator-pending-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: justify;
+        font-size: 10px;
+        font-weight: 600;
+    }
+}
