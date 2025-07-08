@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Coordinators.css';
 import Sidebar from '../../Components/Sidebar';
 import Logout from '../../Components/Logout'
+import { UserContext } from '../../../UserContext';
+import axios from 'axios';
 
 const Coordinators = () => {
-  const [coordinators, setCoordinators] = useState([
-    { name: 'Anjula Mahto', tenure: '2020-present', designation: 'TimeTable Coordinator', email: 'amahto@thapar.edu' },
-    { name: 'Tina Sharma', tenure: '2020-present', designation: 'Head', email: 'tsharma@thapar.edu' },
-  ]);
+  const {hod} = useContext(UserContext);
+  const [coordinators, setCoordinators] = useState([]);
 
   const [showPopup, setShowPopup] = useState(false);
   const [newFaculty, setNewFaculty] = useState({
@@ -17,7 +17,26 @@ const Coordinators = () => {
     password: '',
   });
 
+  useEffect(() => {
+    const fetchCoordinators = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/hod/all-coordinators-details');
+        const data = await response.json();
+        console.log(data);
+        setCoordinators(data.data);
+        
+      } catch (error) {
+        console.error('Error fetching coordinator data:', error);
+      }
+    };
+
+    fetchCoordinators();
+  }, []);
+
   const handleAddFaculty = () => {
+
+    console.log(hod);
+
     if (!newFaculty.name || !newFaculty.thaparId || !newFaculty.designation || !newFaculty.password) return;
 
     const email = `${newFaculty.thaparId}@thapar.edu`;
@@ -27,6 +46,8 @@ const Coordinators = () => {
       designation: newFaculty.designation,
       email,
     };
+
+    axios.post("http://localhost:5000/api/hod/create-coordinator", )
 
     setCoordinators([...coordinators, newEntry]);
     setNewFaculty({ name: '', thaparId: '', designation: '', password: '' });
@@ -59,7 +80,7 @@ const Coordinators = () => {
               {coordinators.map((coord, index) => (
                 <tr key={index}>
                   <td><img src={`https://i.pravatar.cc/30?u=${index}`} alt="profile" /> {coord.name}</td>
-                  <td>{coord.tenure}</td>
+                  <td>{coord.tenureStart} , {coord.tenureEnd}</td>
                   <td>{coord.designation}</td>
                   <td>{coord.email}</td>
                   <td><button className="hod-coordinators-remove-btn" onClick={() => handleRemoveFaculty(index)}>Remove</button></td>

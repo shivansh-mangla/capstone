@@ -5,102 +5,84 @@ def get_occupancy_map(
     data: Dict[str, Any], subgroup: str, total_slots: int = 140
 ) -> List[int]:
     """
-    Build a binary occupancy map for a subgroup's timetable:
-      - 1 indicates the slot is occupied by lecture, lab, tutorial, or elective.
-      - 0 indicates the slot is free.
+    Returns a binary list marking occupied slots (lecture, lab, tutorial, electives).
     """
     occupancy = [0] * total_slots
-
     def mark_intervals(intervals: List[List[int]]):
         for start, end in intervals:
             if 0 <= start <= end < total_slots:
                 for i in range(start, end + 1):
                     occupancy[i] = 1
-
     grp = data.get(subgroup)
     if not grp:
-        raise ValueError(f"Subgroup '{subgroup}' not found in timetable data")
-
-    # Mark all top‑level lecture, lab, tutorial slots
-    for category in ("lecture", "lab", "tutorial"):
-        for details in grp.get(category, {}).values():
+        raise ValueError(f"Subgroup '{subgroup}' not found")
+    # mark all categories
+    for cat in ("lecture", "lab", "tutorial"):
+        for details in grp.get(cat, {}).values():
             mark_intervals(details.get("slots", []))
-
-    # Mark electives (also having lecture/lab/tutorial)
     for elective in grp.get("elective", {}).values():
-        for category in ("lecture", "lab", "tutorial"):
-            part = elective.get(category)
+        for cat in ("lecture", "lab", "tutorial"):
+            part = elective.get(cat)
             if part:
                 mark_intervals(part.get("slots", []))
-
     return occupancy
 
 
-def find_course_clashes(
+def assign_subjects_sequentially(
     timetable: Dict[str, Any],
     current_subgroup: str,
-    subject_map: Dict[str, List[str]]
-) -> Dict[str, Dict[int, List[str]]]:
+    subject_order: List[str],
+    subject_map: Dict[str, List[str]],
+    total_slots: int = 140
+) -> Dict[str, List[str]]:
     """
-    For each subject in subject_map, determine which teaching subgroups
-    have zero total clashes (over lecture, lab, tutorial) or exactly one clash.
-    Returns a dict:
-      { subject: { 0: [subgroups], 1: [subgroups] } }
+    Sequentially assigns subjects to subgroups without time clashes.
+    For each subject in order, picks all subgroups whose lecture slots do not
+    conflict with already occupied slots, marks them occupied, and returns the
+    chosen subgroups per subject (uniquely).
     """
-    occupied = get_occupancy_map(timetable, current_subgroup)
-    report: Dict[str, Dict[int, List[str]]] = {}
+    occupancy = get_occupancy_map(timetable, current_subgroup, total_slots)
+    assignments: Dict[str, List[str]] = {}
 
-    for subj, teaching_subs in subject_map.items():
-        zero_clash, one_clash = set(), set()
+    def lecture_slots_for(sg: str, subj: str) -> List[int]:
+        grp = timetable.get(sg, {})
+        lec = grp.get("lecture", {}).get(subj)
+        if not lec:
+            return []
+        slots = []
+        for start, end in lec.get("slots", []):
+            slots.extend(range(start, end + 1))
+        return slots
 
-        # dedupe input subgroups
-        for sg in set(teaching_subs):
-            grp = timetable.get(sg, {})
-            all_slots: List[int] = []
+    for subj in subject_order:
+        available: List[str] = []
+        for sg in subject_map.get(subj, []):
+            slots = lecture_slots_for(sg, subj)
+            # check if no clash
+            if all(occupancy[s] == 0 for s in slots):
+                available.append(sg)
 
-            # Aggregate all slots for lecture, lab, tutorial
-            for category in ("lecture", "lab", "tutorial"):
-                part = grp.get(category, {}).get(subj)
-                if part:
-                    for start, end in part.get("slots", []):
-                        all_slots.extend(range(start, end + 1))
+        # remove duplicates while preserving order
+        unique_available = list(dict.fromkeys(available))
+        assignments[subj] = unique_available
 
-            # Count occupied collisions
-            collisions = sum(1 for slot in all_slots if occupied[slot] == 1)
+        # mark those slots occupied
+        for sg in unique_available:
+            for s in lecture_slots_for(sg, subj):
+                occupancy[s] = 1
 
-            if collisions == 0:
-                zero_clash.add(sg)
-            elif collisions == 1:
-                one_clash.add(sg)
-
-        report[subj] = {
-            0: sorted(zero_clash),
-            1: sorted(one_clash)
-        }
-
-    return report
+    return assignments
 
 
 if __name__ == "__main__":
-    # Load data files
-    with open("data1.json", "r") as f:
+    with open("data1.json") as f:
         timetable = json.load(f)
-    with open("data2.json", "r") as f:
-        full_subject_map = json.load(f)
+    with open("data2.json") as f:
+        subject_map = json.load(f)
 
-    # Define current subgroup and desired courses
-    current_subgroup = "3C4A"
-    target_subjects = ["UHU003", "UES101", "UES102"]
+    current = "3C4A"
+    targets = ["UHU003", "UMA023", "UES102"]
+    assignments = assign_subjects_sequentially(timetable, current, targets, subject_map)
 
-    # Filter mapping for only the target subjects
-    subject_map = {
-        subj: full_subject_map.get(subj, [])
-        for subj in target_subjects
-    }
-
-    # Compute and display the clash report
-    report = find_course_clashes(timetable, current_subgroup, subject_map)
-    for subj, buckets in report.items():
-        print(f"Subject {subj}:")
-        print(f"  0 clashes: {buckets[0]}")
-        print(f"  1 clash:  {buckets[1]}\n")
+    for subj, sgs in assignments.items():
+        print(f"Subject {subj} can be taken with subgroups: {sgs}")

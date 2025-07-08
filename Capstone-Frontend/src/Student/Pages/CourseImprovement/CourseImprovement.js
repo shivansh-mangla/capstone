@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './CourseImprovement.css';
 import StudentSidebar from '../../Components/Sidebar';
 import { ProgressBar } from 'react-bootstrap';
 import axios from 'axios'
 import { toast } from 'react-toastify';
+import { UserContext } from '../../../UserContext';
 
 const CourseImprovement = () => {
+  const {student} = useContext(UserContext);
   const [courseData, setCourseData] = useState([]);
   const [selectedCourseCode, setSelectedCourseCode] = useState('');
   const [selectedCourseName, setSelectedCourseName] = useState('');
@@ -67,11 +69,18 @@ const CourseImprovement = () => {
   };
 
   const handleSubmit2 = () => {
-    console.log(selectedCourseData);
-
-    axios.post("http://localhost:5000/api/student/njjk", selectedCourseData)
+    const data = {
+      selectedCourseData : selectedCourseData,
+      studentData: student
+    }
+    console.log(data);
+    
+    axios.post("http://127.0.0.1:3001", data)
       .then((res) =>{
         console.log(res);
+      })
+      .catch(()=>{
+        console.log("Eroor");
       })
   }
 

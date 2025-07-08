@@ -1,29 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Account.css';
 
 import Sidebar from '../../Components/Sidebar';
 import Logout from '../../Components/Logout';
 import { toast } from 'react-toastify';
+import { UserContext } from '../../../UserContext';
 
 
-const notifySuccessName = () => {
-    toast.success('Successfully Name Changed!!', {
-        position: 'top-right',
-        autoClose: 4000,
-    });
-};
+
 const notifySuccessPassword = () => {
     toast.success('Successfully Password Changed!!', {
         position: 'top-right',
         autoClose: 4000,
     });
 };
-const notifyFailureName = () => {
-    toast.warning('Name Change Failed!!', {
-        position: 'top-right',
-        autoClose: 4000,
-    });
-};
+
 const notifyFailurePassword = () => {
     toast.warning('Password Change Failed!!', {
         position: 'top-right',
@@ -32,7 +23,8 @@ const notifyFailurePassword = () => {
 };
 
 export default function Account() {
-const [displayName, setDisplayName] = useState('Dr. Anjula Mehta');
+
+    const {coordinator} = useContext(UserContext);
 // const [nameDraft, setNameDraft] = useState('');
 const [oldPw, setOldPw] = useState('');
 const [newPw, setNewPw] = useState('');
@@ -72,7 +64,7 @@ const [newPw, setNewPw] = useState('');
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ old_password: oldPw, new_password: newPw })
+                    body: JSON.stringify({ old_password: oldPw, new_password: newPw, email: coordinator.email })
                 });
 
                 if (!response.ok)
@@ -100,8 +92,8 @@ return (
         <Logout />
 
             <div className="coordinator-account-details">
-            <h3>Welcome !</h3>
-            <h2>{displayName}</h2>
+            <h3>Welcome!</h3>
+            <h2>{coordinator?.name || "Loading"}</h2>
             <br />
 
             {/* <h3>Name</h3>
