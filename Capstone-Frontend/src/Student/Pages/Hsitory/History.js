@@ -34,12 +34,13 @@ export default function History() {
               <h4>Your Applications</h4>
 
               {applicationData && applicationData.length > 0 ? (
-                applicationData.map((app, index) => (
-                  <HistoryTile key={index} data={app} />
+                applicationData
+                .filter(data => data.stage === 5 || data.stage === 10)
+                .map((data, index) => (
+                  <HistoryTile key={index} data={data} />
                 ))
-              ) : (
-                <p>No applications to show</p>
-              )}
+              ) : 
+                <p>No applications to show</p>}
             </div>
         </div>
     </div>

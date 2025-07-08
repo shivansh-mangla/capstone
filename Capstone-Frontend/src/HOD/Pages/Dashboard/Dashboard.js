@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import StatCard from './DashboardComponents/StatCard';
 import StatCardMain from './DashboardComponents/StatCardMain';
 import RequestList from './DashboardComponents/RequestList';
 import Logout from '../../Components/Logout'
 import './Dashboard.css';
+import { UserContext } from '../../../UserContext';
 
 // const approvedData = [
 //   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
@@ -40,6 +41,8 @@ const Dashboard = () => {
   const [approvedData, setApprovedData] = useState('');
   const [selectedType, setSelectedType] = useState('Approved'); 
   const [selectedData, setSelectedData] = useState(approvedData);
+
+  const {hod} = useContext(UserContext);
 
   // const getDataByType = () => {
   //   switch (selectedType) {
@@ -112,7 +115,7 @@ const Dashboard = () => {
             <div className="hod-header-top">
               <div className="hod-welcome-text">
                 <h4>Welcome!</h4>
-                <p>Dr. Shalini Batra</p>
+                <p>{hod?.hod_name || "Loading"}</p>
                 <h3>Applications</h3>
               </div>
             </div>

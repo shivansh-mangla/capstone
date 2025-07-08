@@ -4,6 +4,7 @@ import Sidebar from '../../Components/Sidebar';
 import Logout from '../../Components/Logout'
 import { UserContext } from '../../../UserContext';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Coordinators = () => {
   const {hod} = useContext(UserContext);
@@ -12,7 +13,7 @@ const Coordinators = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [newFaculty, setNewFaculty] = useState({
     name: '',
-    thaparId: '',
+    email: '',
     designation: '',
     password: '',
   });
@@ -33,30 +34,49 @@ const Coordinators = () => {
     fetchCoordinators();
   }, []);
 
-  const handleAddFaculty = () => {
+  const handleAddFaculty = async () => {
 
-    console.log(hod);
+    if (!newFaculty.name || !newFaculty.email || !newFaculty.designation || !newFaculty.password) return;
 
-    if (!newFaculty.name || !newFaculty.thaparId || !newFaculty.designation || !newFaculty.password) return;
-
-    const email = `${newFaculty.thaparId}@thapar.edu`;
     const newEntry = {
+      department: hod.hod_department,
       name: newFaculty.name,
-      tenure: '2024-present',
+      tenureStart: 'present -',
+      tenureEnd: 'present',
       designation: newFaculty.designation,
-      email,
+      email: newFaculty.email
     };
 
-    axios.post("http://localhost:5000/api/hod/create-coordinator", )
+    try {
+      await axios.post("http://localhost:5000/api/hod/create-coordinator", {
+        name: newFaculty.name,
+        email: newFaculty.email,
+        password: newFaculty.password,
+        designation: newFaculty.designation,
+        department: hod.hod_department,
+        email: newFaculty.email
+      });
+    } catch (error) {
+      toast.error("Some error occured");
+    }
 
     setCoordinators([...coordinators, newEntry]);
-    setNewFaculty({ name: '', thaparId: '', designation: '', password: '' });
+    setNewFaculty({ name: '', email: '', designation: '', password: '' });
     setShowPopup(false);
   };
 
-  const handleRemoveFaculty = (index) => {
-    const updatedCoordinators = coordinators.filter((_, i) => i !== index);
-    setCoordinators(updatedCoordinators);
+  const handleRemoveFaculty = async (index, email) => {
+    try {
+      await axios.post("http://localhost:5000/api/hod/delete-coordinator", {
+        email: email
+      });
+      const updatedCoordinators = coordinators.filter((_, i) => i !== index);
+      setCoordinators(updatedCoordinators);
+      toast.success("Deleted successfully!!!");
+    } catch (error) {
+      toast.error("Some error occured!!");
+    }
+    
   };
 
   return (
@@ -83,7 +103,7 @@ const Coordinators = () => {
                   <td>{coord.tenureStart} , {coord.tenureEnd}</td>
                   <td>{coord.designation}</td>
                   <td>{coord.email}</td>
-                  <td><button className="hod-coordinators-remove-btn" onClick={() => handleRemoveFaculty(index)}>Remove</button></td>
+                  <td><button className="hod-coordinators-remove-btn" onClick={() => handleRemoveFaculty(index, coord.email)}>Remove</button></td>
                 </tr>
               ))}
             </tbody>
@@ -104,8 +124,8 @@ const Coordinators = () => {
                   <input
                     type="text"
                     placeholder="Thapar ID"
-                    value={newFaculty.thaparId}
-                    onChange={(e) => setNewFaculty({ ...newFaculty, thaparId: e.target.value })}
+                    value={newFaculty.email}
+                    onChange={(e) => setNewFaculty({ ...newFaculty, email: e.target.value })}
                   className="hod-coordinators-popup-input"
                   />
                   <input
