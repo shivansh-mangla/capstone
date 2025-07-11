@@ -10,6 +10,7 @@ const Status = () => {
   const { student } = useContext(UserContext);
   const [active, setActive] = useState(false);
   const [status, setStatus] = useState(-1);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     if (student && student.ongoing_application) {
@@ -19,7 +20,9 @@ const Status = () => {
       })
       .then((res) => {
         // assuming the response looks like: { stage: 0 | 1 | ... | 10 }
-        setStatus(res.data.stage);
+        setStatus(res.data["Application Data"]["stage"]);
+        console.log(res.data["Application Data"]);
+        setComments(res.data["Application Data"]["comments"]);
       })
       .catch((err) => {
         console.error("Error fetching application details:", err);
@@ -72,11 +75,11 @@ const Status = () => {
 
             <h3 className="alerts-heading">Alerts</h3>
             <div className="alerts-box">
-              {[...Array(3)].map((_, i) => (
+              {comments?.map((val, i) => (
                 <p key={i} className="alert-text">
-                  • Your application is currently at stage {status}. Please wait for the next update.
+                  • {val}
                 </p>
-              ))}
+              )) || "No Comments"}
             </div>
           </>
         ) : (
