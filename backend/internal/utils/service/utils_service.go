@@ -85,7 +85,9 @@ func UploadToCloudinary2(file io.Reader, filename string) (string, error) {
 	}
 
 	uploadRes, err := cld.Upload.Upload(context.Background(), file, uploader.UploadParams{
-		PublicID: filename,
+		PublicID:     filename,
+		ResourceType: "auto",
+		Folder:       "fee_receipts",
 	})
 	if err != nil {
 		return "", err
@@ -136,10 +138,10 @@ func RejectApplicationById(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
 	}
 
-	return c.Status(200).JSON(fiber.Map{"Status": "Application successfully rejected", "application_id": input.ApplicationId,})
+	return c.Status(200).JSON(fiber.Map{"Status": "Application successfully rejected", "application_id": input.ApplicationId})
 }
 
-func GetApplicationStatusById(c * fiber.Ctx) error {
+func GetApplicationStatusById(c *fiber.Ctx) error {
 	var input struct {
 		ApplicationId string `json:"application_id" bson:"application_id"`
 	}
@@ -161,8 +163,8 @@ func GetApplicationStatusById(c * fiber.Ctx) error {
 }
 
 func GetAllApplications(c *fiber.Ctx) error {
-	allApplications, err := repository.GetAllApplicationsinDB();
-	if err!= nil{
+	allApplications, err := repository.GetAllApplicationsinDB()
+	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"Error": err})
 	}
 	return c.Status(200).JSON(fiber.Map{"data": allApplications})

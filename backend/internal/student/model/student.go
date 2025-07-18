@@ -50,4 +50,5 @@ type Application struct {
 	Message         string     `json:"message" bson:"message"`
 	Stage           int        `json:"stage" bson:"stage"`
 	URL             string     `json:"url" bson:"url"`
+	FeeReceiptLink  string     `json:"fee_receipt_link" bson:"fee_receipt_link"`
 }

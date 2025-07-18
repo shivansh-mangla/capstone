@@ -33,19 +33,19 @@ func RejectApplicationById(id string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	filter := bson.M{"application_id": id}  
-    update := bson.M{"$set": bson.M{"stage": 10}}
+	filter := bson.M{"application_id": id}
+	update := bson.M{"$set": bson.M{"stage": 10}}
 
-    result, err := applicationDetails.UpdateOne(ctx, filter, update)
-    if err != nil {
-        return fmt.Errorf("failed to update application: %v", err)
-    }
+	result, err := applicationDetails.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return fmt.Errorf("failed to update application: %v", err)
+	}
 
-    if result.MatchedCount == 0 {
-        return fmt.Errorf("no application found with id: %s", id)
-    }
+	if result.MatchedCount == 0 {
+		return fmt.Errorf("no application found with id: %s", id)
+	}
 
-    return nil
+	return nil
 }
 
 func GetApplicationStatusByID(applicationId string) (int, error) {
@@ -60,7 +60,7 @@ func GetApplicationStatusByID(applicationId string) (int, error) {
 	var result struct {
 		Status int `bson:"status"`
 	}
-	
+
 	err := applicationDetails.FindOne(ctx, filter, options.FindOne().SetProjection(projection)).Decode(&result)
 	if err != nil {
 		return -1, err
@@ -68,32 +68,31 @@ func GetApplicationStatusByID(applicationId string) (int, error) {
 	return result.Status, nil
 }
 
-
 func GetAllApplicationsinDB() ([]model.Application, error) {
-    applicationDetails := database.MongoDB.Collection("applicationDetails")
+	applicationDetails := database.MongoDB.Collection("applicationDetails")
 
-    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-    defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
-    cursor, err := applicationDetails.Find(ctx, bson.M{})
-    if err != nil {
-        return nil, err
-    }
-    defer cursor.Close(ctx)
+	cursor, err := applicationDetails.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, err
+	}
+	defer cursor.Close(ctx)
 
-    var applications []model.Application
+	var applications []model.Application
 
-    for cursor.Next(ctx) {
-        var app model.Application
-        if err := cursor.Decode(&app); err != nil {
-            return nil, err
-        }
-        applications = append(applications, app)
-    }
+	for cursor.Next(ctx) {
+		var app model.Application
+		if err := cursor.Decode(&app); err != nil {
+			return nil, err
+		}
+		applications = append(applications, app)
+	}
 
-    if err := cursor.Err(); err != nil {
-        return nil, err
-    }
+	if err := cursor.Err(); err != nil {
+		return nil, err
+	}
 
-    return applications, nil
+	return applications, nil
 }

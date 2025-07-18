@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
     # example definitions for subjects A, B, C
     # these are your targets
-    subjects = ["UHU003", "UES103", "UES102"]
+    subjects = ["UHU003", "UES101", "UES101"]
     # current group and electives
     current = "3C4A"
     electives = ["ucs635", "ucs645"]

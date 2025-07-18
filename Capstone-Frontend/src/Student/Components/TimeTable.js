@@ -22,7 +22,7 @@ const Timetable = ({data, ed}) => {
 
 
   const getEvent = (day, hour) => {
-    return events.find((event) => event.day === day && event.hour === hour);
+    return events.filter((event) => event.day === day && event.hour === hour);
   };
 
 
@@ -38,9 +38,27 @@ const Timetable = ({data, ed}) => {
           <div className="cell header">{day}</div>
 
           {hours.map((hour) => {
-            const event = getEvent(day, hour);
-            if(event && event.color === "#FFC0CB"){
-              if(ed.includes(event.subjectCode))
+            const eventz = getEvent(day, hour);
+            if(eventz.length === 1){
+              const event = eventz[0];
+              if(event.color === "#FFC0CB"){
+                if(ed.includes(event.subjectCode)){
+                  return (
+                    <div className="cell" style={{ backgroundColor: event?.color || 'white' }} key={hour}>
+                      <p className='subname'>{event ? event.subjectName : ''}</p>
+                      <p>{event ? event.subjectCode : ''}</p>
+                      <p>{event ? event.venue : ''}</p>
+                    </div>
+                  )
+                }
+                else{
+                  return(
+                    <div className="cell" style={{ backgroundColor:'white' }} key={hour}>
+                    </div>
+                  )
+                }
+              }
+              else{
                 return (
                   <div className="cell" style={{ backgroundColor: event?.color || 'white' }} key={hour}>
                     <p className='subname'>{event ? event.subjectName : ''}</p>
@@ -48,19 +66,20 @@ const Timetable = ({data, ed}) => {
                     <p>{event ? event.venue : ''}</p>
                   </div>
                 )
-              else
-                return(
-                  <div className="cell" style={{ backgroundColor:'white' }} key={hour}>
-                  </div>
-                )
-            }else
-              return (
-                <div className="cell" style={{ backgroundColor: event?.color || 'white' }} key={hour}>
-                  <p className='subname'>{event ? event.subjectName : ''}</p>
-                  <p>{event ? event.subjectCode : ''}</p>
-                  <p>{event ? event.venue : ''}</p>
+              }
+            }
+            else if(eventz.length > 1){
+              {eventz.map((event) => {
+                
+              })}
+            }
+            else if(eventz.length === 0){
+              return(
+                <div className="cell" style={{ backgroundColor:'white' }} key={hour}>
                 </div>
               )
+            }
+            
                 
           })}
         </React.Fragment>

@@ -21,7 +21,7 @@ export default function HistoryTile({data}) {
             <p>PDF link: <a href={data.url} target='blank'>Click Here</a></p>
           </div>
           <div className='student-application-tile-fee student-application-tile-elemnt'>
-            Fee receipt : None
+            <p>Fee Receipt link: <a href={data.fee_receipt_link} target='blank'>Click Here</a></p>
           </div>
     </div>
   )

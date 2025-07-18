@@ -174,9 +174,9 @@ func UpdateUtilities(updatedUtilities bson.M) error {
 	filter := bson.M{}
 
 	_, err := utilities.ReplaceOne(ctx, filter, updatedUtilities)
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 	return nil
 }
 func CreateApplicationInDB(application *model.Application) error {
@@ -184,12 +184,12 @@ func CreateApplicationInDB(application *model.Application) error {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	
+
 	_, err := applicationDetails.InsertOne(ctx, application)
 	return err
 }
 
-func AllApplicationsByEmailInDB(email string) ([]model.Application, error){
+func AllApplicationsByEmailInDB(email string) ([]model.Application, error) {
 	applicationDetails := database.MongoDB.Collection("applicationDetails")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -197,13 +197,13 @@ func AllApplicationsByEmailInDB(email string) ([]model.Application, error){
 
 	filer := bson.M{"email": email}
 	cursor, err := applicationDetails.Find(ctx, filer)
-	if err != nil{
+	if err != nil {
 		return nil, fmt.Errorf("Failed to fetch applications of student")
 	}
 	defer cursor.Close(ctx)
 
 	var applications []model.Application
-	for cursor.Next(ctx){
+	for cursor.Next(ctx) {
 		var application model.Application
 		if err := cursor.Decode(&application); err != nil {
 			return nil, fmt.Errorf("failed to decode application: %v", err)
@@ -211,9 +211,30 @@ func AllApplicationsByEmailInDB(email string) ([]model.Application, error){
 		applications = append(applications, application)
 	}
 
-	if err:= cursor.Err(); err!= nil {
+	if err := cursor.Err(); err != nil {
 		return nil, fmt.Errorf("error iterating over applications: %v", err)
 	}
 
 	return applications, nil
+}
+
+func UpdateFeesLinkById(id string, fee_receipt_link string) error {
+	applicationDetails := database.MongoDB.Collection("applicationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"application_id": id}
+	update := bson.M{"$set": bson.M{"fee_receipt_link": fee_receipt_link}}
+
+	result, err := applicationDetails.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return fmt.Errorf("failed to update application: %v", err)
+	}
+
+	if result.MatchedCount == 0 {
+		return fmt.Errorf("no application found with id: %s", id)
+	}
+
+	return nil
 }

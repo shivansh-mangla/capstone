@@ -136,11 +136,14 @@ func UploadReceipt(c *fiber.Ctx) error {
 	}
 	defer file.Close()
 
+	filename := "fees_receipt_" + uuid.New().String()
 	// Upload to Cloudinary with random filename
-	url, err := service.UploadToCloudinary2(file, "helloo123.pdf")
+	url, err := service.UploadToCloudinary2(file, filename)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, "Upload failed")
 	}
+
+	repository.UpdateFeesLinkById(appID, url)
 
 	return c.JSON(fiber.Map{
 		"applicationID": appID,
