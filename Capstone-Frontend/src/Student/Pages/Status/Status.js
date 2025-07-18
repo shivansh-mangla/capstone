@@ -34,11 +34,11 @@ const Status = () => {
   }, [student]);
 
   const steps = [
-    { label: "Application Sent", stepIndex: 0 },
-    { label: "DOAA Approval", stepIndex: 1 },
-    { label: "Coordinator Approval", stepIndex: 2 },
-    { label: "Fees Submitted", stepIndex: 3 },
-    { label: "Application Completed", stepIndex: 4 },
+    { label: "Application Sent", stepIndex: 1 },
+    { label: "DOAA Approval", stepIndex: 2 },
+    { label: "Coordinator Approval", stepIndex: 3 },
+    { label: "Fees Submitted by Student", stepIndex: 4 },
+    { label: "Fees Receipt verified", stepIndex: 5 },
   ];
 
   const statusColor = (stepIndex) => {

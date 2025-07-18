@@ -110,7 +110,7 @@ def run_backtracking(
     return buckets
 
 
-if __name__ == "__main__":
+def main_function() -> List[List[Tuple[str, Any]]]:
     # load data
     with open("data1.json") as f:
         timetable = json.load(f)
@@ -118,16 +118,23 @@ if __name__ == "__main__":
         subject_map = json.load(f)
 
     # example definitions for subjects A, B, C
-    # these are your targets
-    subjects = ["UHU003", "UES101", "UES101"]
+    subjects = ["UHU003", "UMA023", "UES102"]
     # current group and electives
     current = "3C4A"
     electives = ["ucs635", "ucs645"]
 
     buckets = run_backtracking(timetable, subject_map, current, electives, subjects)
 
-    # pretty print
+    # pick highest non-empty bucket: 3, then 2, then 1
+    result: List[List[Tuple[str, Any]]] = []
     for k in (3, 2, 1):
-        print(f"Priority {4-k}: {k} non-empty assignments (count={len(buckets[k])})")
-        for assign, count in buckets[k]:
-            print(assign)
+        if buckets[k]:
+            result = [assign for assign, _ in buckets[k]]
+            break
+
+    return result[:5]
+
+
+if __name__ == "__main__":
+    output = main_function()
+    print(output)

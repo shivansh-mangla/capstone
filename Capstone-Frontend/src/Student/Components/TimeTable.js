@@ -7,6 +7,7 @@ const hours = ['8:00 AM', '8:50 AM', '9:40 AM', '10:30 AM', '11:20 AM', '12:10 P
 
 
 const Timetable = ({data, ed}) => {
+  console.log(ed);
   var events = [{
             "color": "#FFD700",
             "day": "Monday",
@@ -69,9 +70,23 @@ const Timetable = ({data, ed}) => {
               }
             }
             else if(eventz.length > 1){
-              {eventz.map((event) => {
-                
-              })}
+              const preferredEvent = eventz.find((event) => event.color === "#FFC0CB" && ed.includes(event.subjectCode));
+
+              if(preferredEvent){
+                return (
+                    <div className="cell" style={{ backgroundColor: preferredEvent?.color || 'white' }} key={hour}>
+                      <p className='subname'>{preferredEvent ? preferredEvent.subjectName : ''}</p>
+                      <p>{preferredEvent ? preferredEvent.subjectCode : ''}</p>
+                      <p>{preferredEvent ? preferredEvent.venue : ''}</p>
+                    </div>
+                  )
+              }
+              else{
+                return(
+                  <div className="cell" style={{ backgroundColor:'white' }} key={hour}>
+                  </div>
+                )
+              }
             }
             else if(eventz.length === 0){
               return(
