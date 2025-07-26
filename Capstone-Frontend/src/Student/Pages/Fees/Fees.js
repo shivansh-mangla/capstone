@@ -194,9 +194,23 @@ const StudentFees = () => {
           </div>
         )
       }
+      else{
+        return(
+          <div className="student-main-fees">
+            <h1>Fees Section</h1>
+            <h4>Pay your fees here</h4>
+            <h1>No ongoing Applications</h1>
+          </div>
+        )
+      }
     }
     else
-      return <h1>No ongoing Applications</h1>
+      return(
+        <div className="student-main-fees">
+          <h1>No ongoing Applications</h1>
+        </div>
+      )
+      
   }
 
   return (

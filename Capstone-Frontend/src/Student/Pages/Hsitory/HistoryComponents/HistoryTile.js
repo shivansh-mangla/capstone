@@ -1,5 +1,6 @@
 import React from 'react'
 import './HistoryTile.css'
+import Timetable from '../../../Components/TimeTable';
 
 export default function HistoryTile({data}) {
 
@@ -9,20 +10,40 @@ export default function HistoryTile({data}) {
   else
     stage = 'Rejected';
 
+  console.log(data);
+
   return (
     <div className='student-application-tile'>
-          <div className='student-application-tile-id student-application-tile-elemnt'>
-            <p>Application id : {data.application_id}</p>
-          </div>
-          <div className='student-application-tile-status student-application-tile-elemnt'>
-            <p>Status : {stage}</p>
-          </div>
-          <div className='student-application-tile-pdf student-application-tile-elemnt'>
-            <p>PDF link: <a href={data.url} target='blank'>Click Here</a></p>
-          </div>
-          <div className='student-application-tile-fee student-application-tile-elemnt'>
-            <p>Fee Receipt link: <a href={data.fee_receipt_link} target='blank'>Click Here</a></p>
-          </div>
+      <h2>Application ID: {data.application_id}</h2>
+      <h4>{stage}</h4>
+      <br />
+      {data.opted_courses.map((val, ind) =>{
+        return(
+          <h4>Opted {val[0]} in: {val[1]}</h4>
+        )
+      })}
+      <br />
+      <h3>Time Table formed:</h3>
+      <Timetable data={data.new_time_table} ed={data.elective_data}/>
+      <br />
+      <h4>
+        Application Form Link:{" "}
+        <a href={data?.url} target="_blank" rel="noopener noreferrer">
+          Click Here
+        </a>
+      </h4>
+
+      <h4>
+        Fees Receipt Link:{" "}
+        <a href={data?.fee_receipt_link} target="_blank" rel="noopener noreferrer">
+          Click Here
+        </a>
+      </h4>
+      <br />
+      <h4>Comments:</h4>
+      {data.comments.map((val, ind) =>{
+        return <h5>- {val}</h5>
+      })}
     </div>
   )
 }

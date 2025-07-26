@@ -5,12 +5,14 @@ import StudentSidebar from '../../Components/Sidebar';
 import Logout from "../../Components/Logout";
 import { UserContext } from "../../../UserContext";
 import axios from "axios";
+import Timetable from "../../Components/TimeTable";
 
 const Status = () => {
   const { student } = useContext(UserContext);
   const [active, setActive] = useState(false);
   const [status, setStatus] = useState(-1);
   const [comments, setComments] = useState([]);
+  const [appData, setAppData] = useState({});
 
   useEffect(() => {
     if (student && student.ongoing_application) {
@@ -23,6 +25,7 @@ const Status = () => {
         setStatus(res.data["Application Data"]["stage"]);
         console.log(res.data["Application Data"]);
         setComments(res.data["Application Data"]["comments"]);
+        setAppData(res.data["Application Data"]);
       })
       .catch((err) => {
         console.error("Error fetching application details:", err);
@@ -73,6 +76,11 @@ const Status = () => {
                 ))}
               </div>
             </div>
+
+            <br />
+            <br />
+            <h2>Time Table -</h2>
+            <Timetable data={appData?.new_time_table} ed={appData?.elective_data}/>
 
             <h3 className="alerts-heading">Alerts</h3>
             <div className="alerts-box">
