@@ -12,3 +12,7 @@ func LoginCoordinator(c *fiber.Ctx) error {
 func UpdateCoordinatorPassword(c *fiber.Ctx) error {
 	return service.UpdateCoordinatorPassword(c)
 }
+
+func UpdateApplication(c *fiber.Ctx) error {
+	return service.UpdateApplication(c)
+}

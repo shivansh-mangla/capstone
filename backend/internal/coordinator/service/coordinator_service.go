@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -8,6 +9,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/shivansh-mangla/capstone/backend/internal/coordinator/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/coordinator/repository"
+	studentModel "github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -77,4 +79,21 @@ func UpdateCoordinatorPassword(c *fiber.Ctx) error {
 		return err
 	}
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Coordinator password updated"})
+}
+
+
+func UpdateApplication(c *fiber.Ctx) error {
+	input := new(studentModel.Application)
+
+	
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for Application Acceptance/Rejection by Coordinator"})
+	}
+	fmt.Println(input)
+
+	err := repository.UpdateApplicationinDB(input);
+	if err!= nil{
+		return c.Status(400).JSON(fiber.Map{"Error": "Applicated not successfully accepted/rejected"})
+	}
+	return c.Status(200).JSON(fiber.Map{"Status": "Application successfully accepted/rejected."})
 }

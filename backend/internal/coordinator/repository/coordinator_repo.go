@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/shivansh-mangla/capstone/backend/internal/coordinator/model"
+	studentModel "github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/database"
 	"go.mongodb.org/mongo-driver/bson"
 	"golang.org/x/crypto/bcrypt"
@@ -52,4 +53,30 @@ func SetCoordinatorPassword(email string, password string) error {
     }
     
     return nil
+}
+
+func UpdateApplicationinDB(application *studentModel.Application) error {
+	applicationDetails := database.MongoDB.Collection("applicationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	fmt.Println(application.ApplicationId)
+	filter := bson.M{"application_id": application.ApplicationId}
+	update := bson.M{"$set": bson.M{"stage": application.Stage, "comments": application.Comments}}
+
+	_, err := applicationDetails.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return fmt.Errorf("failed to update application: %w", err)
+	}
+
+	// if result.MatchedCount == 0 {
+	// 	fmt.Println("No matching document found for update.")
+	// } else if result.ModifiedCount == 0 {
+	// 	fmt.Println("Document matched but stage was not updated (possibly same value).")
+	// } else {
+	// 	fmt.Println("Update successful.")
+	// }
+
+	return nil
 }

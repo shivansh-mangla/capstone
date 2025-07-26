@@ -35,6 +35,7 @@ func SetupRoutes() *fiber.App {
 	student.Get("/get-elective-data", studentHandler.GetElectiveData)
 	student.Post("/generate-application", studentHandler.CreateApplication)
 	student.Post("/get-all-application", studentHandler.GetAllApplicationsByEmail)
+	
 	// hod routes
 	hod := api.Group("/hod")
 	hod.Post("/login", hodHandler.LoginHod)
@@ -48,6 +49,7 @@ func SetupRoutes() *fiber.App {
 	coordinator := api.Group("/coordinator")
 	coordinator.Post("/login", coordinatorHandler.LoginCoordinator)
 	coordinator.Post("/update-password", coordinatorHandler.UpdateCoordinatorPassword)
+	coordinator.Post("/accept-application", coordinatorHandler.UpdateApplication)
 
 	//doaa routes
 	doaa := api.Group("/doaa")
@@ -66,6 +68,6 @@ func SetupRoutes() *fiber.App {
 	api.Post("/get-application-details", utilsHandler.GetApplicationDetails)
 	api.Post("reject-application", utilsHandler.RejectApplicationById)
 	api.Post("/get-application-status", utilsHandler.GetApplicationStatusById)
-	api.Get("/get-all-applications", doaaHandler.GetAllApplications)
+	api.Get("/get-all-applications", utilsHandler.GetAllApplications)
 	return app
 }

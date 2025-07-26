@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './RequestList.css';
+import axios from 'axios'
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
 
 const PendingTable = ({ data, requestType, department }) => {
@@ -45,8 +46,16 @@ const PendingTable = ({ data, requestType, department }) => {
     };
 
     const handleAccept = (row) => {
-        alert(`Accepted request of ${row.name}`);
-        setTableData((prev) => prev.filter((item) => item !== row));
+        // alert(`Accepted request of ${row.name}`);
+        const updatedRow = { ...row, stage: 3 };
+        axios.post("http://localhost:5000/api/coordinator/accept-application", updatedRow)
+        .then((res) =>{
+            setTableData((prev) => prev.filter((item) => item !== row));
+        })
+        .catch((err)=>{
+            console.error("Error accepting application:", err);
+            alert("Failed to accept request. Please try again.");
+        });
     };
 
     const handleRejectClick = (row) => {
@@ -56,8 +65,19 @@ const PendingTable = ({ data, requestType, department }) => {
     };
 
     const confirmReject = () => {
-        setTableData((prev) => prev.filter((item) => item !== selectedRow));
-        setShowRejectPopup(false);
+        const updatedComments = [...selectedRow.comments];
+        updatedComments[1] = rejectionReason;
+
+        const updatedRow = { ...selectedRow, stage: 10, comments: updatedComments };
+        axios.post("http://localhost:5000/api/coordinator/accept-application", updatedRow)
+        .then((res) => {
+            setTableData((prev) => prev.filter((item) => item !== selectedRow));
+            setShowRejectPopup(false);
+        })
+        .catch((err) => {
+            console.error("Error rejecting application:", err);
+            alert("Failed to reject request. Please try again.");
+        });
     };
 
     const cancelReject = () => {
