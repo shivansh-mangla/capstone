@@ -2,12 +2,14 @@ import React from 'react';
 import './TimeTable.css';
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-const hours = ['8:00 AM', '8:50 AM', '9:40 AM', '10:30 AM', '11:20 AM', '12:10 PM', '1:00 PM', '1:50 PM', '2:40 PM', '3:30 PM', '4:20 PM', '5:10 PM'];
+const hours = ['8:00 AM', '8:50 AM', '9:40 AM', '10:30 AM', '11:20 AM', '12:10 PM', '1:00 PM', '1:50 PM', '2:40 PM', '3:30 PM', '4:20 PM', '5:10 PM', '6:00 PM'];
 // const hours = ['8-8:50', '8:50-9:40', '9:40-10:30', '10:30-11:20', '11:20-12:10', '12:10-1', '1-1:50', '1:50-2:40', '2:40-3:30', '3:30-4:20', '4:20-5:10', '5:10-6'];
 
 
 const Timetable = ({data, ed}) => {
   console.log(ed);
+  console.log(data);
+  // ed = ['UCS551', 'UCS664', 'UCS749', 'UCS748'];
   var events = [{
             "color": "#FFD700",
             "day": "Monday",
@@ -41,8 +43,10 @@ const Timetable = ({data, ed}) => {
           {hours.map((hour) => {
             const eventz = getEvent(day, hour);
             if(eventz.length === 1){
+              // no clashing
               const event = eventz[0];
               if(event.color === "#FFC0CB"){
+                // elective course
                 if(ed.includes(event.subjectCode)){
                   return (
                     <div className="cell" style={{ backgroundColor: event?.color || 'white' }} key={hour}>
@@ -60,6 +64,7 @@ const Timetable = ({data, ed}) => {
                 }
               }
               else{
+                // not elective course
                 return (
                   <div className="cell" style={{ backgroundColor: event?.color || 'white' }} key={hour}>
                     <p className='subname'>{event ? event.subjectName : ''}</p>
@@ -70,14 +75,27 @@ const Timetable = ({data, ed}) => {
               }
             }
             else if(eventz.length > 1){
-              const preferredEvent = eventz.find((event) => event.color === "#FFC0CB" && ed.includes(event.subjectCode));
+              //clashing (multiple events at same time)
 
-              if(preferredEvent){
+              //check if it is an elective and inside my elective list
+              const preferredEvent1 = eventz.find((event) => event.color === "#FFC0CB" && ed.includes(event.subjectCode));
+              const preferredEvent2 = eventz.find((event) => event.color !== "#FFC0CB");
+
+              if(preferredEvent1){
                 return (
-                    <div className="cell" style={{ backgroundColor: preferredEvent?.color || 'white' }} key={hour}>
-                      <p className='subname'>{preferredEvent ? preferredEvent.subjectName : ''}</p>
-                      <p>{preferredEvent ? preferredEvent.subjectCode : ''}</p>
-                      <p>{preferredEvent ? preferredEvent.venue : ''}</p>
+                    <div className="cell" style={{ backgroundColor: preferredEvent1?.color || 'white' }} key={hour}>
+                      <p className='subname'>{preferredEvent1 ? preferredEvent1.subjectName : ''}</p>
+                      <p>{preferredEvent1 ? preferredEvent1.subjectCode : ''}</p>
+                      <p>{preferredEvent1 ? preferredEvent1.venue : ''}</p>
+                    </div>
+                  )
+              }
+              else if(preferredEvent2){
+                return (
+                    <div className="cell" style={{ backgroundColor: preferredEvent2?.color || 'white' }} key={hour}>
+                      <p className='subname'>{preferredEvent2 ? preferredEvent2.subjectName : ''}</p>
+                      <p>{preferredEvent2 ? preferredEvent2.subjectCode : ''}</p>
+                      <p>{preferredEvent2 ? preferredEvent2.venue : ''}</p>
                     </div>
                   )
               }
@@ -89,6 +107,7 @@ const Timetable = ({data, ed}) => {
               }
             }
             else if(eventz.length === 0){
+              // no event found at the cell
               return(
                 <div className="cell" style={{ backgroundColor:'white' }} key={hour}>
                 </div>

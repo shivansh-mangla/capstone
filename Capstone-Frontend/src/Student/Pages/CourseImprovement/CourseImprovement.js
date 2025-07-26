@@ -5,18 +5,22 @@ import { ProgressBar } from 'react-bootstrap';
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import { UserContext } from '../../../UserContext';
+import Timetable from '../../Components/TimeTable';
 
 const CourseImprovement = () => {
-  const {student} = useContext(UserContext);
+  const {student, setStudent} = useContext(UserContext);
   const [courseData, setCourseData] = useState([]);
   const [selectedCourseCode, setSelectedCourseCode] = useState('');
   const [selectedCourseName, setSelectedCourseName] = useState('');
   const [selectedCourseData, setSelectedCourseData] = useState([]);
 
   const [timeTableOptionsData, setTimeTableOptionsData] = useState([]);
+  const [choices, setChoices] = useState([]);
+  const [newTimeTable, setNewTimeTable] = useState([]);
 
 
   useEffect(() => {
+    console.log(student);
     axios.get("http://localhost:5000/api/get-course-list")
       .then((res) => {
         setCourseData(res.data);
@@ -73,14 +77,45 @@ const CourseImprovement = () => {
       selectedCourseData : selectedCourseData,
       studentData: student
     }
-    console.log(data);
+    console.log(student.timeTableData);
     
     axios.post("http://127.0.0.1:3001", data)
       .then((res) =>{
-        console.log(res);
+        console.log(res.data);
+        setChoices(res.data.choices);
+        setNewTimeTable(res.data.newTimeTable);
       })
       .catch(()=>{
         console.log("Eroor");
+      })
+  }
+
+  const handleSubmit3 = (choice, newTimeTable) =>{
+    const arr = Object.entries(choice);
+    
+    const data = {
+      "email": student.thapar_email,
+      "opted_courses": arr,
+      "message": "",
+      "clashing": false,
+      "new_time_table": newTimeTable,
+      "elective_data": student.electiveData
+    };
+
+    console.log(data);
+
+    axios.post("http://localhost:5000/api/student/generate-application", data)
+      .then((res) =>{
+        toast.success("Application successfully created!!");
+        setStudent(prev => ({
+          ...prev,
+          ongoing_application: res.data.applicationId
+        }));
+        console.log(res.data.applicationId);
+      })
+      .catch((err)=>{
+        console.log(err);
+        toast.error("Try again!!");
       })
   }
 
@@ -170,6 +205,23 @@ const CourseImprovement = () => {
         </div>
 
         <button onClick={handleSubmit2}>Generate Options</button>
+
+        <h1>Plz Choose from one of these options: </h1>
+        {choices.map((val, index) => {
+          const combinedList = [...student.timeTableData, ...newTimeTable[index]];
+          return (
+            <div key={index}>
+              <h2>Option {index+1}</h2>
+              {Object.entries(val).map(([key, value]) => (
+                <h4 key={key}>{key} with: {value}</h4>
+              ))}
+
+              <Timetable data={combinedList} ed={student.electiveData}/>
+
+              <button className='finalize-btn' onClick={()=> {handleSubmit3(val, combinedList)}}>Finalize option {index+1}</button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

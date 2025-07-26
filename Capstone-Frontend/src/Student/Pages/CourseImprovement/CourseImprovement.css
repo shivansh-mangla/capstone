@@ -131,3 +131,9 @@
 .student-main-course-improvement-bottom-right {
   gap: 10px; /* Slightly smaller gap for tighter form layout */
 }
+
+.student-main-course-improvement .finalize-btn{
+  padding: 10px;
+  border-radius: 10px;
+  margin: 20px 0;
+}

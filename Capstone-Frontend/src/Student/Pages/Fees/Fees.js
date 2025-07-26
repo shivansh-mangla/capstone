@@ -102,7 +102,7 @@ const StudentFees = () => {
             <p className='fees-breakdown-table-cell'>Fees Amount</p>
             {courseDetails.map((val, ind) => (
               <React.Fragment key={ind}>
-                <p className='fees-breakdown-table-cell'>{ind + 1}. {val[1]}</p>
+                <p className='fees-breakdown-table-cell'>{ind + 1}. {val[0]}</p>
                 <p className='fees-breakdown-table-cell'>Rs. 8000</p>
               </React.Fragment>
             ))}

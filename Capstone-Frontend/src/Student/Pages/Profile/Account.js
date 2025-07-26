@@ -17,8 +17,11 @@ import SaveIcon from '@mui/icons-material/CheckCircle'; //icons import kiya hai 
 import axios from 'axios';
 import { UserContext } from '../../../UserContext';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
+
+  const navigate = useNavigate();
 
   const {student, setStudent} = React.useContext(UserContext);
   const [subgroupList, setSubgroupList] = React.useState([]);
@@ -63,10 +66,13 @@ export default function Account() {
         electives = res.data["electiveBasketList"];
         setElectiveBasketList(res.data["electiveBasketList"]);
         setFields((prevFields) => generateFields(subgroups, electives));
+        console.log(res.data["electiveBasketList"]);
       })
       .catch(() => {
         toast.error('Failed to load elective data, please retry!');
       });
+    // const list = ["High Performance Computing", "Computer Animation and Gaming", "Information and Cyber Security", "Mathematics and Computing", "Data Science", "Financial Derivative", "DevOps and Continuous Delivery", "Full Stack", "Conversational AI", "Robotics and Edge AI", "Cyber Forensics and Ethical Hacking", "None" ];
+    // setElectiveBasketList(list);
   }, [student]);
 
 
@@ -115,6 +121,7 @@ const handleSave = () => {
         })
   .then(() => {
     toast.success("Details updated successfully!");
+    navigate("/student/dashboard");
   })
   .catch((error) => {
     console.log(error);

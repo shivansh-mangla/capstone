@@ -217,12 +217,23 @@ func GenerateAndSaveApplication(d *model.Application) string {
 	pdf.Ln(8)
 
 	pdf.SetFont("Arial", "", 10)
+	fmt.Println(d.OptedCourses)
+
+	// for _, course := range d.OptedCourses {
+	// 	pdf.CellFormat(30, 8, course[0], "1", 0, "C", false, 0, "")
+	// 	pdf.CellFormat(90, 8, course[1], "1", 0, "C", false, 0, "")
+	// 	pdf.CellFormat(20, 8, course[2], "1", 0, "C", false, 0, "")
+	// 	pdf.CellFormat(25, 8, course[2], "1", 0, "C", false, 0, "")
+	// 	pdf.CellFormat(25, 8, course[2], "1", 0, "C", false, 0, "")
+	// 	pdf.Ln(8)
+	// }
+
 	for _, course := range d.OptedCourses {
 		pdf.CellFormat(30, 8, course[0], "1", 0, "C", false, 0, "")
-		pdf.CellFormat(90, 8, course[1], "1", 0, "C", false, 0, "")
-		pdf.CellFormat(20, 8, course[2], "1", 0, "C", false, 0, "")
-		pdf.CellFormat(25, 8, course[2], "1", 0, "C", false, 0, "")
-		pdf.CellFormat(25, 8, course[2], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(90, 8, course[0], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(20, 8, course[1], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(25, 8, course[1], "1", 0, "C", false, 0, "")
+		pdf.CellFormat(25, 8, course[1], "1", 0, "C", false, 0, "")
 		pdf.Ln(8)
 	}
 
@@ -296,7 +307,13 @@ func CreateApplication(c *fiber.Ctx) error {
 	application.OptedCourses = input.OptedCourses
 	application.Clashing = input.Clashing
 	application.Message = input.Message
+
 	application.Stage = 1
+	if !input.Clashing {
+		application.Stage = 2
+	}
+	application.NewTimeTable = input.NewTimeTable
+	application.ElectiveData = input.ElectiveData
 
 	url := GenerateAndSaveApplication(application)
 	application.URL = url
@@ -306,7 +323,7 @@ func CreateApplication(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Cannot generate application for student "})
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Student Application successfully created", "url": url})
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"Status": "Student Application successfully created", "url": url, "applicationId": application.ApplicationId})
 }
 
 func GetAllApplicationsByEmail(c *fiber.Ctx) error {

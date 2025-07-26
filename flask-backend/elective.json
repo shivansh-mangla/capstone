@@ -1,0 +1,71 @@
+{
+    "main-elective": {
+        "High Performance Computing": [
+            "UCS531",
+            "UCS635",
+            "UCS645",
+            "UCS751"
+        ],
+        "Computer Animation and Gaming": [
+            "UCS532",
+            "UCS636",
+            "UCS646",
+            "UCS752"
+        ],
+        "Information and Cyber Security": [
+            "UCS534",
+            "UCS638",
+            "UCS648",
+            "UCS754"
+        ],
+        "Mathematics and Computing": [
+            "UMC512",
+            "UMC622",
+            "UMC632",
+            "UMC742"
+        ],
+        "Data Science": [
+            "UCS548",
+            "UCS654",
+            "UCS761",
+            "UCS772"
+        ],
+        "Financial Derivative": [
+            "UCS539",
+            "UCS675",
+            "UCS658",
+            "UMC743"
+        ],
+        "DevOps and Continuous Delivery": [
+            "UCS537",
+            "UCS659",
+            "UCS660",
+            "UCS758"
+        ],
+        "Full Stack": [
+            "UCS542",
+            "UCS677",
+            "UCS662",
+            "UCS745"
+        ],
+        "Conversational AI": [
+            "UCS551",
+            "UCS664",
+            "UCS749",
+            "UCS748"
+        ],
+        "Robotics and Edge AI": [
+            "UCS547",
+            "UCS668",
+            "UCS671",
+            "UCS760"
+        ],
+        "Cyber Forensics and Ethical Hacking": [
+            "UCS550",
+            "UCS673",
+            "UCS674",
+            "UCS750"
+        ]
+    }
+}
+
