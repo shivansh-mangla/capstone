@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import StudentSidebar from '../../Components/Sidebar'
 import './Dashboard.css'
 import Timetable from '../../Components/TimeTable'
@@ -7,9 +7,11 @@ import { UserContext } from '../../../UserContext'
 import Logout from '../../Components/Logout'
 
 const Dashboard = () => {
-  const {student} = useContext(UserContext);
+  const {setStudent, student} = useContext(UserContext);
   const [ttData, setTtData] = useState(null);
   const [electiveData, setElectiveData] = useState(null);
+  const hasFetchedTTData = useRef(false);  
+
 
   useEffect(() => {
     if (!student) return; 
@@ -35,6 +37,16 @@ const Dashboard = () => {
         });
 
         setTtData(res.data.data);
+
+        if(hasFetchedTTData.current  == false){
+          setStudent(prev => ({
+            ...prev,
+            timeTableData: res.data.data
+          }));
+          hasFetchedTTData.current  = true;
+        }
+        console.log(student);
+
       } catch (err) {
         console.error("Failed to fetch data:", err.response?.data || err.message);
       } 

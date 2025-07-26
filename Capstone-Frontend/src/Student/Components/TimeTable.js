@@ -2,12 +2,14 @@ import React from 'react';
 import './TimeTable.css';
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-const hours = ['8:00 AM', '8:50 AM', '9:40 AM', '10:30 AM', '11:20 AM', '12:10 PM', '1:00 PM', '1:50 PM', '2:40 PM', '3:30 PM', '4:20 PM', '5:10 PM'];
+const hours = ['8:00 AM', '8:50 AM', '9:40 AM', '10:30 AM', '11:20 AM', '12:10 PM', '1:00 PM', '1:50 PM', '2:40 PM', '3:30 PM', '4:20 PM', '5:10 PM', '6:00 PM'];
 // const hours = ['8-8:50', '8:50-9:40', '9:40-10:30', '10:30-11:20', '11:20-12:10', '12:10-1', '1-1:50', '1:50-2:40', '2:40-3:30', '3:30-4:20', '4:20-5:10', '5:10-6'];
 
 
 const Timetable = ({data, ed}) => {
   console.log(ed);
+  console.log(data);
+  ed = ['UCS551', 'UCS664', 'UCS749', 'UCS748'];
   var events = [{
             "color": "#FFD700",
             "day": "Monday",
