@@ -6,33 +6,6 @@ import RequestList from './DashboardComponents/RequestList';
 import Logout from '../../Components/Logout'
 import './Dashboard.css';
 
-// const approvedData = [
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-// ];
-
-// const pendingData = [
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-// ];
-
-// const rejectedData = [
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-//   { name: 'Arnam Chaurasiya', year: 1, courses: 3, date: '01 March, 2024' },
-//   { name: 'Tina Sharma', year: 1, courses: 1, date: '01 March, 2024' },
-// ];
-
 const Dashboard = () => {
   const [allApplications, setAllApplications] = useState('');
   const [pendingData, setPendingData] = useState('');
@@ -40,24 +13,6 @@ const Dashboard = () => {
   const [approvedData, setApprovedData] = useState('');
   const [selectedType, setSelectedType] = useState('Approved'); 
   const [selectedData, setSelectedData] = useState(approvedData);
-
-  // const getDataByType = () => {
-  //   switch (selectedType) {
-  //     case 'Approved':
-  //       return approvedData;
-  //     case 'Pending':
-  //       return pendingData;
-  //     case 'Rejected':
-  //       return rejectedData;
-  //     default:
-  //       return [];
-  //   }
-  // };
-
-  // const handleLogout = () => {
-  //   console.log('Logged out');
-  //   // Add real logout logic here
-  // };
 
   useEffect(() =>{
           const fetchApplications = async () =>{

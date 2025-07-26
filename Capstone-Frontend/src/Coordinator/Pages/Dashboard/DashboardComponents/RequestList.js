@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './RequestList.css';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
 
 const PendingTable = ({ data, requestType, department }) => {
+    const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
+    const [tableData, setTableData] = useState([]);
 
-    console.log(data);
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+    useEffect(() => {
+        if (Array.isArray(data)) {
+            setTableData(data);
+        }
+    }, [data]);
+
+    // Rejection popup states
+    const [showRejectPopup, setShowRejectPopup] = useState(false);
+    const [rejectionReason, setRejectionReason] = useState('');
+    const [selectedRow, setSelectedRow] = useState(null);
 
     const handleSort = (key) => {
         let direction = 'asc';
@@ -15,24 +25,45 @@ const PendingTable = ({ data, requestType, department }) => {
         setSortConfig({ key, direction });
     };
 
-    const sortedData = [...data].sort((a, b) => {
-        if (!sortConfig.key) return 0;
+    const sortedData =[...tableData].sort((a, b) => {
+        if( !sortConfig.key) return 0;
 
-        const aVal = a[sortConfig.key];
-        const bVal = b[sortConfig.key];
-
-        if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
-        if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
-        return 0;
-    });
+            const aVal = a[sortConfig.key];
+            const bVal = b[sortConfig.key];
+            if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
+            if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
+            return 0;
+        })
 
     const getSortIcon = (key) => {
         if (sortConfig.key !== key) return <FaSort className="coordinator-sort-icon" />;
         return sortConfig.direction === 'asc' ? (
             <FaSortUp className="coordinator-sort-icon" />
         ) : (
-                <FaSortDown className="coordinator-sort-icon" />
+            <FaSortDown className="coordinator-sort-icon" />
         );
+    };
+
+    const handleAccept = (row) => {
+        alert(`Accepted request of ${row.name}`);
+        setTableData((prev) => prev.filter((item) => item !== row));
+    };
+
+    const handleRejectClick = (row) => {
+        setSelectedRow(row);
+        setRejectionReason('');
+        setShowRejectPopup(true);
+    };
+
+    const confirmReject = () => {
+        setTableData((prev) => prev.filter((item) => item !== selectedRow));
+        setShowRejectPopup(false);
+    };
+
+    const cancelReject = () => {
+        setShowRejectPopup(false);
+        setSelectedRow(null);
+        setRejectionReason('');
     };
 
     return (
@@ -54,6 +85,7 @@ const PendingTable = ({ data, requestType, department }) => {
                         <th onClick={() => handleSort('date')}>
                             Applied Date {getSortIcon('date')}
                         </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,10 +97,35 @@ const PendingTable = ({ data, requestType, department }) => {
                             <td>{row.year}</td>
                             <td>{row.courses}</td>
                             <td>{row.date}</td>
+                            <td>
+                                {requestType === 'Pending' ? (
+                                    <>
+                                        <button onClick={() => handleAccept(row)}>Accept</button>
+                                        <button onClick={() => handleRejectClick(row)}>Reject</button>
+                                    </>
+                                ) : null}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {showRejectPopup && (
+                <div className="coordinator-reject-popup">
+                    <div className="coordinator-popup-content">
+                        <h4>Reject Request: {selectedRow.name}</h4>
+                        <textarea
+                            placeholder="Enter reason (optional)"
+                            value={rejectionReason}
+                            onChange={(e) => setRejectionReason(e.target.value)}
+                        />
+                        <div className="coordinator-popup-buttons">
+                            <button onClick={confirmReject}>Confirm Reject</button>
+                            <button onClick={cancelReject}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -90,20 +90,28 @@ const CourseImprovement = () => {
       })
   }
 
-  const handleSubmit3 = (choice) =>{
+  const handleSubmit3 = (choice, newTimeTable) =>{
     const arr = Object.entries(choice);
     
     const data = {
       "email": student.thapar_email,
       "opted_courses": arr,
       "message": "",
-      "clashing": false
+      "clashing": false,
+      "new_time_table": newTimeTable,
+      "elective_data": student.electiveData
     };
 
     console.log(data);
 
-    // axios.post("http://localhost:5000/api/student/generate-application", data)
-    //   .then()
+    axios.post("http://localhost:5000/api/student/generate-application", data)
+      .then((res) =>{
+        console.log(res.data);
+      })
+      .catch((err)=>{
+        console.log(err);
+        toast.error("Try again!!");
+      })
   }
 
 
@@ -203,9 +211,9 @@ const CourseImprovement = () => {
                 <h4 key={key}>{key} with: {value}</h4>
               ))}
 
-              <Timetable data={combinedList}/>
+              <Timetable data={combinedList} ed={student.electiveData}/>
 
-              <button className='finalize-btn' onClick={()=> {handleSubmit3(val)}}>Finalize</button>
+              <button className='finalize-btn' onClick={()=> {handleSubmit3(val, combinedList)}}>Finalize option {index+1}</button>
             </div>
           );
         })}

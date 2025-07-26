@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [ttData, setTtData] = useState(null);
   const [electiveData, setElectiveData] = useState(null);
   const hasFetchedTTData = useRef(false);  
+  const hasFetchedElectiveData = useRef(false);  
 
 
   useEffect(() => {
@@ -59,6 +60,14 @@ const Dashboard = () => {
   if (!student || !electiveData) return <p>Loading...</p>; 
 
   const ed = electiveData[student.elective_basket];
+  if(hasFetchedElectiveData.current == false){
+    setStudent(prev => ({
+        ...prev,
+        electiveData: ed
+      }));
+    hasFetchedElectiveData.current = true;
+  }
+
 
   return (
     <div>

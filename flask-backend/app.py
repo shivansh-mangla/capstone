@@ -36,7 +36,6 @@ def get_students():
 
     newTT, choices = sf.mainF(subgroup, elective_basket, subjectCodes[0], subjectCodes[1], subjectCodes[2])
     
-    print(newTT[0])
 
     return jsonify({"newTimeTable": newTT, "choices": choices})
 
