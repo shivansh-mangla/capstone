@@ -8,7 +8,7 @@ import { UserContext } from '../../../UserContext';
 import Timetable from '../../Components/TimeTable';
 
 const CourseImprovement = () => {
-  const {student} = useContext(UserContext);
+  const {student, setStudent} = useContext(UserContext);
   const [courseData, setCourseData] = useState([]);
   const [selectedCourseCode, setSelectedCourseCode] = useState('');
   const [selectedCourseName, setSelectedCourseName] = useState('');
@@ -106,7 +106,12 @@ const CourseImprovement = () => {
 
     axios.post("http://localhost:5000/api/student/generate-application", data)
       .then((res) =>{
-        console.log(res.data);
+        toast.success("Application successfully created!!");
+        setStudent(prev => ({
+          ...prev,
+          ongoing_application: res.data.applicationId
+        }));
+        console.log(res.data.applicationId);
       })
       .catch((err)=>{
         console.log(err);
