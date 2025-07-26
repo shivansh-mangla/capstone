@@ -57,7 +57,7 @@ type Application struct {
 	GeneralElective string           `json:"general_elective" bson:"general_elective"`
 	OptedCourses    [][]string       `json:"opted_courses" bson:"opted_courses"` // e.g., [["CS101", "Optimization Tech", "A1"], ["MA102", "DSA", "B2"]]
 	Clashing        bool             `json:"clashing" bson:"clashing"`
-	Comments        [][]string       `json:"comments" bson:"comments"` // e.g., [["DOAA", "Clashes with CS102"]]
+	Comments        []string         `json:"comments" bson:"comments"`
 	Message         string           `json:"message" bson:"message"`
 	Stage           int              `json:"stage" bson:"stage"`
 	URL             string           `json:"url" bson:"url"`

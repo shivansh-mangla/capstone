@@ -104,6 +104,9 @@ const CourseImprovement = () => {
 
     console.log(data);
 
+    const confirmed = window.confirm(`Application once submitted can't be taken back. \n\nAre you sure you want to pick these courses with these subgroups ?`);
+    if (!confirmed) return;
+
     axios.post("http://localhost:5000/api/student/generate-application", data)
       .then((res) =>{
         toast.success("Application successfully created!!");
@@ -118,6 +121,12 @@ const CourseImprovement = () => {
         toast.error("Try again!!");
       })
   }
+
+  const handleRemoveCourse = (subjectCode) => {
+    setSelectedCourseData(prev =>
+      prev.filter(course => course.subjectCode !== subjectCode)
+    );
+  };
 
 
   return (
@@ -150,7 +159,7 @@ const CourseImprovement = () => {
                   <p>{course.subjectCode}</p>
                   <p>Course Credits: {course.subjectCredits}</p>
                   <p>L: {course.subjectL} T: {course.subjectT} P: {course.subjectP}</p>
-                  <p>X</p>
+                  <p onClick={() => handleRemoveCourse(course.subjectCode)} className='remove-x'>X</p>
                 </div>
               ))}
             </div>
