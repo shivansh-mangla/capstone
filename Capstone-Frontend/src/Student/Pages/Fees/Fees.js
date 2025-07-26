@@ -16,18 +16,20 @@ const StudentFees = () => {
   useEffect(() => {
     if (student) {
       console.log(student);
-      axios.post("http://localhost:5000/api/get-application-details", {
-        application_id: student.ongoing_application
-      })
-      .then((res) => {
-        console.log(res.data)
-        console.log(res.data["Application Data"]);
-        setApplicationDetails(res.data["Application Data"]);
-        setCourseDetails(res.data["Application Data"]["opted_courses"]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      if(student.ongoing_application){
+        axios.post("http://localhost:5000/api/get-application-details", {
+          application_id: student.ongoing_application
+        })
+        .then((res) => {
+          console.log(res.data)
+          console.log(res.data["Application Data"]);
+          setApplicationDetails(res.data["Application Data"]);
+          setCourseDetails(res.data["Application Data"]["opted_courses"]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
     }
   }, [student]);
 
@@ -84,59 +86,123 @@ const StudentFees = () => {
     }
   };
 
+  function renderFeesPage(){
+    if(applicationDetails){
+      if(applicationDetails.stage === 4){
+        return(
+          <div className="student-main-fees">
+            <h1>Fees Section</h1>
+            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top">
+              <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
+              <div className="fees-breakdown-table">
+                <p className='fees-breakdown-table-cell'>Courses</p>
+                <p className='fees-breakdown-table-cell'>Fees Amount</p>
+                {courseDetails.map((val, ind) => (
+                  <React.Fragment key={ind}>
+                    <p className='fees-breakdown-table-cell'>{ind + 1}. {val[0]}</p>
+                    <p className='fees-breakdown-table-cell'>Rs. 8000</p>
+                  </React.Fragment>
+                ))}
+                <p className='fees-breakdown-table-cell'>Total</p>
+                <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
+              </div>
+            </div>
+            <div className="student-main-fees-middle">
+              <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
+              <br />
+              <br />
+              <h1>Payment reciept uploaded!! Please wait... Application will be accepted after verification by Coordinator</h1>
+            </div>
+          </div>
+        )
+      }
+      else if(applicationDetails.stage === 3){
+        return(
+          <div className="student-main-fees">
+            <h1>Fees Section</h1>
+            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top">
+              <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
+              <div className="fees-breakdown-table">
+                <p className='fees-breakdown-table-cell'>Courses</p>
+                <p className='fees-breakdown-table-cell'>Fees Amount</p>
+                {courseDetails.map((val, ind) => (
+                  <React.Fragment key={ind}>
+                    <p className='fees-breakdown-table-cell'>{ind + 1}. {val[0]}</p>
+                    <p className='fees-breakdown-table-cell'>Rs. 8000</p>
+                  </React.Fragment>
+                ))}
+                <p className='fees-breakdown-table-cell'>Total</p>
+                <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
+              </div>
+            </div>
+            <div className="student-main-fees-middle">
+              <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
+              <div className="student-main-fees-middle-left">
+                <p>Pay using UPI by scanning this QR code</p>
+              </div>
+              <div className="student-main-fees-middle-right">
+                <p>Pay using Eazy Pay</p>
+              </div>
+            </div>
+            <div className="student-main-fees-bottom">
+              <h2>Upload Fees Receipt here in PDF form (max 2MB)</h2>
+              <form onSubmit={handleSubmit}>
+                <input type="file" accept="application/pdf" onChange={handleFileChange} />
+                <button type="submit">Submit</button>
+              </form>
+              {uploadStatus && <p>{uploadStatus}</p>}
+              {uploadedUrl && (
+                <p>
+                  View uploaded receipt:{" "}
+                  <a href={uploadedUrl} target="_blank" rel="noopener noreferrer">
+                    {uploadedUrl}
+                  </a>
+                </p>
+              )}
+            </div>
+          </div>
+        )
+      }
+      else if(applicationDetails.stage === 1 || applicationDetails.stage === 2){
+        return(
+          <div className="student-main-fees">
+            <h1>Fees Section</h1>
+            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top">
+              <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
+              <div className="fees-breakdown-table">
+                <p className='fees-breakdown-table-cell'>Courses</p>
+                <p className='fees-breakdown-table-cell'>Fees Amount</p>
+                {courseDetails.map((val, ind) => (
+                  <React.Fragment key={ind}>
+                    <p className='fees-breakdown-table-cell'>{ind + 1}. {val[0]}</p>
+                    <p className='fees-breakdown-table-cell'>Rs. 8000</p>
+                  </React.Fragment>
+                ))}
+                <p className='fees-breakdown-table-cell'>Total</p>
+                <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
+              </div>
+            </div>
+            <div className="student-main-fees-middle">
+              <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
+              <br />
+              <br />
+              <h1>Payment options and Reciept upload will be available after approval of Coordinator/DoAA</h1>
+            </div>
+          </div>
+        )
+      }
+    }
+    else
+      return <h1>No ongoing Applications</h1>
+  }
+
   return (
     <div>
       <StudentSidebar />
-      {applicationDetails?.fee_receipt_link ? (
-        <div className="student-main-fees">
-          <h1>Fee Reciept Submitted... Plz wait for approval</h1>
-        </div>
-      ) : (
-        <div className="student-main-fees">
-        <h1>Fees Section</h1>
-        <h4>Pay your fees here</h4>
-        <div className="student-main-fees-top">
-          <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
-          <div className="fees-breakdown-table">
-            <p className='fees-breakdown-table-cell'>Courses</p>
-            <p className='fees-breakdown-table-cell'>Fees Amount</p>
-            {courseDetails.map((val, ind) => (
-              <React.Fragment key={ind}>
-                <p className='fees-breakdown-table-cell'>{ind + 1}. {val[0]}</p>
-                <p className='fees-breakdown-table-cell'>Rs. 8000</p>
-              </React.Fragment>
-            ))}
-            <p className='fees-breakdown-table-cell'>Total</p>
-            <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
-          </div>
-        </div>
-        <div className="student-main-fees-middle">
-          <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
-          <div className="student-main-fees-middle-left">
-            <p>Pay using UPI by scanning this QR code</p>
-          </div>
-          <div className="student-main-fees-middle-right">
-            <p>Pay using Eazy Pay</p>
-          </div>
-        </div>
-        <div className="student-main-fees-bottom">
-          <h2>Upload Fees Receipt here in PDF form (max 2MB)</h2>
-          <form onSubmit={handleSubmit}>
-            <input type="file" accept="application/pdf" onChange={handleFileChange} />
-            <button type="submit">Submit</button>
-          </form>
-          {uploadStatus && <p>{uploadStatus}</p>}
-          {uploadedUrl && (
-            <p>
-              View uploaded receipt:{" "}
-              <a href={uploadedUrl} target="_blank" rel="noopener noreferrer">
-                {uploadedUrl}
-              </a>
-            </p>
-          )}
-        </div>
-      </div>
-      )}
+      {renderFeesPage()}
     </div>
   );
 };

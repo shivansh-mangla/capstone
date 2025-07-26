@@ -54,6 +54,7 @@ const Status = () => {
       <div className="status-container">
         <Logout />
         <h2 className="status-heading">Notification Section</h2>
+        <h2 className="status-heading">Application ID: {student?.ongoing_application}</h2>
         <p className="sub-heading">Your Application Status</p>
 
         {active ? (

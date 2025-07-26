@@ -307,6 +307,7 @@ func CreateApplication(c *fiber.Ctx) error {
 	application.OptedCourses = input.OptedCourses
 	application.Clashing = input.Clashing
 	application.Message = input.Message
+	application.Comments = []string{"", ""}
 
 	application.Stage = 1
 	if !input.Clashing {
@@ -317,6 +318,12 @@ func CreateApplication(c *fiber.Ctx) error {
 
 	url := GenerateAndSaveApplication(application)
 	application.URL = url
+
+	student.OngoingApplication = application.ApplicationId
+	err = repository.UpdateDetailsDB(&student)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update student's ongoing application"})
+	}
 
 	err = repository.CreateApplicationInDB(application)
 	if err != nil {
