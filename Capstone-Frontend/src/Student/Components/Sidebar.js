@@ -29,7 +29,7 @@ export default function StudentSidebar() {
     { name: "Fees Payment", path: "/student/fees", icon: <FaMoneyCheckAlt /> },
     { name: "History", path: "/student/history", icon: <FaHistory /> },
     { name: "Notification/Status", path: "/student/status", icon: <FaBell /> },
-    { name: "Setting", path: "/student/settings", icon: <FaCog /> },
+    { name: "FAQs", path: "/student/faq", icon: <FaCog /> },
   ];
 
   const toggleSidebar = () => {

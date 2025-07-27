@@ -14,6 +14,7 @@ import StudentCourseImprovement from './Student/Pages/CourseImprovement/CourseIm
 import StudentFees from './Student/Pages/Fees/Fees.js'
 import StudentStatus from './Student/Pages/Status/Status.js'
 import StudentHistory from './Student/Pages/Hsitory/History.js'
+import Faq from "./Student/Pages/FAQ/Faq.jsx";
 
 import CoordinatorDashboard from './Coordinator/Pages/Dashboard/Dashboard.js'
 import CoordinatorAccount from './Coordinator/Pages/Account/Account.js'
@@ -57,6 +58,7 @@ function App() {
             <Route path="/student/fees" element={<ProtectedRouteStudent><StudentFees /></ProtectedRouteStudent>} />
             <Route path="/student/status" element={<ProtectedRouteStudent><StudentStatus /></ProtectedRouteStudent>} />
             <Route path="/student/history" element={<ProtectedRouteStudent><StudentHistory /></ProtectedRouteStudent>} />
+            <Route path="/student/faq" element={<ProtectedRouteStudent><Faq /></ProtectedRouteStudent>} />
 
             {/* Coordinator routes */}
             <Route path="/coordinator/dashboard" element={<ProtectedRouteCoordinator><CoordinatorDashboard /></ProtectedRouteCoordinator>} />

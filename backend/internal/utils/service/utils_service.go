@@ -26,13 +26,39 @@ func SendVerificationEmail(recipientEmail, token string) error {
 	m := mail.NewMessage()
 	m.SetHeader("From", m.FormatAddress(from, "Improvement Portal Server"))
 	m.SetHeader("To", recipientEmail)
-	m.SetHeader("Subject", "Verify your email for Improvement Portal")
+	m.SetHeader("Subject", "Please Verify Your Email Address - Improvement Course Management Portal")
 	verificationLink := fmt.Sprintf("http://localhost:5000/verify?token=%s", token)
 	m.SetBody("text/html", fmt.Sprintf(`
-		<h2>Email Verification</h2>
-		<p>Click the link below to verify your email and then login:</p>
-		<a href="%s">Verify Email</a>
-	`, verificationLink))
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<meta charset="UTF-8">
+			<title>Email Verification</title>
+		</head>
+		<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+			<div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+				<h2 style="color: #333333;">Welcome to the Improvement Portal!</h2>
+				<p style="color: #555555; font-size: 16px;">
+					Thank you for registering. To complete your signup, please verify your email address by clicking the button below:
+				</p>
+				<div style="text-align: center; margin: 30px 0;">
+					<a href="%s" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;">
+						Verify Email
+					</a>
+				</div>
+				<p style="color: #777777; font-size: 14px;">
+					If the button above doesn't work, copy and paste the following link into your browser:
+				</p>
+				<p style="color: #777777; font-size: 14px; word-wrap: break-word;">
+					%s
+				</p>
+				<p style="color: #999999; font-size: 12px; margin-top: 30px;">
+					If you did not create an account, you can safely ignore this email.
+				</p>
+			</div>
+		</body>
+		</html>
+	`, verificationLink, verificationLink))
 
 	// Set up dialer
 	d := mail.NewDialer(smtpHost, smtpPort, from, password)
