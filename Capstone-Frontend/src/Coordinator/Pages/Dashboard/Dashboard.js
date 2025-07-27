@@ -28,9 +28,7 @@ const Dashboard = () => {
 
                   data.data.forEach((app) => {
                       switch (app.stage) {
-                          case 1:
                           case 2:
-                          case 3:
                           case 4:
                               pending.push(app);
                               break;

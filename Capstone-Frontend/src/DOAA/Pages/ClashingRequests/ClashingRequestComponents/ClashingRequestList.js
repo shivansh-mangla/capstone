@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import '../../Dashboard/DashboardComponents/RequestList.css';
 import './ClashingRequestList.css';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
+import { toast } from "react-toastify";
+import axios from 'axios'
+
 
 const ClashingRequestList = ({ data, department }) => {
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });   // Manages the current sorting configuration (column key and direction)
-    const [requests, setRequests] = useState(data);     // Stores the list of clashing requests (filtered when accepted/rejected)
-    const [showModal, setShowModal] = useState(false);         // Controls the visibility of the rejection reason modal
-    const [selectedRequest, setSelectedRequest] = useState(null);       // Keeps track of the currently selected request for rejection
-    const [rejectionReason, setRejectionReason] = useState('');     // Stores the input text for the rejection reason
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });   
+    const [requests, setRequests] = useState(data);    
+    const [showModal, setShowModal] = useState(false);         
+    const [selectedRequest, setSelectedRequest] = useState(null);      
+    const [rejectionReason, setRejectionReason] = useState('');     
 
 
     const handleSort = (key) => {
@@ -20,8 +23,15 @@ const ClashingRequestList = ({ data, department }) => {
     };
 
     const handleAccept = (row) => {
-        console.log('Accepted:', row);
-        setRequests((prev) => prev.filter((r) => r !== row));
+        const updatedRow = { ...row, stage: 2 };
+        axios.post("http://localhost:5000/api/doaa/update-application", updatedRow)
+        .then((res) => {
+            setRequests((prev) => prev.filter((r) => r !== row));
+        })
+        .catch((err) => {
+            console.error("Error accepting application:", err);
+            toast.error("Failed to accept request. Please try again.");
+        });
     };
 
     const handleRejectClick = (row) => {
@@ -30,11 +40,21 @@ const ClashingRequestList = ({ data, department }) => {
     };
 
     const handleModalOk = () => {
-        console.log('Rejected:', selectedRequest, 'Reason:', rejectionReason);
-        setRequests((prev) => prev.filter((r) => r !== selectedRequest));
-        setShowModal(false);
-        setSelectedRequest(null);
-        setRejectionReason('');
+        const updatedComments = [...selectedRequest.comments];
+        updatedComments[0] = rejectionReason;
+
+        const updatedRow = { ...selectedRequest, stage: 10, comments: updatedComments };
+        axios.post("http://localhost:5000/api/doaa/update-application", updatedRow)
+        .then((res) => {
+            setRequests((prev) => prev.filter((r) => r !== selectedRequest));
+            setShowModal(false);
+            setSelectedRequest(null);
+            setRejectionReason('');
+        })
+        .catch((err) => {
+            console.error("Error rejecting application:", err);
+            alert("Failed to reject request. Please try again.");
+        });
     };
 
     const handleModalCancel = () => {
@@ -61,10 +81,7 @@ const ClashingRequestList = ({ data, department }) => {
         );
     };
 
-    useEffect(()=>{
-        console.log(data);
-    })
-
+  
     return (
         <div className="doaa-classing-request-table">
             <h3>Clashing Requests</h3>
@@ -116,17 +133,34 @@ const ClashingRequestList = ({ data, department }) => {
             </table>
 
             {showModal && (
-                <div className="modal-backdrop">
-                    <div className="modal">
-                        <h4>Enter Reason for Rejection (optional)</h4>
+                // <div className="modal-backdrop">
+                //     <div className="modal">
+                //         <h4>Enter Reason for Rejection (optional)</h4>
+                //         <textarea
+                //             value={rejectionReason}
+                //             onChange={(e) => setRejectionReason(e.target.value)}
+                //             placeholder="Type reason here..."
+                //         />
+                //         <div className="modal-buttons">
+                //             <button onClick={handleModalOk} className="action-btn accept">OK</button>
+                //             <button onClick={handleModalCancel} className="action-btn reject">Cancel</button>
+                //         </div>
+                //     </div>
+                // </div>
+
+
+
+                <div className="doaa-reject-popup">
+                    <div className="doaa-popup-content">
+                        <h4>Reject Request: {selectedRequest.name}</h4>
                         <textarea
+                            placeholder="Enter reason (optional)"
                             value={rejectionReason}
                             onChange={(e) => setRejectionReason(e.target.value)}
-                            placeholder="Type reason here..."
                         />
-                        <div className="modal-buttons">
-                            <button onClick={handleModalOk} className="action-btn accept">OK</button>
-                            <button onClick={handleModalCancel} className="action-btn reject">Cancel</button>
+                        <div className="doaa-popup-buttons">
+                            <button onClick={handleModalOk}  className="action-btn accept" >Confirm Reject</button>
+                            <button onClick={handleModalCancel} className="action-btn reject" >Cancel</button>
                         </div>
                     </div>
                 </div>

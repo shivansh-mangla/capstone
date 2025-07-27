@@ -7,6 +7,7 @@ import (
 
 	"github.com/shivansh-mangla/capstone/backend/internal/database"
 	"github.com/shivansh-mangla/capstone/backend/internal/doaa/model"
+    studentModel "github.com/shivansh-mangla/capstone/backend/internal/student/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -101,31 +102,59 @@ func AllCoordinatorsInDB() ([]model.Coordinator, error) {
     return coordinators, nil
 }
 
-func GetAllApplicationsinDB() ([]model.Application, error) {
-    applicationDetails := database.MongoDB.Collection("applicationDetails")
+// func GetAllApplicationsinDB() ([]model.Application, error) {
+//     applicationDetails := database.MongoDB.Collection("applicationDetails")
 
-    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-    defer cancel()
+//     ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+//     defer cancel()
 
-    cursor, err := applicationDetails.Find(ctx, bson.M{})
-    if err != nil {
-        return nil, err
-    }
-    defer cursor.Close(ctx)
+//     cursor, err := applicationDetails.Find(ctx, bson.M{})
+//     if err != nil {
+//         return nil, err
+//     }
+//     defer cursor.Close(ctx)
 
-    var applications []model.Application
+//     var applications []model.Application
 
-    for cursor.Next(ctx) {
-        var app model.Application
-        if err := cursor.Decode(&app); err != nil {
-            return nil, err
-        }
-        applications = append(applications, app)
-    }
+//     for cursor.Next(ctx) {
+//         var app model.Application
+//         if err := cursor.Decode(&app); err != nil {
+//             return nil, err
+//         }
+//         applications = append(applications, app)
+//     }
 
-    if err := cursor.Err(); err != nil {
-        return nil, err
-    }
+//     if err := cursor.Err(); err != nil {
+//         return nil, err
+//     }
 
-    return applications, nil
+//     return applications, nil
+// }
+
+
+
+func UpdateApplicationinDB(application *studentModel.Application) error {
+	applicationDetails := database.MongoDB.Collection("applicationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	fmt.Println(application.ApplicationId)
+	filter := bson.M{"application_id": application.ApplicationId}
+	update := bson.M{"$set": bson.M{"stage": application.Stage, "comments": application.Comments}}
+
+	_, err := applicationDetails.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return fmt.Errorf("failed to update application: %w", err)
+	}
+
+	// if result.MatchedCount == 0 {
+	// 	fmt.Println("No matching document found for update.")
+	// } else if result.ModifiedCount == 0 {
+	// 	fmt.Println("Document matched but stage was not updated (possibly same value).")
+	// } else {
+	// 	fmt.Println("Update successful.")
+	// }
+
+	return nil
 }

@@ -49,7 +49,7 @@ func SetupRoutes() *fiber.App {
 	coordinator := api.Group("/coordinator")
 	coordinator.Post("/login", coordinatorHandler.LoginCoordinator)
 	coordinator.Post("/update-password", coordinatorHandler.UpdateCoordinatorPassword)
-	coordinator.Post("/accept-application", coordinatorHandler.UpdateApplication)
+	coordinator.Post("/update-application", coordinatorHandler.UpdateApplication)
 
 	//doaa routes
 	doaa := api.Group("/doaa")
@@ -57,7 +57,8 @@ func SetupRoutes() *fiber.App {
 	doaa.Post("/update-name", doaaHandler.UpdateDoaaName)
 	doaa.Post("/update-password", doaaHandler.UpdateDoaaPassword)
 	doaa.Get("/all-coordinators-details", doaaHandler.GetAllCoordinatorsDetails)
-	doaa.Get("/get-all-applications", doaaHandler.GetAllApplications)
+	doaa.Post("/update-application", doaaHandler.UpdateApplication)
+	// doaa.Get("/get-all-applications", doaaHandler.GetAllApplications)
 
 	//auth routes
 	auth := app.Group("/verify")

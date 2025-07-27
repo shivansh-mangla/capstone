@@ -47,8 +47,10 @@ const PendingTable = ({ data, requestType, department }) => {
 
     const handleAccept = (row) => {
         // alert(`Accepted request of ${row.name}`);
-        const updatedRow = { ...row, stage: 3 };
-        axios.post("http://localhost:5000/api/coordinator/accept-application", updatedRow)
+        let updatedRow = { ...row, stage: 3 };
+        if(row.stage == 4)
+        updatedRow = { ...row, stage: 5 };
+        axios.post("http://localhost:5000/api/coordinator/update-application", updatedRow)
         .then((res) =>{
             setTableData((prev) => prev.filter((item) => item !== row));
         })
@@ -69,7 +71,7 @@ const PendingTable = ({ data, requestType, department }) => {
         updatedComments[1] = rejectionReason;
 
         const updatedRow = { ...selectedRow, stage: 10, comments: updatedComments };
-        axios.post("http://localhost:5000/api/coordinator/accept-application", updatedRow)
+        axios.post("http://localhost:5000/api/coordinator/update-application", updatedRow)
         .then((res) => {
             setTableData((prev) => prev.filter((item) => item !== selectedRow));
             setShowRejectPopup(false);

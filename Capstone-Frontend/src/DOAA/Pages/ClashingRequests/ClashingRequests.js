@@ -21,28 +21,24 @@ import './ClashingRequests.css';
 const ClashingRequest = () => {
     const [allApplications, setAllApplications] = useState('');
     const [clashingData, setClashingData] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() =>{
             const fetchApplications = async () =>{
                 try {
-                    const response = await fetch('http://localhost:5000/api/doaa/get-all-applications');
+                    const response = await fetch('http://localhost:5000/api/get-all-applications');
                     const data = await response.json();
-                    console.log(data.data);
+                    // console.log(data.data);
                     setAllApplications(data.data);
     
-                    const clashing = [];
-    
-                    data.data.forEach((app) => {
-                        if(app.clashing === true)
-                            clashing.push(app);
-                    });
-                    
-                    console.log(clashing);
+                    const clashing = data.data.filter(app => app.stage === 1);
                     setClashingData(clashing);
 
                 } catch (error) {
                     console.error('Error fetching applications data:', error);
-                  }
+                } finally {
+                    setLoading(false);
+                }
             };
     
             fetchApplications();
@@ -55,13 +51,22 @@ const ClashingRequest = () => {
             <div className="clashing-request-main">
                 <Logout />
 
-                {/* {Object.entries(clashingData).map(([deptName, deptData]) => ( */}
+                {loading ? (
+                    <p>Loading clashing requests ...</p>
+                ): (
+                        <ClashingRequestList
+                            // key={deptName}
+                            data={clashingData}
+                            department={"CSED"}
+                        />
+                )}
+                {/* {Object.entries(clashingData).map(([deptName, deptData]) => (
                     <ClashingRequestList
                         // key={deptName}
                         data={clashingData}
                         department={"CSED"}
                     />
-                {/* ))} */}
+                 ))}  */}
 
             </div>
         </div>

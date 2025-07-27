@@ -21,6 +21,10 @@ func GetAllCoordinatorsDetails(c *fiber.Ctx) error {
 	return service.GetAllCoordinatorsDetails(c)
 }
 
-func GetAllApplications( c *fiber.Ctx) error {
-	return service.GetAllApplications(c);
+// func GetAllApplications( c *fiber.Ctx) error {
+// 	return service.GetAllApplications(c);
+// }
+
+func UpdateApplication(c *fiber.Ctx) error {
+	return service.UpdateApplication(c)
 }
