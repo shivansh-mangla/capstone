@@ -6,7 +6,7 @@ import Timetable from '../../../../Student/Components/TimeTable';
 import { toast } from 'react-toastify';
 
 const PendingTable = ({ data, requestType, department }) => {
-    const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
     const [tableData, setTableData] = useState([]);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -18,6 +18,17 @@ const PendingTable = ({ data, requestType, department }) => {
             setTableData(data);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (Array.isArray(data)) {
+            const mappedData = data.map(item => ({
+                ...item,
+                category: item.stage === 2 ? 'Timetable' : 'Fees'
+            }));
+            setTableData(mappedData);
+        }
+    }, [data]);
+
 
     // Rejection popup states
     const [showRejectPopup, setShowRejectPopup] = useState(false);
@@ -124,6 +135,9 @@ const PendingTable = ({ data, requestType, department }) => {
                         <th onClick={() => handleSort('appID')}>
                             Application ID {getSortIcon('appID')}
                         </th>
+                        <th onClick={() => handleSort('category')}>
+                            Category {getSortIcon('category')}
+                        </th>
                         <th>
                             Details
                         </th>
@@ -138,6 +152,7 @@ const PendingTable = ({ data, requestType, department }) => {
                             </td>
                             <td>{row.year}</td>
                             <td>{row.application_id}</td>
+                            <td>{row.category}</td>
                             <td>
                                 <button onClick={() => showDetailsPopup(row)}>Get Details</button>
                             </td>
