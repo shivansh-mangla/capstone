@@ -53,29 +53,29 @@ function App() {
             <Route path="/student/signup" element={<ICMPSignUp />} />
             <Route path="/student/dashboard" element={<ProtectedRouteStudent><StudentDashboard /></ProtectedRouteStudent>} />
             <Route path="/student/account" element={<ProtectedRouteStudent><StudentAccount /></ProtectedRouteStudent>} />
-            <Route path="/student/course-improvement" element={<StudentCourseImprovement />} />
-            <Route path="/student/fees" element={<StudentFees />} />
-            <Route path="/student/status" element={<StudentStatus />} />
-            <Route path="/student/history" element={<StudentHistory />} />
+            <Route path="/student/course-improvement" element={<ProtectedRouteStudent><StudentCourseImprovement /></ProtectedRouteStudent>} />
+            <Route path="/student/fees" element={<ProtectedRouteStudent><StudentFees /></ProtectedRouteStudent>} />
+            <Route path="/student/status" element={<ProtectedRouteStudent><StudentStatus /></ProtectedRouteStudent>} />
+            <Route path="/student/history" element={<ProtectedRouteStudent><StudentHistory /></ProtectedRouteStudent>} />
 
-
-            {/* Coordinator routes  */}
+            {/* Coordinator routes */}
             <Route path="/coordinator/dashboard" element={<ProtectedRouteCoordinator><CoordinatorDashboard /></ProtectedRouteCoordinator>} />
-            <Route path="/coordinator/account" element={<CoordinatorAccount/>} />
-            <Route path="/coordinator/academic-information" element={<CoordinatorAcademicInformation />} />
-            <Route path="/coordinator/time-table" element={<CoordinatorTimeTable />} />
+            <Route path="/coordinator/account" element={<ProtectedRouteCoordinator><CoordinatorAccount /></ProtectedRouteCoordinator>} />
+            <Route path="/coordinator/academic-information" element={<ProtectedRouteCoordinator><CoordinatorAcademicInformation /></ProtectedRouteCoordinator>} />
+            <Route path="/coordinator/time-table" element={<ProtectedRouteCoordinator><CoordinatorTimeTable /></ProtectedRouteCoordinator>} />
 
-            {/* HOD routes  */}
+            {/* HOD routes */}
             <Route path="/hod/dashboard" element={<ProtectedRouteHod><HODDashboard /></ProtectedRouteHod>} />
-            <Route path="/hod/coordinators" element={<HODCoordinators />} />
-            <Route path="/hod/account" element={<HODAccount />} />
-            
-            {/* DOAA routes   */}
+            <Route path="/hod/coordinators" element={<ProtectedRouteHod><HODCoordinators /></ProtectedRouteHod>} />
+            <Route path="/hod/account" element={<ProtectedRouteHod><HODAccount /></ProtectedRouteHod>} />
+
+            {/* DOAA routes */}
             <Route path="/doaa/dashboard" element={<ProtectedRouteDoaa><DOAADashboard /></ProtectedRouteDoaa>} />
-            <Route path="/doaa/coordinators" element={<DOAACoordinators />} />
-            <Route path="/doaa/clashing-requests" element={<DOAAClashingRequest />} />
-            <Route path="/doaa/clashing-stats" element={<DOAAClashingStats />} />
-            <Route path="/doaa/account" element={<DOAAAccount />} />
+            <Route path="/doaa/coordinators" element={<ProtectedRouteDoaa><DOAACoordinators /></ProtectedRouteDoaa>} />
+            <Route path="/doaa/clashing-requests" element={<ProtectedRouteDoaa><DOAAClashingRequest /></ProtectedRouteDoaa>} />
+            <Route path="/doaa/clashing-stats" element={<ProtectedRouteDoaa><DOAAClashingStats /></ProtectedRouteDoaa>} />
+            <Route path="/doaa/account" element={<ProtectedRouteDoaa><DOAAAccount /></ProtectedRouteDoaa>} />
+
 
           </Routes>
           <ToastContainer />

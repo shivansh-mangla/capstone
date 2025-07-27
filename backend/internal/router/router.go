@@ -33,9 +33,9 @@ func SetupRoutes() *fiber.App {
 	student.Post("/upload-fee", authHandler.JWTMiddleware, studentHandler.UploadFeeReciept)
 	student.Post("/update-details", authHandler.JWTMiddleware, studentHandler.UpdateDetails)
 	student.Get("/get-elective-data", studentHandler.GetElectiveData)
-	student.Post("/generate-application", studentHandler.CreateApplication)
+	student.Post("/generate-application", authHandler.JWTMiddleware, studentHandler.CreateApplication)
 	student.Post("/get-all-application", studentHandler.GetAllApplicationsByEmail)
-	
+
 	// hod routes
 	hod := api.Group("/hod")
 	hod.Post("/login", hodHandler.LoginHod)

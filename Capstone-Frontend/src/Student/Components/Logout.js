@@ -13,7 +13,7 @@ export default function Logout() {
     };
     
   return (
-      <div className="student-top-row" >
+      <div className="student-logout-top-row" >
           <button className="student-logout-button" onClick={handleLogout}>
               Log Out <span className="logout-icon">➡️</span>
           </button>

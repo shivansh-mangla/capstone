@@ -1,4 +1,4 @@
-.student-top-row {
+.student-logout-top-row {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     transition: all 0.2s ease-in-out;
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
 .student-logout-button .logout-icon {
@@ -34,7 +34,7 @@
 }
 
 @media (max-width: 1400px){
-    .student-top-row {
+    .student-logout-top-row {
             margin: 0px;
         }
 }

@@ -6,8 +6,10 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 import { UserContext } from '../../../UserContext';
 import Timetable from '../../Components/TimeTable';
+import Logout from '../../Components/Logout';
 
 const CourseImprovement = () => {
+  const token = localStorage.getItem("ICMPTokenStudent");
   const {student, setStudent} = useContext(UserContext);
   const [courseData, setCourseData] = useState([]);
   const [selectedCourseCode, setSelectedCourseCode] = useState('');
@@ -77,7 +79,6 @@ const CourseImprovement = () => {
       selectedCourseData : selectedCourseData,
       studentData: student
     }
-    console.log(student.timeTableData);
     
     axios.post("http://127.0.0.1:3001", data)
       .then((res) =>{
@@ -102,19 +103,21 @@ const CourseImprovement = () => {
       "elective_data": student.electiveData
     };
 
-    console.log(data);
-
     const confirmed = window.confirm(`Application once submitted can't be taken back. \n\nAre you sure you want to pick these courses with these subgroups ?`);
     if (!confirmed) return;
 
-    axios.post("http://localhost:5000/api/student/generate-application", data)
+    toast.warning("Please wait for Application to be generated!!");
+    axios.post("http://localhost:5000/api/student/generate-application", data, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+        })
       .then((res) =>{
         toast.success("Application successfully created!!");
         setStudent(prev => ({
           ...prev,
           ongoing_application: res.data.applicationId
         }));
-        console.log(res.data.applicationId);
       })
       .catch((err)=>{
         console.log(err);
@@ -132,9 +135,10 @@ const CourseImprovement = () => {
   return (
     <div>
       <StudentSidebar />
+      <Logout />
       <div className="student-main-course-improvement">
         <h1>Courses Improvement Section</h1>
-        <div className="student-main-course-improvement-top">
+        {/* <div className="student-main-course-improvement-top">
           <div className="student-main-course-improvement-top-t1">
             <p>Current Semester <span>#3</span></p>
             <p>Odd Semester</p>
@@ -147,6 +151,13 @@ const CourseImprovement = () => {
             <p>Credits Remaining 7/30</p>
             <ProgressBar now={(7 * 100) / 30} variant="danger" />
           </div>
+        </div> */}
+
+        <div className="student-main-course-improvement-top2">
+          <h5>- Please choose maximum of 3 courses to pick.</h5>
+          <h5>- Generate options by clicking on "Generate options button".</h5>
+          <h5>- Select one of the available options.</h5>
+          <h5>- Wait for the Ongoing Application to be Accepted/Rejected before making new request.</h5>
         </div>
 
         <div className="student-main-course-improvement-bottom">

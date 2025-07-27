@@ -18,6 +18,7 @@ import axios from 'axios';
 import { UserContext } from '../../../UserContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Logout from '../../Components/Logout';
 
 export default function Account() {
 
@@ -142,6 +143,7 @@ const handleSave = () => {
   return (
     <Box alignItems="flex-start">
       <StudentSidebar/>
+      <Logout />
       <Container >
         
       </Container>

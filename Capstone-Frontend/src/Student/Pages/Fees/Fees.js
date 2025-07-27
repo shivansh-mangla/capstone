@@ -4,6 +4,7 @@ import './Fees.css';
 import axios from 'axios';
 import { UserContext } from '../../../UserContext';
 import { toast } from 'react-toastify';
+import Logout from '../../Components/Logout';
 
 const StudentFees = () => {
   const [applicationDetails, setApplicationDetails] = useState(null);
@@ -216,6 +217,7 @@ const StudentFees = () => {
   return (
     <div>
       <StudentSidebar />
+      <Logout />
       {renderFeesPage()}
     </div>
   );
