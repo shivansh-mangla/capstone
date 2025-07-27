@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import './RequestList.css';
 import axios from 'axios'
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
+import Timetable from '../../../../Student/Components/TimeTable';
+import { toast } from 'react-toastify';
 
 const PendingTable = ({ data, requestType, department }) => {
     const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
     const [tableData, setTableData] = useState([]);
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedDetailsRow, setSelectedDetailsRow] = useState(null); // NEW
+
 
     useEffect(() => {
         if (Array.isArray(data)) {
@@ -53,6 +59,7 @@ const PendingTable = ({ data, requestType, department }) => {
         axios.post("http://localhost:5000/api/coordinator/update-application", updatedRow)
         .then((res) =>{
             setTableData((prev) => prev.filter((item) => item !== row));
+            toast.success("Application Accepted successfully!!");
         })
         .catch((err)=>{
             console.error("Error accepting application:", err);
@@ -75,6 +82,7 @@ const PendingTable = ({ data, requestType, department }) => {
         .then((res) => {
             setTableData((prev) => prev.filter((item) => item !== selectedRow));
             setShowRejectPopup(false);
+            toast.success("Application Rejected successfully!!");
         })
         .catch((err) => {
             console.error("Error rejecting application:", err);
@@ -87,6 +95,18 @@ const PendingTable = ({ data, requestType, department }) => {
         setSelectedRow(null);
         setRejectionReason('');
     };
+
+
+    const showDetailsPopup = (row) => {
+        setSelectedDetailsRow(row);
+        setIsPopupOpen(true);
+    };
+
+    const closeDetailsPopup = () => {
+        setIsPopupOpen(false);
+        setSelectedDetailsRow(null);
+    };
+
 
     return (
         <div className="coordinator-pending-table">
@@ -101,11 +121,11 @@ const PendingTable = ({ data, requestType, department }) => {
                         <th onClick={() => handleSort('year')}>
                             Year {getSortIcon('year')}
                         </th>
-                        <th onClick={() => handleSort('courses')}>
-                            Courses {getSortIcon('courses')}
+                        <th onClick={() => handleSort('appID')}>
+                            Application ID {getSortIcon('appID')}
                         </th>
-                        <th onClick={() => handleSort('date')}>
-                            Applied Date {getSortIcon('date')}
+                        <th>
+                            Details
                         </th>
                         <th>Actions</th>
                     </tr>
@@ -117,8 +137,10 @@ const PendingTable = ({ data, requestType, department }) => {
                                 <FaUser className="coordinator-user-icon" /> {row.name}
                             </td>
                             <td>{row.year}</td>
-                            <td>{row.courses}</td>
-                            <td>{row.date}</td>
+                            <td>{row.application_id}</td>
+                            <td>
+                                <button onClick={() => showDetailsPopup(row)}>Get Details</button>
+                            </td>
                             <td>
                                 {requestType === 'Pending' ? (
                                     <>
@@ -145,6 +167,34 @@ const PendingTable = ({ data, requestType, department }) => {
                             <button onClick={confirmReject}>Confirm Reject</button>
                             <button onClick={cancelReject}>Cancel</button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {isPopupOpen && (
+                <div className="coordinator-details-popup">
+                    <div className="coordinator-popup-content2">
+                        <h1>Application Id: #{selectedDetailsRow?.application_id}</h1>
+                        <h5>Roll No: {selectedDetailsRow?.roll_no}</h5>
+                        <h5>Email: {selectedDetailsRow?.email}</h5>
+                        <h5>Subgroup: {selectedDetailsRow?.subgroup}</h5>
+                        {selectedDetailsRow?.opted_courses.map((val, ind)=>{
+                            return <h4>- {val[0]} opted with {val[1]}</h4>
+                        })}
+                        <Timetable data={selectedDetailsRow?.new_time_table} ed={selectedDetailsRow?.elective_data}/>
+                        <h4>
+                            Application Form Link:{" "}
+                            <a href={selectedDetailsRow?.url} target="_blank" rel="noopener noreferrer">
+                            Click Here
+                            </a>
+                        </h4>
+                        <h4>
+                            Fee Reciept Link:{" "}
+                            <a href={selectedDetailsRow?.fee_receipt_link} target="_blank" rel="noopener noreferrer">
+                            Click Here
+                            </a>
+                        </h4>
+                        <button onClick={closeDetailsPopup} className='coordinator-popup-close-btn'>Close</button>
                     </div>
                 </div>
             )}

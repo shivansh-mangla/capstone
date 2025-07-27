@@ -225,7 +225,7 @@ func UpdateFeesLinkById(id string, fee_receipt_link string) error {
 	defer cancel()
 
 	filter := bson.M{"application_id": id}
-	update := bson.M{"$set": bson.M{"fee_receipt_link": fee_receipt_link}}
+	update := bson.M{"$set": bson.M{"fee_receipt_link": fee_receipt_link, "stage": 4}}
 
 	result, err := applicationDetails.UpdateOne(ctx, filter, update)
 	if err != nil {
