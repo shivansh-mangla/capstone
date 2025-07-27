@@ -81,23 +81,23 @@ const Dashboard = () => {
           </h4>
           <div className="student-dashboard-info-tiles">
             <div className="student-dashboard-info-tile">
-              <h1>Roll Number</h1>
+              <h2>Roll Number</h2>
               <p>{student.roll_no}</p>
             </div>
             <div className="student-dashboard-info-tile">
-              <h1>Academic Year</h1>
+              <h2>Academic Year</h2>
               <p>{student.academic_year}</p>
             </div>
             <div className="student-dashboard-info-tile">
-              <h1>Branch</h1>
+              <h2>Branch</h2>
               <p>{student.branch}</p>
             </div>
             <div className="student-dashboard-info-tile">
-              <h1>Subgroup</h1>
+              <h2>Subgroup</h2>
               <p>{student.subgroup}</p>
             </div>
             <div className="student-dashboard-info-tile">
-              <h1>Electives</h1>
+              <h2>Electives</h2>
               <p>{student.elective_basket}</p>
               <p>{student.general_elective}</p>
             </div>
@@ -126,6 +126,10 @@ const Dashboard = () => {
             <div className='timetable-legend-inner'>
               <div className='timetable-legend-circle' style={{backgroundColor: '#ADD8E6'}}></div>
               <p>Tutorials</p>
+            </div>
+            <div className='timetable-legend-inner'>
+              <div className='timetable-legend-circle' style={{backgroundColor: 'pink'}}></div>
+              <p>Electives</p>
             </div>
           </div>
 

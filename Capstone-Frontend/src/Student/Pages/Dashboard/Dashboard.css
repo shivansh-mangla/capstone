@@ -29,14 +29,30 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
-  margin-top: 40px;
+  margin: 20px 0;
 }
 
 .student-dashboard-info-tile{
-  width: 200px;
+  width: 170px;
   aspect-ratio: 1;
-  background-color: aqua;
+  background-color: #32ff7e;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+.student-dashboard-info-tile:hover{
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+}
+
+.student-dashboard-info-tile h2{
+  width: 100%;
+  text-align: center;
 }
 
 
