@@ -133,10 +133,10 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="student-dashboard-bottom-buttons">
+          {/* <div className="student-dashboard-bottom-buttons">
             <button>Download as PDF</button>
             <button>Add to google Calendar</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

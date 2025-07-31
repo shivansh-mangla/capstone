@@ -202,6 +202,9 @@ func GenerateAndSaveApplication(d *model.Application) string {
 	pdf.Cell(70, 8, "Branch and Year: "+d.Branch+" "+d.AcademicYear)
 	pdf.Cell(70, 8, "Group: "+d.Subgroup)
 	pdf.Cell(70, 8, "Mobile No.: "+d.PhoneNumber)
+	pdf.Ln(8)
+	pdf.Cell(70, 8, "Present CGPA: "+"9.22")
+
 	pdf.Ln(12)
 
 	pdf.SetFont("Arial", "B", 11)
@@ -247,6 +250,11 @@ func GenerateAndSaveApplication(d *model.Application) string {
 	pdf.Ln(1)
 	pdf.MultiCell(0, 6, "3. I will maintain minimum 75% attendance in the course.", "", "", false)
 
+	pdf.Ln(40)
+	pdf.SetFont("Arial", "B", 10)
+	pdf.CellFormat(190, 6, "The students should submit (in hard copy) the backlog/Add and drop proforma duly completed and approved", "", 1, "", false, 0, "")
+	pdf.Ln(1)
+	pdf.CellFormat(190, 6, "by respective time table coordinator to Mr. Rupinder Pal Singh in academic section.", "", 1, "", false, 0, "")
 	// Generate PDF in memory buffer
 	var buf bytes.Buffer
 	if err := pdf.Output(&buf); err != nil {

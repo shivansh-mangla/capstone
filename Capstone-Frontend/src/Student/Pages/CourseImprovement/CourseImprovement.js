@@ -39,16 +39,21 @@ const CourseImprovement = () => {
       const foundCourse = courseData.find(
         (course) => course.subjectCode.toLowerCase() === selectedCourseCode.toLowerCase()
       );
+
+      console.log(foundCourse);
       if (foundCourse) {
         console.log(foundCourse.subjectCode);
-        setSelectedCourseData(selectedCourseData.append({
-          subjectCode: foundCourse.subjectCode,
-          subjectName: foundCourse.data["course name"],
-          subjectCredits: foundCourse.data["Credit"],
-          subjectL: foundCourse.data["L"],
-          subjectT: foundCourse.data["T"],
-          subjectP: foundCourse.data["P"],
-        }));
+        setSelectedCourseData([
+          ...selectedCourseData,
+          {
+            subjectCode: foundCourse.subjectCode,
+            subjectName: foundCourse.data["course name"],
+            subjectCredits: foundCourse.data["Credit"],
+            subjectL: foundCourse.data["L"],
+            subjectT: foundCourse.data["T"],
+            subjectP: foundCourse.data["P"],
+          }
+        ]);
       }
     } else if (selectedCourseName) {
       const foundCourse = courseData.find(
