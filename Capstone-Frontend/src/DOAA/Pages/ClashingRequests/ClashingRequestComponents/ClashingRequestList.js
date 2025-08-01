@@ -4,7 +4,7 @@ import './ClashingRequestList.css';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
 import { toast } from "react-toastify";
 import axios from 'axios'
-
+import Timetable from '../../../../Student/Components/TimeTable';
 
 const ClashingRequestList = ({ data, department }) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });   
@@ -13,6 +13,9 @@ const ClashingRequestList = ({ data, department }) => {
     const [selectedRequest, setSelectedRequest] = useState(null);      
     const [rejectionReason, setRejectionReason] = useState('');     
 
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedDetailsRow, setSelectedDetailsRow] = useState(null); // NEW
+        
 
     const handleSort = (key) => {
         let direction = 'asc';
@@ -81,6 +84,18 @@ const ClashingRequestList = ({ data, department }) => {
         );
     };
 
+
+    const showDetailsPopup = (row) => {
+        setSelectedDetailsRow(row);
+        setIsPopupOpen(true);
+    };
+
+    const closeDetailsPopup = () => {
+        setIsPopupOpen(false);
+        setSelectedDetailsRow(null);
+    };
+
+
   
     return (
         <div className="doaa-classing-request-table">
@@ -101,6 +116,9 @@ const ClashingRequestList = ({ data, department }) => {
                         <th onClick={() => handleSort('date')}>
                             Branch {getSortIcon('date')}
                         </th>
+                        <th>
+                            Details
+                        </th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -113,6 +131,9 @@ const ClashingRequestList = ({ data, department }) => {
                             <td>{row.year}</td>
                             <td>{row.opted_courses.length}</td>
                             <td>{row.branch}</td>
+                            <td>
+                                <button onClick={() => showDetailsPopup(row)}>Get Details</button>
+                            </td>
                             <td className='doaa-classing-request-button-area'>
                                 <button
                                     className="action-btn accept"
@@ -162,6 +183,34 @@ const ClashingRequestList = ({ data, department }) => {
                             <button onClick={handleModalOk}  className="action-btn accept" >Confirm Reject</button>
                             <button onClick={handleModalCancel} className="action-btn reject" >Cancel</button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {isPopupOpen && (
+                <div className="doaa-details-popup">
+                    <div className="doaa-popup-content2">
+                        <h1>Application Id: #{selectedDetailsRow?.application_id}</h1>
+                        <h5>Roll No: {selectedDetailsRow?.roll_no}</h5>
+                        <h5>Email: {selectedDetailsRow?.email}</h5>
+                        <h5>Subgroup: {selectedDetailsRow?.subgroup}</h5>
+                        {selectedDetailsRow?.opted_courses.map((val, ind) => {
+                            return <h4>- {val[0]} opted with {val[1]}</h4>
+                        })}
+                        <Timetable data={selectedDetailsRow?.new_time_table} ed={selectedDetailsRow?.elective_data} />
+                        <h4>
+                            Application Form Link:{" "}
+                            <a href={selectedDetailsRow?.url} target="_blank" rel="noopener noreferrer">
+                                Click Here
+                            </a>
+                        </h4>
+                        <h4>
+                            Fee Reciept Link:{" "}
+                            <a href={selectedDetailsRow?.fee_receipt_link} target="_blank" rel="noopener noreferrer">
+                                Click Here
+                            </a>
+                        </h4>
+                        <button onClick={closeDetailsPopup} className='doaa-popup-close-btn'>Close</button>
                     </div>
                 </div>
             )}
