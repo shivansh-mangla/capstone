@@ -11,6 +11,7 @@ const PendingTable = ({ data, requestType, department }) => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedDetailsRow, setSelectedDetailsRow] = useState(null); // NEW
+    const [selectedRowsData, setSelectedRowsData] = useState([]);
 
 
     useEffect(() => {
@@ -118,6 +119,16 @@ const PendingTable = ({ data, requestType, department }) => {
         setSelectedDetailsRow(null);
     };
 
+    const handleSelect = (e, rowData) =>{
+        const isChecked = e.target.checked;
+        if(isChecked == true) setSelectedRowsData([...selectedRowsData, rowData])
+        else setSelectedRowsData(selectedRowsData.filter(row => row.application_id !== rowData.application_id));
+        console.log("Row selected:", selectedRowsData, "Checked:", isChecked);
+    }
+
+    const handleAcceptAll = () =>{}
+    const handleRejectAll = () =>{}
+
 
     return (
         <div className="coordinator-pending-table">
@@ -161,13 +172,33 @@ const PendingTable = ({ data, requestType, department }) => {
                                     <>
                                         <button onClick={() => handleAccept(row)}>Accept</button>
                                         <button onClick={() => handleRejectClick(row)}>Reject</button>
+                                        {/* <label>
+                                            Select
+                                            <input type='checkbox' />
+                                        </label> */}
                                     </>
+                                ) : null}
+                            </td>
+                            <td>
+                                {requestType === 'Pending' ? (
+                                   <label>
+                                            <input type='checkbox' onChange = {(e)=> handleSelect(e, row)} />
+                                    </label>
                                 ) : null}
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {selectedRowsData.length > 0?
+                <>
+                <button onClick={() => handleAcceptAll()}>Accept All</button>
+                <button onClick={() => handleRejectAll()}>Reject All</button>
+                </>
+            :
+                ""
+            }
 
             {showRejectPopup && (
                 <div className="coordinator-reject-popup">
