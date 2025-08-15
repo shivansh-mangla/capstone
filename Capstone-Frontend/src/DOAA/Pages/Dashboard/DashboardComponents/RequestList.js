@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import './RequestList.css';
 import { FaSort, FaSortUp, FaSortDown, FaUser } from 'react-icons/fa';
+import Timetable from '../../../../Student/Components/TimeTable';
 
 const PendingTable = ({ data, requestType, department }) => {
 
     console.log(data);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+    
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedDetailsRow, setSelectedDetailsRow] = useState(null); // NEW
+    
 
     const handleSort = (key) => {
         let direction = 'asc';
@@ -35,6 +40,17 @@ const PendingTable = ({ data, requestType, department }) => {
         );
     };
 
+    const showDetailsPopup = (row) => {
+        setSelectedDetailsRow(row);
+        setIsPopupOpen(true);
+    };
+
+    const closeDetailsPopup = () => {
+        setIsPopupOpen(false);
+        setSelectedDetailsRow(null);
+    };
+
+
     return (
         <div className="pending-table">
             <h3>{requestType}</h3>
@@ -48,11 +64,17 @@ const PendingTable = ({ data, requestType, department }) => {
                         <th onClick={() => handleSort('year')}>
                             Year {getSortIcon('year')}
                         </th>
+                        <th onClick={() => handleSort('appID')}>
+                            Application ID {getSortIcon('appID')}
+                        </th>
                         <th onClick={() => handleSort('courses')}>
                             Courses {getSortIcon('courses')}
                         </th>
                         <th onClick={() => handleSort('branch')}>
                             Branch {getSortIcon('branch')}
+                        </th>
+                        <th>
+                            Details
                         </th>
                     </tr>
                 </thead>
@@ -63,12 +85,44 @@ const PendingTable = ({ data, requestType, department }) => {
                                 <FaUser className="user-icon" /> {row.name}
                             </td>
                             <td>{row.year}</td>
+                            <td>{row.application_id}</td>
                             <td>{row.opted_courses.length}</td>
                             <td>{row.branch}</td>
+                            <td>
+                                <button onClick={() => showDetailsPopup(row)}>Get Details</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {isPopupOpen && (
+                <div className="doaa-details-popup">
+                    <div className="doaa-popup-content2">
+                        <h1>Application Id: #{selectedDetailsRow?.application_id}</h1>
+                        <h5>Roll No: {selectedDetailsRow?.roll_no}</h5>
+                        <h5>Email: {selectedDetailsRow?.email}</h5>
+                        <h5>Subgroup: {selectedDetailsRow?.subgroup}</h5>
+                        {selectedDetailsRow?.opted_courses.map((val, ind) => {
+                            return <h4>- {val[0]} opted with {val[1]}</h4>
+                        })}
+                        <Timetable data={selectedDetailsRow?.new_time_table} ed={selectedDetailsRow?.elective_data} />
+                        <h4>
+                            Application Form Link:{" "}
+                            <a href={selectedDetailsRow?.url} target="_blank" rel="noopener noreferrer">
+                                Click Here
+                            </a>
+                        </h4>
+                        <h4>
+                            Fee Reciept Link:{" "}
+                            <a href={selectedDetailsRow?.fee_receipt_link} target="_blank" rel="noopener noreferrer">
+                                Click Here
+                            </a>
+                        </h4>
+                        <button onClick={closeDetailsPopup} className='doaa-popup-close-btn'>Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
