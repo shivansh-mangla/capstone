@@ -81,19 +81,47 @@ func UpdateCoordinatorPassword(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{"Status": "Coordinator password updated"})
 }
 
-
 func UpdateApplication(c *fiber.Ctx) error {
 	input := new(studentModel.Application)
 
-	
 	if err := c.BodyParser(input); err != nil {
 		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for Application Acceptance/Rejection by Coordinator"})
 	}
 	fmt.Println(input)
 
-	err := repository.UpdateApplicationinDB(input);
-	if err!= nil{
+	err := repository.UpdateApplicationinDB(input)
+	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"Error": "Applicated not successfully accepted/rejected"})
 	}
 	return c.Status(200).JSON(fiber.Map{"Status": "Application successfully accepted/rejected."})
+}
+
+func UpdateAllApplication(c *fiber.Ctx) error {
+	input := new(studentModel.ApplicationList)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON for Application Acceptance/Rejection by Coordinator"})
+	}
+
+	for _, app := range input.Applications {
+		// fmt.Println("Application ID:", app.ApplicationId)
+		// fmt.Println("Name:", app.Name)
+		// fmt.Println("Email:", app.Email)
+		// fmt.Println("Stage:", app.Stage)
+		// fmt.Println("Comments:", app.Comments)
+		// fmt.Println("-----------------------------")
+
+		err := repository.UpdateApplicationinDB(&app)
+		if err != nil {
+			return c.Status(400).JSON(fiber.Map{"Error": "Applications not successfully accepted/rejected"})
+		}
+	}
+
+	return c.Status(200).JSON(fiber.Map{"Status": "Applications successfully accepted/rejected."})
+
+	// err := repository.UpdateApplicationinDB(input);
+	// if err!= nil{
+	// 	return c.Status(400).JSON(fiber.Map{"Error": "Applicated not successfully accepted/rejected"})
+	// }
+	// return c.Status(200).JSON(fiber.Map{"Status": "Application successfully accepted/rejected."})
 }

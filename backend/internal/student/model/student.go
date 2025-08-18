@@ -65,3 +65,7 @@ type Application struct {
 	NewTimeTable    []TimeTableEntry `json:"new_time_table" bson:"new_time_table"`
 	ElectiveData    []string         `json:"elective_data" bson:"elective_data"`
 }
+
+type ApplicationList struct {
+	Applications []Application `json:"applications" bson:"applications"`
+}

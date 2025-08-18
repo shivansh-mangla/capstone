@@ -16,3 +16,7 @@ func UpdateCoordinatorPassword(c *fiber.Ctx) error {
 func UpdateApplication(c *fiber.Ctx) error {
 	return service.UpdateApplication(c)
 }
+
+func UpdateAllApplication(c *fiber.Ctx) error {
+	return service.UpdateAllApplication(c)
+}

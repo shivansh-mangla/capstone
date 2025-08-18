@@ -123,11 +123,61 @@ const PendingTable = ({ data, requestType, department }) => {
         const isChecked = e.target.checked;
         if(isChecked == true) setSelectedRowsData([...selectedRowsData, rowData])
         else setSelectedRowsData(selectedRowsData.filter(row => row.application_id !== rowData.application_id));
-        console.log("Row selected:", selectedRowsData, "Checked:", isChecked);
+        // console.log("Row selected:", selectedRowsData, "Checked:", isChecked);
     }
 
-    const handleAcceptAll = () =>{}
-    const handleRejectAll = () =>{}
+    const handleAcceptAll = () =>{
+        let formList = [];
+        selectedRowsData.forEach(val => {
+            val.stage = val.stage == 2 ? 3 : 5;
+            formList.push(val);
+        });
+
+        const formData = {
+            'applications': formList
+        }
+        // console.log(formData);
+        axios.post("http://localhost:5000/api/coordinator/update-all-applications", formData)
+        .then((res) =>{
+            setTableData(prev =>
+                prev.filter(item => !selectedRowsData.some(sel => sel.application_id === item.application_id))
+            );
+            setSelectedRowsData([]);
+                
+            toast.success("Applications Accepted successfully!!");
+        })
+        .catch((err)=>{
+            console.error("Error accepting applications:", err);
+            toast.error("Failed to accept request. Please Refresh The Page.");
+            setSelectedRowsData([]);
+        });
+    }
+    const handleRejectAll = () =>{
+        let formList = [];
+        selectedRowsData.forEach(val => {
+            val.stage = 10;
+            formList.push(val);
+        });
+
+        const formData = {
+            'applications': formList
+        }
+        // console.log(formData);
+        axios.post("http://localhost:5000/api/coordinator/update-all-applications", formData)
+        .then((res) =>{
+            setTableData(prev =>
+                prev.filter(item => !selectedRowsData.some(sel => sel.application_id === item.application_id))
+            );
+            setSelectedRowsData([]);
+                
+            toast.success("Applications Rejected successfully!!");
+        })
+        .catch((err)=>{
+            console.error("Error rejecting applications:", err);
+            toast.error("Failed to reject requests. Please Refresh The Page.");
+            setSelectedRowsData([]);
+        });
+    }
 
 
     return (
@@ -182,7 +232,11 @@ const PendingTable = ({ data, requestType, department }) => {
                             <td>
                                 {requestType === 'Pending' ? (
                                    <label>
-                                            <input type='checkbox' onChange = {(e)=> handleSelect(e, row)} />
+                                            <input
+                                                type='checkbox'
+                                                checked={selectedRowsData.some(sel => sel.application_id === row.application_id)}
+                                                onChange={(e) => handleSelect(e, row)}
+                                            />
                                     </label>
                                 ) : null}
                             </td>
