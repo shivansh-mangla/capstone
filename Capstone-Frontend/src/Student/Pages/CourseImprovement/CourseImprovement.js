@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './CourseImprovement.css';
 import StudentSidebar from '../../Components/Sidebar';
 import { ProgressBar } from 'react-bootstrap';
@@ -19,6 +19,7 @@ const CourseImprovement = () => {
   const [timeTableOptionsData, setTimeTableOptionsData] = useState([]);
   const [choices, setChoices] = useState([]);
   const [newTimeTable, setNewTimeTable] = useState([]);
+  const [emptyChoices, setEmptyChoices] = useState(false);
 
 
   useEffect(() => {
@@ -90,6 +91,11 @@ const CourseImprovement = () => {
         console.log(res.data);
         setChoices(res.data.choices);
         setNewTimeTable(res.data.newTimeTable);
+
+        if(res.data.choice.length > 0)
+          setEmptyChoices(false);
+        else
+          setEmptyChoices(true);
       })
       .catch(()=>{
         console.log("Eroor");
@@ -231,7 +237,7 @@ const CourseImprovement = () => {
 
         <button onClick={handleSubmit2}>Generate Options</button>
 
-        <h1>Plz Choose from one of these options: </h1>
+        {emptyChoices ? <h1>No Options Found</h1> : <h1>Plz Choose from one of these options:</h1>}
         {choices.map((val, index) => {
           const combinedList = [...student.timeTableData, ...newTimeTable[index]];
           return (
