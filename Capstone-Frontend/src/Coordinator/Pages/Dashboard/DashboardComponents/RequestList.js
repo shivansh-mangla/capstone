@@ -200,9 +200,12 @@ const PendingTable = ({ data, requestType, department }) => {
                             Category {getSortIcon('category')}
                         </th>
                         <th>
+                            Clashing {getSortIcon('clashing')}
+                        </th>
+                        <th>
                             Details
                         </th>
-                        <th>Actions</th>
+                        {requestType === 'Pending' ? <th>Actions</th> : ""}
                     </tr>
                 </thead>
                 <tbody>
@@ -214,6 +217,9 @@ const PendingTable = ({ data, requestType, department }) => {
                             <td>{row.year}</td>
                             <td>{row.application_id}</td>
                             <td>{row.category}</td>
+                            <td>
+                                {row.clashing ? "YES" : "NO"}
+                            </td>
                             <td>
                                 <button onClick={() => showDetailsPopup(row)}>Get Details</button>
                             </td>

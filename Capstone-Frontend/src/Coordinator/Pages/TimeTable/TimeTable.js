@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CoordinatorSidebar from '../../Components/Sidebar';
 import './TimeTable.css';
-
-const timetableUploads = [
-  { name: 'Draft1.xlsx', year: '2025-2026', size: '1.24 MB', date: '7 January,2025', status: 'Implemented' },
-];
+import { toast } from 'react-toastify';
 
 const TimeTable = () => {
+  const [timetableUploads, setTimetableUploads] = useState([
+    { name: 'TIMETABLEJULYTODEC25.xlsx', year: '2025-2026', size: '1.24 MB', date: '7 August, 2025', status: 'Implemented' },
+  ]);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const newUpload = {
+      name: file.name,
+      year: '2025-2026', // Make this dynamic if needed
+      size: (file.size / (1024 * 1024)).toFixed(2) + ' MB',
+      date: new Date().toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      }),
+      status: 'Pending'
+    };
+
+    setTimetableUploads((prev) => [...prev, newUpload]);
+    toast.success("File uploaded successfully. Changes will be applied shortly");
+  };
+
   return (
     <div>
       <CoordinatorSidebar />
@@ -35,17 +56,27 @@ const TimeTable = () => {
                   <td>{item.year}</td>
                   <td>{item.size}</td>
                   <td>{item.date}</td>
-                  <td><span className="timetable-status implemented">{item.status}</span></td>
+                  <td><span>{item.status}</span></td>
                 </tr>
               ))}
             </tbody>
           </table>
+
           <div className="timetable-upload-area">
-            <div className="timetable-upload-box">
-              <span className="timetable-upload-text">Click to browse or drag and drop your files</span>
-              <span className="timetable-upload-icon">&#8682;</span>
-            </div>
-            <button className="timetable-update-btn">Update</button>
+            {/* Hidden file input */}
+            <input
+              type="file"
+              accept=".xlsx,.xls"
+              style={{ display: 'none' }}
+              id="timetable-file"
+              onChange={handleFileUpload}
+            />
+            <button
+              className="timetable-update-btn"
+              onClick={() => document.getElementById("timetable-file").click()}
+            >
+              Upload New Time Table
+            </button>
           </div>
         </div>
       </div>

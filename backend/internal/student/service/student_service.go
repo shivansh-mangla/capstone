@@ -209,7 +209,7 @@ func GenerateAndSaveApplication(d *model.Application) string {
 
 	pdf.SetFont("Arial", "B", 11)
 	pdf.Cell(190, 6, "Preference wise detail of Backlog Courses:")
-	pdf.Ln(12)
+	pdf.Ln(8)
 
 	headers := []string{"Course Code", "Course Title", "Lecture", "Tutorial", "Practical"}
 	widths := []float64{30, 90, 20, 25, 25}
@@ -240,21 +240,44 @@ func GenerateAndSaveApplication(d *model.Application) string {
 		pdf.Ln(8)
 	}
 
-	pdf.Ln(80)
+	pdf.Ln(5)
+	pdf.SetFont("Arial", "B", 11)
+	pdf.CellFormat(190, 6, "Important Notes :", "", 1, "", false, 0, "")
+	pdf.Ln(1)
 	pdf.SetFont("Arial", "B", 10)
+	pdf.MultiCell(0, 6, "If course code is changed in the revised course scheme, then mention new code. Group name to be filled in the L/T/P Group column should be as mentioned in the time table of the respective semester", "", "", false)
+	pdf.Ln(4)
+
+	pdf.CellFormat(190, 6, "Regular Courses to be dropped, if any, for taking up Backlog Courses:", "", 1, "", false, 0, "")
+	pdf.Ln(1)
+	pdf.CellFormat(60, 8, "Course Code", "1", 0, "C", false, 0, "")
+	pdf.CellFormat(130, 8, "Course Title", "1", 0, "C", false, 0, "")
+	pdf.Ln(8)
+	pdf.CellFormat(60, 7, "", "1", 0, "C", false, 0, "")
+	pdf.CellFormat(130, 7, "", "1", 0, "C", false, 0, "")
+	pdf.Ln(7)
+	pdf.CellFormat(60, 7, "", "1", 0, "C", false, 0, "")
+	pdf.CellFormat(130, 7, "", "1", 0, "C", false, 0, "")
+	pdf.Ln(15)
+
+	pdf.SetFont("Arial", "B", 11)
 	pdf.CellFormat(190, 6, "I hereby certify that:", "", 1, "", false, 0, "")
-	pdf.SetFont("Arial", "", 10)
+	pdf.SetFont("Arial", "B", 10)
 	pdf.MultiCell(0, 6, "1. Total credits of all the courses in the current semester (including both regular and backlog/added courses) do not exceed 30.0 cr.", "", "", false)
 	pdf.Ln(1)
 	pdf.MultiCell(0, 6, "2. I am not undergoing the training in an industry/any other institute for project semester.", "", "", false)
 	pdf.Ln(1)
 	pdf.MultiCell(0, 6, "3. I will maintain minimum 75% attendance in the course.", "", "", false)
+	pdf.Ln(10)
+	pdf.SetFont("Arial", "", 10)
+	pdf.MultiCell(0, 6, "Student Signature:    ________________________________", "", "", false)
 
-	pdf.Ln(40)
+	pdf.Ln(20)
+	pdf.SetFont("Arial", "B", 11)
+	pdf.MultiCell(0, 6, "The students should submit (in hard copy) the backlog/Add and drop proforma duly completed and approved by respective time table coordinator to Mr. Rupinder Pal Singh in academic section.", "", "", false)
+	pdf.Ln(15)
 	pdf.SetFont("Arial", "B", 10)
-	pdf.CellFormat(190, 6, "The students should submit (in hard copy) the backlog/Add and drop proforma duly completed and approved", "", 1, "", false, 0, "")
-	pdf.Ln(1)
-	pdf.CellFormat(190, 6, "by respective time table coordinator to Mr. Rupinder Pal Singh in academic section.", "", 1, "", false, 0, "")
+	pdf.MultiCell(0, 6, "Time-Table Coordinator			         																									          									                             Time-Table Committee Chairman", "", "", false)
 	// Generate PDF in memory buffer
 	var buf bytes.Buffer
 	if err := pdf.Output(&buf); err != nil {

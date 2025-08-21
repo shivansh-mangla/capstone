@@ -1,0 +1,793 @@
+"3C5E": {
+        "lecture": {
+            "UCS503": {
+                "slots": [
+                    [
+                        4,
+                        5
+                    ],
+                    [
+                        6,
+                        7
+                    ],
+                    [
+                        30,
+                        31
+                    ],
+                    [
+                        132,
+                        133
+                    ]
+                ],
+                "teacher_code": "KML",
+                "venue": [
+                    "LT401",
+                    "LT401",
+                    "LT401",
+                    "LT401"
+                ]
+            },
+            "UCS510": {
+                "slots": [
+                    [
+                        28,
+                        29
+                    ],
+                    [
+                        104,
+                        105
+                    ]
+                ],
+                "teacher_code": "JPK",
+                "venue": [
+                    "LT401",
+                    "LT402"
+                ]
+            },
+            "UCS414": {
+                "slots": [
+                    [
+                        40,
+                        41
+                    ],
+                    [
+                        64,
+                        65
+                    ],
+                    [
+                        130,
+                        131
+                    ]
+                ],
+                "teacher_code": "SHD",
+                "venue": [
+                    "LT402",
+                    "LT401",
+                    "LT401"
+                ]
+            },
+            "UML501": {
+                "slots": [
+                    [
+                        42,
+                        43
+                    ],
+                    [
+                        102,
+                        103
+                    ],
+                    [
+                        122,
+                        123
+                    ]
+                ],
+                "teacher_code": "MHK",
+                "venue": [
+                    "LT402",
+                    "LT402",
+                    "LT401"
+                ]
+            },
+            "UCS615": {
+                "slots": [
+                    [
+                        44,
+                        45
+                    ],
+                    [
+                        66,
+                        67
+                    ],
+                    [
+                        120,
+                        121
+                    ]
+                ],
+                "teacher_code": "NDH",
+                "venue": [
+                    "LT402",
+                    "LT401",
+                    "LT401"
+                ]
+            }
+        },
+        "lab": {
+            "UCS414": {
+                "slots": [
+                    [
+                        32,
+                        35
+                    ]
+                ],
+                "teacher_code": null,
+                "venue": [
+                    "IS-1"
+                ]
+            },
+            "UCS615": {
+                "slots": [
+                    [
+                        46,
+                        49
+                    ]
+                ],
+                "teacher_code": null,
+                "venue": [
+                    "CG-2"
+                ]
+            },
+            "UCS503": {
+                "slots": [
+                    [
+                        60,
+                        63
+                    ]
+                ],
+                "teacher_code": null,
+                "venue": [
+                    "SE-1"
+                ]
+            },
+            "UML501": {
+                "slots": [
+                    [
+                        116,
+                        119
+                    ]
+                ],
+                "teacher_code": null,
+                "venue": [
+                    "ML"
+                ]
+            }
+        },
+        "tutorial": {},
+        "elective": {
+            "UCS002": {
+                "lecture": {
+                    "slots": [
+                        [
+                            12,
+                            13
+                        ],
+                        [
+                            84,
+                            85
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "LT101",
+                        "LT101"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UEN006": {
+                "lecture": {
+                    "slots": [
+                        [
+                            12,
+                            13
+                        ],
+                        [
+                            84,
+                            85
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "F301",
+                        "F301"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UHU016": {
+                "lecture": {
+                    "slots": [
+                        [
+                            12,
+                            13
+                        ],
+                        [
+                            84,
+                            85
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "LP106",
+                        "LP106"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UHU018": {
+                "lecture": {
+                    "slots": [
+                        [
+                            12,
+                            13
+                        ],
+                        [
+                            84,
+                            85
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "LT102",
+                        "LT102"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UMA069": {
+                "lecture": {
+                    "slots": [
+                        [
+                            12,
+                            13
+                        ],
+                        [
+                            84,
+                            85
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "T205",
+                        "T205"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UBT510": {
+                "lecture": {
+                    "slots": [
+                        [
+                            12,
+                            13
+                        ],
+                        [
+                            84,
+                            85
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "E308",
+                        "E308"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UTD004": {
+                "lecture": {
+                    "slots": [
+                        [
+                            14,
+                            15
+                        ],
+                        [
+                            86,
+                            87
+                        ]
+                    ],
+                    "teacher_code": "SSS",
+                    "venue": [
+                        "LT101",
+                        "LT101"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UHU051": {
+                "lecture": {
+                    "slots": [
+                        [
+                            14,
+                            15
+                        ],
+                        [
+                            86,
+                            87
+                        ]
+                    ],
+                    "teacher_code": "?",
+                    "venue": [
+                        "F301",
+                        "F301"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS539": {
+                "lecture": {
+                    "slots": [
+                        [
+                            18,
+                            19
+                        ],
+                        [
+                            78,
+                            79
+                        ]
+                    ],
+                    "teacher_code": "KUC",
+                    "venue": [
+                        "LP101",
+                        "LT103"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            22,
+                            25
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "PL-III"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UEC646": {
+                "lecture": {
+                    "slots": [
+                        [
+                            18,
+                            19
+                        ],
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "---",
+                    "venue": [
+                        "E307",
+                        "E307",
+                        "E307"
+                    ]
+                },
+                "lab": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS534": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "RAK",
+                    "venue": [
+                        "LP108",
+                        "LP108"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            56,
+                            59
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "IS-I"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS537": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "STT",
+                    "venue": [
+                        "E107",
+                        "E107"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            56,
+                            59
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "GC-I"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS550": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "SAL",
+                    "venue": [
+                        "E108",
+                        "E108"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            56,
+                            59
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "NS-I"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS668": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "JHB",
+                    "venue": [
+                        "LP110",
+                        "LP110"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            56,
+                            59
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "PGAS-II"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS531": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "VPS",
+                    "venue": [
+                        "LP109",
+                        "LP109"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            126,
+                            129
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "IOT"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS532": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "ST",
+                    "venue": [
+                        "LT403",
+                        "LT403"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            126,
+                            129
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "GA"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS542": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "VBJ",
+                    "venue": [
+                        "LT103",
+                        "LT103"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            126,
+                            129
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "IS-II"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS551": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "JS",
+                    "venue": [
+                        "LT302",
+                        "LT302"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            126,
+                            129
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "ES-I"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            },
+            "UCS548": {
+                "lecture": {
+                    "slots": [
+                        [
+                            90,
+                            91
+                        ],
+                        [
+                            92,
+                            93
+                        ]
+                    ],
+                    "teacher_code": "ARN",
+                    "venue": [
+                        "LT402",
+                        "LT402"
+                    ]
+                },
+                "lab": {
+                    "slots": [
+                        [
+                            126,
+                            129
+                        ]
+                    ],
+                    "teacher_code": null,
+                    "venue": [
+                        "AI"
+                    ]
+                },
+                "tutorial": {
+                    "slots": [],
+                    "teacher_code": null,
+                    "venue": []
+                }
+            }
+        }
+    }
