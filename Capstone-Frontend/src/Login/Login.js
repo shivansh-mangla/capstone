@@ -173,7 +173,7 @@ const ICMPLogin = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <a href="#">Forgot Password?</a>
+            <a href="/forget-pass">Forgot Password?</a>
             <button type="submit">Sign in</button>
           </form>
           <p>

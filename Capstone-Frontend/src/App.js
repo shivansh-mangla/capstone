@@ -40,6 +40,7 @@ import ProtectedRouteStudent from "./ProtectedRouteStudent.jsx";
 import ProtectedRouteCoordinator from "./ProtectedRouteCoordinator.jsx";
 import ProtectedRouteHod from "./ProtectedRouteHod.jsx";
 import ProtectedRouteDoaa from "./ProtectedRouteDoaa.jsx";
+import ForgetPass from "./ForgetPass/ForgetPass.jsx";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Routes>
 
             <Route path="/login" element={<ICMPLogin />} />
+            <Route path="/forget-pass" element={<ForgetPass />} />
 
             {/* Student routes */}
             <Route path="/student/signup" element={<ICMPSignUp />} />
