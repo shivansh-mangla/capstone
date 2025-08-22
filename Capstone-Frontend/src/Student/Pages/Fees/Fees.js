@@ -5,6 +5,8 @@ import axios from 'axios';
 import { UserContext } from '../../../UserContext';
 import { toast } from 'react-toastify';
 import Logout from '../../Components/Logout';
+import UpiCode from "./upiQR.png"
+import EazyPay from "./eazyPay.jpg"
 
 const StudentFees = () => {
   const [applicationDetails, setApplicationDetails] = useState(null);
@@ -109,8 +111,8 @@ const StudentFees = () => {
                 <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
               </div>
             </div>
+            <h2>Payment Reciept Uploaded for Rs. {courseDetails.length * 8000}</h2>
             <div className="student-main-fees-middle">
-              <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
               <br />
               <br />
               <h1>Payment reciept uploaded!! Please wait... Application will be accepted after verification by Coordinator</h1>
@@ -138,20 +140,23 @@ const StudentFees = () => {
                 <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
               </div>
             </div>
+            <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
             <div className="student-main-fees-middle">
-              <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
               <div className="student-main-fees-middle-left">
                 <p>Pay using UPI by scanning this QR code</p>
+                <img src={UpiCode} alt="not loaded" className='student-main-fees-middle-img'/>
               </div>
               <div className="student-main-fees-middle-right">
                 <p>Pay using Eazy Pay</p>
+                <img src={EazyPay} alt="EazyPay Image" className='student-main-fees-middle-img'/>
+                <a href="https://eazypay.icicibank.com/homePage" target="_blank" rel="noopener noreferrer">EazyPay Link</a>
               </div>
             </div>
             <div className="student-main-fees-bottom">
               <h2>Upload Fees Receipt here in PDF form (max 2MB)</h2>
               <form onSubmit={handleSubmit}>
                 <input type="file" accept="application/pdf" onChange={handleFileChange} />
-                <button type="submit">Submit</button>
+                <button type="submit" className='student-main-fees-bottom-submit-btn'>Submit</button>
               </form>
               {uploadStatus && <p>{uploadStatus}</p>}
               {uploadedUrl && (
@@ -186,8 +191,8 @@ const StudentFees = () => {
                 <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
               </div>
             </div>
+            <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
             <div className="student-main-fees-middle">
-              <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
               <br />
               <br />
               <h1>Payment options and Reciept upload will be available after approval of Coordinator/DoAA</h1>

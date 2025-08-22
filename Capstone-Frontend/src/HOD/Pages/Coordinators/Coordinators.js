@@ -99,7 +99,7 @@ const Coordinators = () => {
             <tbody>
               {coordinators.map((coord, index) => (
                 <tr key={index}>
-                  <td><img src={`https://i.pravatar.cc/30?u=${index}`} alt="profile" /> {coord.name}</td>
+                  <td><img src='https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg' alt="profile" className='hod-coordinators-icon-img'/> {coord.name}</td>
                   <td>{coord.tenureStart} , {coord.tenureEnd}</td>
                   <td>{coord.designation}</td>
                   <td>{coord.email}</td>

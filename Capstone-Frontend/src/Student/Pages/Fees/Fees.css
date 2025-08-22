@@ -20,6 +20,45 @@
   border-radius: 10px;
 }
 
+.student-main-fees-middle{
+  display: flex;
+  flex-direction: row;
+  overflow: none;
+  width: 100%;
+}
+.student-main-fees-middle-left, .student-main-fees-middle-right{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.student-main-fees-middle-img{
+  aspect-ratio: 1;
+  max-width: 200px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+
+.student-main-fees-bottom{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.student-main-fees-bottom-submit-btn{
+  padding: 5px 10px;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.student-main-fees-bottom-submit-btn:hover{
+  background-color: black;
+  color: white;
+}
+
 
 .fees-breakdown-table{
   display: grid;
