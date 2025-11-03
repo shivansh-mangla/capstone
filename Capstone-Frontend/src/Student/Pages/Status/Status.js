@@ -17,7 +17,7 @@ const Status = () => {
   useEffect(() => {
     if (student && student.ongoing_application) {
       setActive(true);
-      axios.post("http://localhost:5000/api/get-application-details", {
+      axios.post("https://capstone-5dsm.onrender.com/api/get-application-details", {
         application_id: student.ongoing_application
       })
       .then((res) => {

@@ -2,7 +2,7 @@
 .student-sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #fff;
+  background-color: #1b1a1a;
   border-right: 1px solid #e0e0e0;
   padding: 30px 20px;
   display: flex;
@@ -17,7 +17,7 @@
 .student-sidebar-logo {
   font-size: 32px;
   font-weight: bold;
-  color: #000;
+  color: #d1d1d1;
   margin-bottom: 40px;
 }
 
@@ -40,12 +40,12 @@
 }
 
 .student-sidebar-menu-item:hover {
-  background-color: #f0f0f0;
-  color: red;
+  background-color: #797979;
+  color: rgb(255, 255, 255);
 }
 
 .student-sidebar-menu-item:hover .student-sidebar-icon {
-  color: red;
+  color: #989191;
 }
 
 .student-sidebar-menu-item .student-sidebar-icon {
@@ -54,10 +54,10 @@
 }
 
 .student-sidebar-menu-item.active {
-  color: red;
-  background-color: #ffecec;
+  color: #3d3d3d;
+  background-color: #e3e3e3;
   font-weight: bold;
-  border-left: 4px solid red;
+  border-left: 4px solid rgb(232, 0, 0);
 }
 
 .student-sidebar::-webkit-scrollbar {

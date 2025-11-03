@@ -21,7 +21,7 @@ const Coordinators = () => {
   useEffect(() => {
     const fetchCoordinators = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/hod/all-coordinators-details');
+        const response = await fetch('https://capstone-5dsm.onrender.com/api/hod/all-coordinators-details');
         const data = await response.json();
         console.log(data);
         setCoordinators(data.data);
@@ -48,7 +48,7 @@ const Coordinators = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/hod/create-coordinator", {
+      await axios.post("https://capstone-5dsm.onrender.com/api/hod/create-coordinator", {
         name: newFaculty.name,
         email: newFaculty.email,
         password: newFaculty.password,
@@ -67,7 +67,7 @@ const Coordinators = () => {
 
   const handleRemoveFaculty = async (index, email) => {
     try {
-      await axios.post("http://localhost:5000/api/hod/delete-coordinator", {
+      await axios.post("https://capstone-5dsm.onrender.com/api/hod/delete-coordinator", {
         email: email
       });
       const updatedCoordinators = coordinators.filter((_, i) => i !== index);

@@ -17,7 +17,7 @@ const ForgetPass = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/forget-password", { email });
+      const res = await axios.post("https://capstone-5dsm.onrender.com/api/forget-password", { email });
       if (res.status === 200) {
         toast.success("Password reset link sent to your email!");
         setEmail("");

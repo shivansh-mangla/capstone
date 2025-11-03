@@ -1,12 +1,12 @@
-.student-logout-top-row {
+/* .student-logout-top-row {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
     margin: 10px;
-    /* margin-bottom: 0px; */
+    margin-bottom: 0px;
     box-sizing: border-box;
-}
+} */
 
 .student-logout-button {
     background-color: white;
