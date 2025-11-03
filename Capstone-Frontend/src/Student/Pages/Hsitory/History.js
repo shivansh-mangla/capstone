@@ -14,7 +14,7 @@ export default function History() {
 
   useEffect(() => {
     if(student){
-      axios.post("http://localhost:5000/api/student/get-all-application", student)
+      axios.post("https://capstone-5dsm.onrender.com/api/student/get-all-application", student)
         .then((res) => {
           console.log(res.data.Applications);
           setApplicationData(res.data.Applications);

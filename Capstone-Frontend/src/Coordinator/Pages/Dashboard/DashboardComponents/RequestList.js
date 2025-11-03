@@ -68,7 +68,7 @@ const PendingTable = ({ data, requestType, department }) => {
         let updatedRow = { ...row, stage: 3 };
         if(row.stage == 4)
         updatedRow = { ...row, stage: 5 };
-        axios.post("http://localhost:5000/api/coordinator/update-application", updatedRow)
+        axios.post("https://capstone-5dsm.onrender.com/api/coordinator/update-application", updatedRow)
         .then((res) =>{
             setTableData((prev) => prev.filter((item) => item !== row));
             toast.success("Application Accepted successfully!!");
@@ -90,7 +90,7 @@ const PendingTable = ({ data, requestType, department }) => {
         updatedComments[1] = rejectionReason;
 
         const updatedRow = { ...selectedRow, stage: 10, comments: updatedComments };
-        axios.post("http://localhost:5000/api/coordinator/update-application", updatedRow)
+        axios.post("https://capstone-5dsm.onrender.com/api/coordinator/update-application", updatedRow)
         .then((res) => {
             setTableData((prev) => prev.filter((item) => item !== selectedRow));
             setShowRejectPopup(false);
@@ -137,7 +137,7 @@ const PendingTable = ({ data, requestType, department }) => {
             'applications': formList
         }
         // console.log(formData);
-        axios.post("http://localhost:5000/api/coordinator/update-all-applications", formData)
+        axios.post("https://capstone-5dsm.onrender.com/api/coordinator/update-all-applications", formData)
         .then((res) =>{
             setTableData(prev =>
                 prev.filter(item => !selectedRowsData.some(sel => sel.application_id === item.application_id))
@@ -163,7 +163,7 @@ const PendingTable = ({ data, requestType, department }) => {
             'applications': formList
         }
         // console.log(formData);
-        axios.post("http://localhost:5000/api/coordinator/update-all-applications", formData)
+        axios.post("https://capstone-5dsm.onrender.com/api/coordinator/update-all-applications", formData)
         .then((res) =>{
             setTableData(prev =>
                 prev.filter(item => !selectedRowsData.some(sel => sel.application_id === item.application_id))

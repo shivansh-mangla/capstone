@@ -17,7 +17,7 @@ const Dashboard = () => {
   useEffect(() =>{
           const fetchApplications = async () =>{
               try {
-                  const response = await fetch('http://localhost:5000/api/get-all-applications');
+                  const response = await fetch('https://capstone-5dsm.onrender.com/api/get-all-applications');
                   const data = await response.json();
                   console.log(data.data);
                   setAllApplications(data.data);

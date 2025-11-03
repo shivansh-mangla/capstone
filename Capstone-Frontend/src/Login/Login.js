@@ -34,7 +34,7 @@ const ICMPLogin = () => {
         password: password
       }
       try {
-        const res = await axios.post("http://localhost:5000/api/student/login", data);
+        const res = await axios.post("https://capstone-5dsm.onrender.com/api/student/login", data);
         if(res.status === 202){
           notifySuccess();
           localStorage.setItem("ICMPTokenStudent", res.data["token"]);
@@ -57,7 +57,7 @@ const ICMPLogin = () => {
       }
 
       try {
-        const res = await axios.post("http://localhost:5000/api/coordinator/login", data);
+        const res = await axios.post("https://capstone-5dsm.onrender.com/api/coordinator/login", data);
         if(res.status === 202){
           notifySuccess();
           localStorage.setItem("ICMPTokenCoordinator", res.data["token"]);
@@ -81,7 +81,7 @@ const ICMPLogin = () => {
       }
 
       try {
-        const res = await axios.post("http://localhost:5000/api/hod/login", data);
+        const res = await axios.post("https://capstone-5dsm.onrender.com/api/hod/login", data);
         if(res.status === 202){
           notifySuccess();
           localStorage.setItem("ICMPTokenHod", res.data["token"]);
@@ -106,7 +106,7 @@ const ICMPLogin = () => {
       }
 
       try {
-        const res = await axios.post("http://localhost:5000/api/doaa/login", data);
+        const res = await axios.post("https://capstone-5dsm.onrender.com/api/doaa/login", data);
         if(res.status === 202){
           notifySuccess();
           localStorage.setItem("ICMPTokenDoaa", res.data["token"]);

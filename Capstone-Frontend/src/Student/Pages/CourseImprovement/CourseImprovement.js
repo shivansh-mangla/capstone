@@ -24,7 +24,7 @@ const CourseImprovement = () => {
 
   useEffect(() => {
     console.log(student);
-    axios.get("http://localhost:5000/api/get-course-list")
+    axios.get("https://capstone-5dsm.onrender.com/api/get-course-list")
       .then((res) => {
         setCourseData(res.data);
       })
@@ -86,7 +86,7 @@ const CourseImprovement = () => {
       studentData: student
     }
     
-    axios.post("http://127.0.0.1:3001", data)
+    axios.post("https://capstone-flask-gofl.onrender.com", data)
       .then((res) =>{
         console.log(res.data);
         setChoices(res.data.choices);
@@ -118,7 +118,7 @@ const CourseImprovement = () => {
     if (!confirmed) return;
 
     toast.warning("Please wait for Application to be generated!!");
-    axios.post("http://localhost:5000/api/student/generate-application", data, {
+    axios.post("https://capstone-5dsm.onrender.com/api/student/generate-application", data, {
           headers: {
             Authorization: `Bearer ${token}`
           },
