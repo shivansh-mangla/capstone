@@ -13,8 +13,9 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading the .env file")
+		log.Println("No .env file found, using Render environment variables")
 	}
+
 	PORT := os.Getenv("PORT")
 	database.ConnectMongo()
 	database.GetCourseList()
