@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { UserContext } from '../../../UserContext';
 import Timetable from '../../Components/TimeTable';
 import Logout from '../../Components/Logout';
+import { useNavigate } from 'react-router-dom';
 
 const CourseImprovement = () => {
   const token = localStorage.getItem("ICMPTokenStudent");
@@ -20,6 +21,8 @@ const CourseImprovement = () => {
   const [choices, setChoices] = useState([]);
   const [newTimeTable, setNewTimeTable] = useState([]);
   const [emptyChoices, setEmptyChoices] = useState(false);
+
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -87,19 +90,27 @@ const CourseImprovement = () => {
     }
     
     axios.post("https://capstone-flask-gofl.onrender.com", data)
-      .then((res) =>{
+      .then((res) => {
         console.log(res.data);
         setChoices(res.data.choices);
         setNewTimeTable(res.data.newTimeTable);
 
-        if(res.data.choice.length > 0)
+        // show success first
+        toast.success("Options Generated Successfully!!");
+
+        // fix: use correct key
+        if (res.data.choices && res.data.choices.length > 0) {
           setEmptyChoices(false);
-        else
+        } else {
+          toast.error("Could not find any Options");
           setEmptyChoices(true);
+        }
       })
-      .catch(()=>{
-        console.log("Eroor");
-      })
+      .catch((err) => {
+        console.error("Error:", err);
+        toast.error("Internal Server Error");
+      });
+
   }
 
   const handleSubmit3 = (choice, newTimeTable) =>{
@@ -118,6 +129,10 @@ const CourseImprovement = () => {
     if (!confirmed) return;
 
     toast.warning("Please wait for Application to be generated!!");
+
+    setChoices([]);
+    setNewTimeTable([]);
+    
     axios.post("https://capstone-5dsm.onrender.com/api/student/generate-application", data, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -129,6 +144,13 @@ const CourseImprovement = () => {
           ...prev,
           ongoing_application: res.data.applicationId
         }));
+
+        setTimeout(() => {
+          navigate("/student/status");
+        }, 1000);
+
+        //navigating after 1second wait
+
       })
       .catch((err)=>{
         console.log(err);
@@ -146,27 +168,16 @@ const CourseImprovement = () => {
   return (
     <div>
       <StudentSidebar />
-      <Logout />
       <div className="student-main-course-improvement">
-        <h1>Courses Improvement Section</h1>
-        {/* <div className="student-main-course-improvement-top">
-          <div className="student-main-course-improvement-top-t1">
-            <p>Current Semester <span>#3</span></p>
-            <p>Odd Semester</p>
-          </div>
-          <div className="student-main-course-improvement-top-t1">
-            <p>Total Credits 23/30</p>
-            <ProgressBar now={(23 * 100) / 30} variant="success" />
-          </div>
-          <div className="student-main-course-improvement-top-t1">
-            <p>Credits Remaining 7/30</p>
-            <ProgressBar now={(7 * 100) / 30} variant="danger" />
-          </div>
-        </div> */}
+        <div className="student-main-dashboard-top-row">
+          <h1>Courses Improvement Section</h1>
+          <Logout />
+        </div>
 
         <div className="student-main-course-improvement-top2">
+          <h3>Guidelines: </h3>
           <h5>- Please choose maximum of 3 courses to pick.</h5>
-          <h5>- Generate options by clicking on "Generate options button".</h5>
+          <h5>- Generate options by clicking on "Generate options" button.</h5>
           <h5>- Select one of the available options.</h5>
           <h5>- Wait for the Ongoing Application to be Accepted/Rejected before making new request.</h5>
         </div>
@@ -187,7 +198,7 @@ const CourseImprovement = () => {
             </div>
             <form>
               <p>Present CGPA</p>
-              <input type="text" />
+              <input type="text" placeholder='Ex: 9.00'/>
 
               <p>Upload IEE Signed Document</p>
               <input type="file" />
@@ -195,8 +206,9 @@ const CourseImprovement = () => {
           </div>
 
           <div className="student-main-course-improvement-bottom-right">
+            <h5>Search Courses for Improvement</h5>
             <form onSubmit={handleSubmit1}>
-              <label style={{ color: 'red' }}>Search by Course Code</label>
+              <label style={{ color: 'whitesmoke' }}>Search by Course Code</label>
               <input
                 list="courseCodes"
                 value={selectedCourseCode}
@@ -204,7 +216,7 @@ const CourseImprovement = () => {
                   setSelectedCourseCode(e.target.value);
                   setSelectedCourseName('');
                 }}
-                placeholder="Enter Course Code"
+                placeholder="Ex: UCS401"
               />
               <datalist id="courseCodes">
                 {courseData.map((course) => (
@@ -214,7 +226,7 @@ const CourseImprovement = () => {
 
               <div style={{ textAlign: 'center', color: 'red', fontWeight: 'bold', margin: '10px 0' }}>OR</div>
 
-              <label style={{ color: 'red' }}>Search by Course Name</label>
+              <label style={{ color: 'whitesmoke' }}>Search by Course Name</label>
               <input
                 list="courseNames"
                 value={selectedCourseName}
@@ -222,7 +234,7 @@ const CourseImprovement = () => {
                   setSelectedCourseName(e.target.value);
                   setSelectedCourseCode('');
                 }}
-                placeholder="Enter Course Name"
+                placeholder="Ex: Applied Physics"
               />
               <datalist id="courseNames">
                 {courseData.map((course) => (
@@ -235,24 +247,27 @@ const CourseImprovement = () => {
           </div>
         </div>
 
-        <button onClick={handleSubmit2}>Generate Options</button>
+        <button className='generate-options-btn' onClick={handleSubmit2}>Generate Options</button>
 
-        {emptyChoices ? <h1>No Options Found</h1> : <h1>Plz Choose from one of these options:</h1>}
-        {choices.map((val, index) => {
-          const combinedList = [...student.timeTableData, ...newTimeTable[index]];
-          return (
-            <div key={index}>
-              <h2>Option {index+1}</h2>
-              {Object.entries(val).map(([key, value]) => (
-                <h4 key={key}>{key} with: {value}</h4>
-              ))}
+        <div className="student-course-improvement-choices-div">
+          {choices.length > 0 ? <h1>Plz Choose from one of these options:</h1> : ""}
+          {emptyChoices ? <h1>No Options Found</h1> : ""}
+          {choices.map((val, index) => {
+            const combinedList = [...student.timeTableData, ...newTimeTable[index]];
+            return (
+              <div className='student-course-improvement-individual-choices-div' key={index}>
+                <h2>Option {index+1}</h2>
+                {Object.entries(val).map(([key, value]) => (
+                  <h4 key={key}>{key} with: {value}</h4>
+                ))}
 
-              <Timetable data={combinedList} ed={student.electiveData}/>
+                <Timetable data={combinedList} ed={student.electiveData}/>
 
-              <button className='finalize-btn' onClick={()=> {handleSubmit3(val, combinedList)}}>Finalize option {index+1}</button>
-            </div>
-          );
-        })}
+                <button className='finalize-btn' onClick={()=> {handleSubmit3(val, combinedList)}}>Finalize option {index+1}</button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

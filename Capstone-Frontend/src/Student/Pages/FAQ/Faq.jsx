@@ -5,24 +5,24 @@ import Logout from '../../Components/Logout';
 
 const faqs = [
   {
-    question: "What is the Improvement Portal?",
-    answer: "The Improvement Portal is a platform for students to submit and track their improvement suggestions and ideas."
+    question: "What if I select courses that exceed the credit limit or clash with my schedule?",
+    answer: "The system automatically checks credit caps (≤ 30 credits) and timetable clashes before submission."
   },
   {
-    question: "How do I submit an idea?",
-    answer: "Navigate to the 'Submit Idea' section in the sidebar and fill out the form with your idea details."
+    question: "Do I still need to get physical signatures from coordinators or HODs?",
+    answer: "No. The portal offers a digital approval workflow that routes requests electronically to Coordinators, HODs, and DoAA."
   },
   {
-    question: "Can I edit or delete my idea after submission?",
-    answer: "Yes, go to the 'My Submissions' page to edit or delete your entries."
+    question: "Can I access the portal on mobile devices?",
+    answer: "Yes, the portal is responsive and mobile-friendly. A dedicated mobile app/PWA is planned as a future enhancement."
   },
   {
-    question: "Who can view my submissions?",
-    answer: "Your submissions are visible to authorized faculty and admin members for review."
+    question: "Is there a way to get quick help inside the portal?",
+    answer: "Yes. An AI-powered chatbot (coming soon) will answer common queries instantly. Until then, FAQs and help guides are available."
   },
   {
-    question: "What happens after I submit an idea?",
-    answer: "Your idea will be reviewed by the concerned faculty or department. You’ll receive updates via the portal."
+    question: "What documents do I need to upload with my application (e.g., fee receipt, approvals)?",
+    answer: "Typically, you will need to upload the improvement course fee receipt and any special approvals (like IEP approval for final-year students). Required documents are listed during the application process."
   }
 ];
 

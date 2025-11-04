@@ -1,15 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora&display=swap');
+
 .student-main-course-improvement{
   margin-left: 250px;
   padding: 30px;
-  background-color: rgb(229, 229, 229);
+  background-color: #1b1a1a;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 30px;
-}
-.student-main-course-improvement *{
-  margin: 0;
-  padding: 0;
 }
 
 
@@ -18,8 +16,9 @@
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-evenly;
+  gap: 50px;
   /* background-color: azure;
   padding: 20px;
   border-radius: 20px; */
@@ -43,6 +42,23 @@
   font-size: 20px;
 }
 
+
+.student-main-course-improvement-top2{
+  border: 1px solid gray;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #2c3e50;
+  font-family: "Playfair Display", serif;
+  color: #E0D9D9;
+}
+
+.student-main-course-improvement-top2 h3{
+  color: whitesmoke;
+  font-family: "Playfair Display", serif;
+}
+
+
+
 .student-main-course-improvement-bottom-left, .student-main-course-improvement-bottom-right{
   border: 1px solid gray;
   border-radius: 10px;
@@ -51,12 +67,18 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1;
+  background-color: #2c3e50;
+  color: #DFD0B8;
+  justify-content: space-between;
 }
-.student-main-course-improvement-bottom-left h5{
+.student-main-course-improvement-bottom-left h5,
+.student-main-course-improvement-bottom-right h5{
   padding: 5px 15px;
   border: 1px solid gray;
   border-radius: 10px;
   font-weight: bold;
+  align-self: center;
 }
 .student-main-course-improvement-bottom-left h6{
   font-weight: bold;
@@ -81,12 +103,25 @@
   align-items: center;
   padding: 5px;
   font-size: 13px;
+  background-color: #243342;
+}
+
+.student-main-course-improvement-bottom-left-t2 *{
+  padding: 0;
+  margin: 0;
+}
+
+form input{
+  border: 1px solid gray;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
 }
 /* Beautify only the new form inputs section */
 .student-main-course-improvement-bottom-right form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 4px;
 }
 
 .student-main-course-improvement-bottom-right label {
@@ -135,6 +170,19 @@
   gap: 10px; /* Slightly smaller gap for tighter form layout */
 }
 
+.student-main-course-improvement-bottom-right button{
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 15px;
+  background-color: antiquewhite;
+  transition: 0.5s;
+}
+
+.student-main-course-improvement-bottom-right button:hover{
+  background-color: rgb(185, 176, 157);
+  color: black;
+}
+
 .student-main-course-improvement .finalize-btn{
   padding: 10px;
   border-radius: 10px;
@@ -146,4 +194,39 @@
   font-size: 17px;
   cursor: pointer;
   font-weight: bold;
+}
+
+
+.generate-options-btn{
+  padding: 10px;
+  border: 1px solid white;
+  background-color: #DFD0B8;
+  color: black;
+  border-radius: 10px;
+  outline: none;
+  font-weight: 600;
+  transition: 0.5s;
+  margin-bottom: 30px;
+}
+
+.generate-options-btn:hover{
+  color: black;
+  background-color: #c4b7a1;
+}
+
+.student-course-improvement-choices-div h2,
+.student-course-improvement-choices-div h4{
+  color: whitesmoke;
+}
+
+.student-course-improvement-individual-choices-div{
+  border: 1px solid gainsboro;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.student-course-improvement-choices-div h1{
+  color: #697565;
+  font-weight: bolder;
 }
