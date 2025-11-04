@@ -5,6 +5,9 @@ import Timetable from '../../Components/TimeTable'
 import axios from 'axios'
 import { UserContext } from '../../../UserContext'
 import Logout from '../../Components/Logout'
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
+
 
 const Dashboard = () => {
   const {setStudent, student} = useContext(UserContext);
