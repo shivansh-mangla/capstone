@@ -1,15 +1,31 @@
 .student-history-container{
-    display: flex;
-    width: 100vw;
-    min-height: 100vh;
-    overflow: hidden;
-    
-}
-.student-history-main{
     margin-left: 250px;
+  padding: 30px;
+  background-color: #1b1a1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.student-main-history-top-row{
+    display: flex;
+    flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-main-history-top-row h1{
+  font-weight: 600;
+  color: whitesmoke;
+}
+
+.student-history-main{
+    /* margin-left: 250px; */
     flex: 1;
-    padding: 40px 30px;
-    background-color: #f4f6f8;
+    padding: 10px;
+    /* background-color: rgba(#e2dfdf, 0.7);
+    background-color: aqua; */
     display: flex;
     flex-direction: column;
     min-height: 100vh;

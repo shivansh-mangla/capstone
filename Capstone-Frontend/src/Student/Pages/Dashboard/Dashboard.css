@@ -8,9 +8,8 @@
   gap: 30px;
 }
 
-.student-main-dashboard *{
-  padding: 0;
-  margin: 0;
+.loading-heading{
+  color: whitesmoke;
 }
 
 
@@ -118,7 +117,8 @@
 
 .timetable-legend-inner p{
   color: #E0D9D9;
-  align-items: center;
+  margin: 0;
+  /* align-items: center; */
 }
 
 .timetable-legend-circle{
@@ -126,7 +126,7 @@
   height: 16px;
   border: 0.5px solid gray;
   border-radius: 50%;
-  align-items: center;
+  /* align-items: center; */
 }
 
 

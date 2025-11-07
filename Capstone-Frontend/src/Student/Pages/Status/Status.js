@@ -17,7 +17,7 @@ const Status = () => {
   useEffect(() => {
     if (student && student.ongoing_application) {
       setActive(true);
-      axios.post("https://capstone-5dsm.onrender.com/api/get-application-details", {
+      axios.post("http://127.0.0.1:5000/api/get-application-details", {
         application_id: student.ongoing_application
       })
       .then((res) => {
@@ -52,11 +52,13 @@ const Status = () => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div>
       <StudentSidebar />
-      <div className="status-container">
+      <div className="student-status-top-row">
+        <h1 className="status-heading">Notification Section</h1>
         <Logout />
-        <h2 className="status-heading">Notification Section</h2>
+      </div>
+      <div className="status-container">
         <h2 className="status-heading">Application ID: {student?.ongoing_application}</h2>
         <p className="sub-heading">Your Application Status</p>
 
@@ -78,9 +80,10 @@ const Status = () => {
             </div>
 
             <br />
-            <br />
-            <h2>Time Table -</h2>
-            <Timetable data={appData?.new_time_table} ed={appData?.elective_data}/>
+            <div className="student-status-tt-div">
+              <h2 className="student-status-tt-h">Time Table -</h2>
+              <Timetable data={appData?.new_time_table} ed={appData?.elective_data}/>
+            </div>
 
             <h3 className="alerts-heading">Alerts</h3>
             <div className="alerts-box">

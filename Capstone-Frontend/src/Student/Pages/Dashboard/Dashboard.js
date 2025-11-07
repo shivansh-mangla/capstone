@@ -23,7 +23,7 @@ const Dashboard = () => {
 
     const fetchElectiveData = async () => {
       try{
-        const res = await axios.get("https://capstone-5dsm.onrender.com/api/student/get-elective-data");
+        const res = await axios.get("http://127.0.0.1:5000/api/student/get-elective-data");
         setElectiveData(res.data);
       } catch (err) {
         console.error("Failed to fetch data:", err.response?.data || err.message);
@@ -34,7 +34,7 @@ const Dashboard = () => {
       try {
         const token = localStorage.getItem("ICMPStudentToken");
 
-        const res = await axios.get("https://capstone-5dsm.onrender.com/api/student/gettimetable?subgroup="+student.subgroup, {
+        const res = await axios.get("http://127.0.0.1:5000/api/student/gettimetable?subgroup="+student.subgroup, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,7 +60,18 @@ const Dashboard = () => {
     fetchElectiveData();
   }, [student]);
 
-  if (!student || !electiveData) return <p>Loading...</p>; 
+  if (!student || !electiveData) return (
+    <div>
+      <StudentSidebar />
+      <div className="student-main-dashboard">
+        <div className="student-main-dashboard-top-row">
+          <h1>Dashboard</h1>
+          <Logout />
+        </div>
+        <h1 className='loading-heading'>Fetching and Loading the Data...</h1>
+      </div>
+    </div>
+  );
 
   const ed = electiveData[student.elective_basket];
   if(hasFetchedElectiveData.current == false){

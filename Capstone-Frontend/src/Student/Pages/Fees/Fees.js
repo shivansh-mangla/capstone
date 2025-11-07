@@ -20,7 +20,7 @@ const StudentFees = () => {
     if (student) {
       console.log(student);
       if(student.ongoing_application){
-        axios.post("https://capstone-5dsm.onrender.com/api/get-application-details", {
+        axios.post("http://127.0.0.1:5000/api/get-application-details", {
           application_id: student.ongoing_application
         })
         .then((res) => {
@@ -71,7 +71,7 @@ const StudentFees = () => {
 
     try {
       const token = localStorage.getItem("ICMPTokenStudent");
-      const response = await axios.post("https://capstone-5dsm.onrender.com/api/student/upload-fee", formData, {
+      const response = await axios.post("http://127.0.0.1:5000/api/student/upload-fee", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
