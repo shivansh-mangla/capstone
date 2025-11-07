@@ -36,9 +36,11 @@ const Faq = () => {
   return (
     <div className="student-faq-main">
       <StudentSidebar />
-      {/* <Logout /> */}
+      <div className="student-main-faq-top-row">
+        <h1>FAQ & Help</h1>
+        <Logout />
+      </div>
       <div className="student-faq-content">
-        <h1 className="student-faq-title">FAQ & Help</h1>
         <div className="student-faq-list">
           {faqs.map((item, index) => (
             <div

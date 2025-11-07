@@ -27,7 +27,7 @@ const ClashingRequestList = ({ data, department }) => {
 
     const handleAccept = (row) => {
         const updatedRow = { ...row, stage: 2 };
-        axios.post("https://capstone-5dsm.onrender.com/api/doaa/update-application", updatedRow)
+        axios.post("http://127.0.0.1:5000/api/doaa/update-application", updatedRow)
         .then((res) => {
             setRequests((prev) => prev.filter((r) => r !== row));
         })
@@ -47,7 +47,7 @@ const ClashingRequestList = ({ data, department }) => {
         updatedComments[0] = rejectionReason;
 
         const updatedRow = { ...selectedRequest, stage: 10, comments: updatedComments };
-        axios.post("https://capstone-5dsm.onrender.com/api/doaa/update-application", updatedRow)
+        axios.post("http://127.0.0.1:5000/api/doaa/update-application", updatedRow)
         .then((res) => {
             setRequests((prev) => prev.filter((r) => r !== selectedRequest));
             setShowModal(false);
