@@ -1,9 +1,16 @@
 .student-application-tile{
     display: flex;
-    background-color: white;
+    background-color: #2c3e50;
     border-radius: 10px;
     overflow: hidden;
     flex-direction: column;
     padding: 20px;
     border: 1px solid gray;
+}
+
+.student-application-tile h2,
+.student-application-tile h4,
+.student-application-tile h3,
+.student-application-tile h5{
+    color: whitesmoke;
 }

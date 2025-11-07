@@ -8,9 +8,8 @@
   gap: 30px;
 }
 
-.student-main-dashboard *{
-  padding: 0;
-  margin: 0;
+.loading-heading{
+  color: whitesmoke;
 }
 
 
@@ -42,7 +41,8 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1.1;
-  color: rgb(225, 212, 212);
+  /* color: rgb(225, 212, 212); */
+  color: #E0D9D9;
   text-transform: uppercase;
   padding: 10px 0;
 }
@@ -88,7 +88,8 @@
   width: 100%;
   text-align: center;
   font-size: 23px;
-  color: rgb(67, 23, 23);
+  /* color: rgb(67, 23, 23); */
+  color: #3A0519;
 }
 
 .student-dashboard-info-tile p{
@@ -111,13 +112,21 @@
 .timetable-legend-inner{
   display: flex;
   gap: 4px;
+  align-items: center;
+}
+
+.timetable-legend-inner p{
+  color: #E0D9D9;
+  margin: 0;
+  /* align-items: center; */
 }
 
 .timetable-legend-circle{
   width: 16px;
-  aspect-ratio: 1;
+  height: 16px;
   border: 0.5px solid gray;
   border-radius: 50%;
+  /* align-items: center; */
 }
 
 

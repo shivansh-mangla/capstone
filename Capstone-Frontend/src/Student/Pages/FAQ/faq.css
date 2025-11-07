@@ -1,13 +1,27 @@
 .student-faq-main {
-  display: flex;
+  /* display: flex; */
+  background-color: #1b1a1a;
+  padding: 30px;
+  /* background-color: #f9f9f9; */
+  margin-left: 250px;
   min-height: 100vh;
-  background-color: #f9f9f9;
+}
+
+.student-main-faq-top-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-main-faq-top-row h1{
+  font-weight: 600;
+  color: whitesmoke;
 }
 
 .student-faq-content {
+  margin-top: 50px;
   flex: 1;
-  padding: 40px;
-  margin-left: 250px;
 }
 
 .student-faq-title {
@@ -24,8 +38,8 @@
 }
 
 .student-faq-item {
-  background-color: #fff;
-  border-left: 4px solid #4CAF50;
+  background-color: #c2c2c2;
+  border-left: 4px solid rgb(139, 1, 1);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
@@ -49,14 +63,14 @@
 
 .faq-icon {
   font-size: 1.5rem;
-  color: #4CAF50;
+  color: rgb(139, 1, 1);
   transition: transform 0.6s;
 }
 
 .student-faq-answer {
   margin-top: 15px;
   font-size: 1rem;
-  color: #555;
+  color: #032947;
   line-height: 1.5;
   animation: fadeIn 0.6s ease;
 }
