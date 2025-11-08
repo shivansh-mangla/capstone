@@ -19,10 +19,21 @@ import { UserContext } from '../../../UserContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Logout from '../../Components/Logout';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+
+  const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 
 export default function Account() {
 
   const navigate = useNavigate();
+
 
   const {student, setStudent} = React.useContext(UserContext);
   const [subgroupList, setSubgroupList] = React.useState([]);
@@ -50,7 +61,7 @@ export default function Account() {
     var subgroups = [];
     var electives = [];
     // Get subgroups list
-    axios.get("http://127.0.0.1:5000/api/student/get-subgroup-name-list")
+    axios.get("https://capstone-5dsm.onrender.com/api/student/get-subgroup-name-list")
       .then((res) => {
         //keep only those subgroups in list whose 1st charecter === academic year
         subgroups = res.data["subgroupList"];
@@ -62,7 +73,7 @@ export default function Account() {
       });
 
     // Get electives list
-    axios.get("http://127.0.0.1:5000/api/student/get-elective-basket-list")
+    axios.get("https://capstone-5dsm.onrender.com/api/student/get-elective-basket-list")
       .then((res) => {
         electives = res.data["electiveBasketList"];
         setElectiveBasketList(res.data["electiveBasketList"]);
@@ -114,7 +125,7 @@ const handleSave = () => {
   setStudent(updatedStudent);
 
   const token = localStorage.getItem("ICMPTokenStudent");
-  axios.post("http://127.0.0.1:5000/api/student/update-details", updatedStudent, {
+  axios.post("https://capstone-5dsm.onrender.com/api/student/update-details", updatedStudent, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json"
@@ -141,7 +152,9 @@ const handleSave = () => {
 // 3. Last mein ek Save button hai jo data console mein print karta hai
 
   return (
-    <Box alignItems="flex-start">
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Box alignItems="flex-start">
       <StudentSidebar/>
       <Logout />
       <Container >
@@ -209,5 +222,7 @@ const handleSave = () => {
       </Box>
     </Container>
     </Box>
+    </ThemeProvider>
+    
   );
 }
