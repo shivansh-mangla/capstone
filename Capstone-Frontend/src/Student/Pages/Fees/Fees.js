@@ -20,7 +20,7 @@ const StudentFees = () => {
     if (student) {
       console.log(student);
       if(student.ongoing_application){
-        axios.post("http://127.0.0.1:5000/api/get-application-details", {
+        axios.post("https://capstone-5dsm.onrender.com/api/get-application-details", {
           application_id: student.ongoing_application
         })
         .then((res) => {
@@ -71,7 +71,7 @@ const StudentFees = () => {
 
     try {
       const token = localStorage.getItem("ICMPTokenStudent");
-      const response = await axios.post("http://127.0.0.1:5000/api/student/upload-fee", formData, {
+      const response = await axios.post("https://capstone-5dsm.onrender.com/api/student/upload-fee", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
@@ -123,8 +123,10 @@ const StudentFees = () => {
       else if(applicationDetails.stage === 3){
         return(
           <div className="student-main-fees">
-            <h1>Fees Section</h1>
-            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top-row">
+              <h1>Fees Section</h1>
+              <Logout/>
+            </div>
             <div className="student-main-fees-top">
               <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
               <div className="fees-breakdown-table">
@@ -140,7 +142,7 @@ const StudentFees = () => {
                 <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
               </div>
             </div>
-            <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
+            <h2 className='you-have-to-pay-h'>You have to pay Rs. {courseDetails.length * 8000}</h2>
             <div className="student-main-fees-middle">
               <div className="student-main-fees-middle-left">
                 <p>Pay using UPI by scanning this QR code</p>
@@ -153,7 +155,7 @@ const StudentFees = () => {
               </div>
             </div>
             <div className="student-main-fees-bottom">
-              <h2>Upload Fees Receipt here in PDF form (max 2MB)</h2>
+              <h2>Upload Fees Receipt here in PDF format (max 2MB)</h2>
               <form onSubmit={handleSubmit}>
                 <input type="file" accept="application/pdf" onChange={handleFileChange} />
                 <button type="submit" className='student-main-fees-bottom-submit-btn'>Submit</button>
@@ -222,7 +224,6 @@ const StudentFees = () => {
   return (
     <div>
       <StudentSidebar />
-      <Logout />
       {renderFeesPage()}
     </div>
   );
