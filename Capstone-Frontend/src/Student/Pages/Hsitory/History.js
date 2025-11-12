@@ -5,6 +5,7 @@ import Logout from '../../Components/Logout'
 import HistoryTile from './HistoryComponents/HistoryTile'
 import { UserContext } from '../../../UserContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 export default function History() {
@@ -14,10 +15,13 @@ export default function History() {
 
   useEffect(() => {
     if(student){
-      axios.post("https://capstone-5dsm.onrender.com/api/student/get-all-application", student)
+      axios.post("http://127.0.0.1:5000/api/student/get-all-application", student)
         .then((res) => {
           console.log(res.data.Applications);
           setApplicationData(res.data.Applications);
+        })
+        .catch((error) =>{
+          toast.error("Some error in fetching data!!");
         })
       
     }

@@ -17,11 +17,13 @@ const Status = () => {
   useEffect(() => {
     if (student && student.ongoing_application) {
       setActive(true);
-      axios.post("https://capstone-5dsm.onrender.com/api/get-application-details", {
+      axios.post("http://127.0.0.1:5000/api/get-application-details", {
         application_id: student.ongoing_application
       })
       .then((res) => {
         // assuming the response looks like: { stage: 0 | 1 | ... | 10 }
+        console.log(res);
+        
         setStatus(res.data["Application Data"]["stage"]);
         console.log(res.data["Application Data"]);
         setComments(res.data["Application Data"]["comments"]);

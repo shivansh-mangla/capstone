@@ -51,7 +51,7 @@ const Dashboard = () => {
     useEffect(() =>{
         const fetchApplications = async () =>{
             try {
-                const response = await fetch('https://capstone-5dsm.onrender.com/api/get-all-applications');
+                const response = await fetch('http://127.0.0.1:5000/api/get-all-applications');
                 const data = await response.json();
                 console.log(data.data);
                 setAllApplications(data.data);
@@ -101,7 +101,7 @@ const Dashboard = () => {
                     <div className="doaa-header-top">
                         <div className="doaa-welcome-text">
                             <h4>Welcome !</h4>
-                            <p>DR. Maninder Singh</p>
+                            <p>Dr. Shruti Sharma</p>
                             <h3>Applications</h3>
                         </div>
                     </div>

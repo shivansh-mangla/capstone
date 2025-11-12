@@ -22,7 +22,7 @@ const notifySuccessPassword = () => {
 
 
 export default function Account() {
-const [displayName, setDisplayName] = useState('Dr. Maninder Singh'); // get this name from dashboard page
+const [displayName, setDisplayName] = useState('Dr. Shruti Sharma'); // get this name from dashboard page
 const [nameDraft, setNameDraft] = useState('');
 const [oldPw, setOldPw] = useState('');
 const [newPw, setNewPw] = useState('');
@@ -31,7 +31,7 @@ const [newPw, setNewPw] = useState('');
     const handleSaveName = async () => {
         if (nameDraft.trim()) {
             try {
-                const response = await fetch('https://capstone-5dsm.onrender.com/api/doaa/update-name', {
+                const response = await fetch('http://127.0.0.1:5000/api/doaa/update-name', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ const [newPw, setNewPw] = useState('');
     const handleSavePassword = async () => {
         if (oldPw && newPw) {
             try {
-                const response = await fetch('https://capstone-5dsm.onrender.com/api/doaa/update-password', {
+                const response = await fetch('http://127.0.0.1:5000/api/doaa/update-password', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

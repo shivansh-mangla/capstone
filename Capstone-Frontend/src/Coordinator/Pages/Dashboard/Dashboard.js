@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import StatCard from './DashboardComponents/StatCard';
 import StatCardMain from './DashboardComponents/StatCardMain';
@@ -6,6 +6,7 @@ import RequestList from './DashboardComponents/RequestList';
 import Logout from '../../Components/Logout'
 import './Dashboard.css';
 
+import { UserContext } from '../../../UserContext';
 const Dashboard = () => {
   const [allApplications, setAllApplications] = useState('');
   const [pendingData, setPendingData] = useState('');
@@ -14,10 +15,12 @@ const Dashboard = () => {
   const [selectedType, setSelectedType] = useState('Approved'); 
   const [selectedData, setSelectedData] = useState(approvedData);
 
+  const {coordinator} = useContext(UserContext);
+
   useEffect(() =>{
           const fetchApplications = async () =>{
               try {
-                  const response = await fetch('https://capstone-5dsm.onrender.com/api/get-all-applications');
+                  const response = await fetch('http://127.0.0.1:5000/api/get-all-applications');
                   const data = await response.json();
                   console.log(data.data);
                   setAllApplications(data.data);
@@ -67,7 +70,7 @@ const Dashboard = () => {
             <div className="coordinator-header-top">
               <div className="coordinator-welcome-text">
                 <h4>Welcome!</h4>
-                <p>Dr. Anjula Mehto</p>
+                <p>{coordinator?.name || "Loading"}</p>
                 <h3>Applications</h3>
               </div>
             </div>
