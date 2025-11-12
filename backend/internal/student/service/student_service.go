@@ -203,7 +203,7 @@ func GenerateAndSaveApplication(d *model.Application) string {
 	pdf.Cell(70, 8, "Group: "+d.Subgroup)
 	pdf.Cell(70, 8, "Mobile No.: "+d.PhoneNumber)
 	pdf.Ln(8)
-	pdf.Cell(70, 8, "Present CGPA: "+"9.22")
+	pdf.Cell(70, 8, "Present CGPA: "+ d.CGPA)
 
 	pdf.Ln(12)
 
@@ -339,6 +339,7 @@ func CreateApplication(c *fiber.Ctx) error {
 	application.Clashing = input.Clashing
 	application.Message = input.Message
 	application.Comments = []string{"", ""}
+	application.CGPA = input.CGPA
 
 	application.Stage = 1
 	if !input.Clashing {
