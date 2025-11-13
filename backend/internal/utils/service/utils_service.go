@@ -24,12 +24,17 @@ func SendVerificationEmail(recipientEmail, token string) error {
 	smtpHost := os.Getenv("SMTP_HOST")
 	smtpPort := 587
 
+	fmt.Println("Hello 1")
+
 	// Create message
 	m := mail.NewMessage()
 	m.SetHeader("From", m.FormatAddress(from, "Improvement Portal Server"))
 	m.SetHeader("To", recipientEmail)
 	m.SetHeader("Subject", "Please Verify Your Email Address - Improvement Course Management Portal")
 	verificationLink := fmt.Sprintf("https://capstone-5dsm.onrender.com/verify?token=%s", token)
+
+	fmt.Println("Hello 2")
+
 	m.SetBody("text/html", fmt.Sprintf(`
 		<!DOCTYPE html>
 		<html>
@@ -62,16 +67,23 @@ func SendVerificationEmail(recipientEmail, token string) error {
 		</html>
 	`, verificationLink, verificationLink))
 
+
+	fmt.Println("Hello 3")
+
 	// Set up dialer
 	d := mail.NewDialer(smtpHost, smtpPort, from, password)
 	d.Timeout = 10 * time.Second // prevent hanging
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: false}
+
+	fmt.Println("Hello 4")
 
 	// Send email
 	if err := d.DialAndSend(m); err != nil {
 		log.Printf("Failed to send email to %s: %v\n", recipientEmail, err)
 		return err
 	}
+
+	fmt.Println("Hello 5")
 
 	fmt.Println("Verification email sent to:", recipientEmail)
 	return nil
