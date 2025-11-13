@@ -54,10 +54,17 @@
 
 .doaa-stats-section {
     display: flex;
+    flex-direction: row;
     /* gap: 1rem; */
     margin-top: 20px;
     flex-wrap: wrap;
     height: fit-content;
+}
+
+.doaa-stats-section-right{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 

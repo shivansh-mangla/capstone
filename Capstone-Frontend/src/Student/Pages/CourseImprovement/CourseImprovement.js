@@ -31,26 +31,30 @@ const CourseImprovement = () => {
 
 
   useEffect(() => {
-    console.log(student);
+    if (!student) return; // wait until student is available
 
-    if (student && student.ongoing_application) {
-      axios.post("http://127.0.0.1:5000/api/get-application-details", {
+    console.log("Student data:", student);
+
+    if (student.ongoing_application) {
+      // 1️⃣ Fetch application details
+      axios.post("https://capstone-5dsm.onrender.com/api/get-application-details", {
         application_id: student.ongoing_application
       })
       .then((res) => {
-        // assuming the response looks like: { stage: 0 | 1 | ... | 10 }
-        console.log(res);
-        
-        const stage = res.data["Application Data"]["stage"];
-        if(stage === 5 || stage === 10 || stage === -1)
+        console.log("Application details:", res);
+
+        const stage = res.data?.["Application Data"]?.["stage"];
+        if (stage === 5 || stage === 10 || stage === -1) {
           setActive(false);
+        }
       })
       .catch((err) => {
         console.error("Error fetching application details:", err);
         setActive(false); 
       });
 
-      axios.get("http://127.0.0.1:5000/api/get-course-list")
+      // 2️⃣ Fetch course list
+      axios.get("https://capstone-5dsm.onrender.com/api/get-course-list")
       .then((res) => {
         setCourseData(res.data);
       })
@@ -58,7 +62,8 @@ const CourseImprovement = () => {
         toast.error("Failed to fetch data");
       });
     }
-  }, []);
+
+  }, [student]); 
 
   const handleSubmit1 = (e) => {
     e.preventDefault();
@@ -70,6 +75,10 @@ const CourseImprovement = () => {
 
       console.log(foundCourse);
       if (foundCourse) {
+        if(selectedCourseData.length === 3){
+          toast.error("Can Select Maximum of 3 Courses");
+          return;
+        }
         console.log(foundCourse.subjectCode);
         setSelectedCourseData([
           ...selectedCourseData,
@@ -88,6 +97,10 @@ const CourseImprovement = () => {
         (course) => course.data["course name"].toLowerCase() === selectedCourseName.toLowerCase()
       );
       if (foundCourse) {
+        if(selectedCourseData.length === 3){
+          toast.error("Can Select Maximum of 3 Courses");
+          return;
+        }
         setSelectedCourseData(prevData => [
           ...prevData,
           {
@@ -115,7 +128,7 @@ const CourseImprovement = () => {
 
     console.log(data);
     
-    axios.post("http://127.0.0.1:3001", data)
+    axios.post("https://capstone-flask-gofl.onrender.com", data)
       .then((res) => {
         console.log(res.data);
         setChoices(res.data.choices);
@@ -196,7 +209,7 @@ const CourseImprovement = () => {
     setChoices([]);
     setNewTimeTable([]);
     
-    axios.post("http://127.0.0.1:5000/api/student/generate-application", data, {
+    axios.post("https://capstone-5dsm.onrender.com/api/student/generate-application", data, {
           headers: {
             Authorization: `Bearer ${token}`
           },

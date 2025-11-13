@@ -61,7 +61,7 @@ export default function Account() {
     var subgroups = [];
     var electives = [];
     // Get subgroups list
-    axios.get("http://127.0.0.1:5000/api/student/get-subgroup-name-list")
+    axios.get("https://capstone-5dsm.onrender.com/api/student/get-subgroup-name-list")
       .then((res) => {
         //keep only those subgroups in list whose 1st charecter === academic year
         subgroups = res.data["subgroupList"];
@@ -73,7 +73,7 @@ export default function Account() {
       });
 
     // Get electives list
-    axios.get("http://127.0.0.1:5000/api/student/get-elective-basket-list")
+    axios.get("https://capstone-5dsm.onrender.com/api/student/get-elective-basket-list")
       .then((res) => {
         electives = res.data["electiveBasketList"];
         setElectiveBasketList(res.data["electiveBasketList"]);
@@ -125,7 +125,7 @@ const handleSave = () => {
   setStudent(updatedStudent);
 
   const token = localStorage.getItem("ICMPTokenStudent");
-  axios.post("http://127.0.0.1:5000/api/student/update-details", updatedStudent, {
+  axios.post("https://capstone-5dsm.onrender.com/api/student/update-details", updatedStudent, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json"
