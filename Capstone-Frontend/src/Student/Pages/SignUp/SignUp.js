@@ -34,7 +34,7 @@ const ICMPSignUp = () => {
 
   useEffect(() => {
     // Get subgroups list
-    axios.get("http://127.0.0.1:5000/api/student/get-subgroup-name-list")
+    axios.get("https://capstone-5dsm.onrender.com/api/student/get-subgroup-name-list")
       .then((res) => {
         setSubgroupList(res.data["subgroupList"]);
       })
@@ -43,7 +43,7 @@ const ICMPSignUp = () => {
       });
 
     // Get electives list
-    axios.get("http://127.0.0.1:5000/api/student/get-elective-basket-list")
+    axios.get("https://capstone-5dsm.onrender.com/api/student/get-elective-basket-list")
       .then((res) => {
         setElectiveBasketList(res.data["electiveBasketList"]);
       })
@@ -136,7 +136,7 @@ const ICMPSignUp = () => {
   });
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/api/student/register", data);
+      const res = await axios.post("https://capstone-5dsm.onrender.com/api/student/register", data);
       if(res.status === 202){
         notifySuccess();
         navigate("/student/login");

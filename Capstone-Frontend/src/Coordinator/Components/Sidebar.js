@@ -16,7 +16,7 @@ export default function CoordinatorSidebar() {
   const menuItems = [
     { name: 'Dashboard', path: '/coordinator/dashboard', icon: <FaHome /> },
     { name: 'Accounts', path: '/coordinator/account', icon: <FaUserTie /> },
-    // { name: 'Academic Information', path: '/coordinator/academic-information', icon: <FaUserTie /> },
+    { name: 'Academic Information', path: '/coordinator/academic-information', icon: <FaUserTie /> },
     { name: 'Time Table', path: '/coordinator/time-table', icon: <FaCalendarAlt /> },
   ];
 

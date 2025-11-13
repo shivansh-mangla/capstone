@@ -1,0 +1,96 @@
+.chart-card {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 30px 25px 35px 25px;
+  width: 440px;
+  text-align: center;
+  margin: 20px auto;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.chart-card:hover {
+  transform: scale(1.02);
+}
+
+.chart-inner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-center-text {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.chart-center-text h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.chart-center-text p {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.chart-divider {
+  width: 90%;
+  height: 1px;
+  background-color: #eee;
+  margin: 15px auto 10px auto;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 14px;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot.approved {
+  background-color: #8ef9aeff;
+}
+
+.legend-dot.pending {
+  background-color: #b69dd4ff;
+}
+
+.legend-dot.rejected {
+  background-color: #a4cbd7ff;
+}
+
+@media (max-width: 768px) {
+  .chart-card {
+    width: 95%;
+  }
+
+  .chart-legend {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

@@ -6,7 +6,9 @@ import RequestList from './DashboardComponents/RequestList';
 import Logout from '../../Components/Logout'
 import './Dashboard.css';
 
+
 import { UserContext } from '../../../UserContext';
+import GaugeChart from './DashboardComponents/GaugeChart';
 const Dashboard = () => {
   const [allApplications, setAllApplications] = useState('');
   const [pendingData, setPendingData] = useState('');
@@ -20,7 +22,7 @@ const Dashboard = () => {
   useEffect(() =>{
           const fetchApplications = async () =>{
               try {
-                  const response = await fetch('http://127.0.0.1:5000/api/get-all-applications');
+                  const response = await fetch('https://capstone-5dsm.onrender.com/api/get-all-applications');
                   const data = await response.json();
                   console.log(data.data);
                   setAllApplications(data.data);
@@ -76,10 +78,17 @@ const Dashboard = () => {
             </div>
 
             <div className="coordinator-stats-section">
-            <StatCardMain type="Approved" count="{}" color="#D9FCE3" icon="✅" onClick={() => { setSelectedType('Approved'); setSelectedData(approvedData) }} />
-            <StatCard type="Approved" count={approvedData.length} color="#D9FCE3" icon="✅" onClick={() => { setSelectedType('Approved'); setSelectedData(approvedData) }} />
-            <StatCard type="Pending" count={pendingData.length} color="#F3E9FF" icon="⏸️" onClick={() => { setSelectedType('Pending'); setSelectedData(pendingData) }} />
-            <StatCard type="Rejected" count={rejectedData.length} color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
+              <GaugeChart
+                approved={approvedData.length}
+                pending={pendingData.length}
+                rejected={rejectedData.length}
+              />
+              <div className="coordinator-stats-section-right">
+                <StatCard type="Approved" count={approvedData.length} color="#D9FCE3" icon="✅" onClick={() => { setSelectedType('Approved'); setSelectedData(approvedData) }} />
+                
+                <StatCard type="Pending" count={pendingData.length} color="#F3E9FF" icon="⏸️" onClick={() => { setSelectedType('Pending'); setSelectedData(pendingData) }} />
+                <StatCard type="Rejected" count={rejectedData.length} color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
+              </div>
 
             </div>
           </div>
