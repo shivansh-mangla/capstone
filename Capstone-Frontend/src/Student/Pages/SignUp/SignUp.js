@@ -139,7 +139,7 @@ const ICMPSignUp = () => {
       const res = await axios.post("https://capstone-5dsm.onrender.com/api/student/register", data);
       if(res.status === 202){
         notifySuccess();
-        navigate("/student/login");
+        navigate("/login");
       }
     } catch(error) {
       console.log(error);
