@@ -2,11 +2,13 @@ package service
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"log"
 	"mime/multipart"
 	"os"
+	"time"
 
 	"github.com/cloudinary/cloudinary-go"
 	"github.com/cloudinary/cloudinary-go/api/uploader"
@@ -62,10 +64,12 @@ func SendVerificationEmail(recipientEmail, token string) error {
 
 	// Set up dialer
 	d := mail.NewDialer(smtpHost, smtpPort, from, password)
+	d.Timeout = 10 * time.Second // prevent hanging
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: false}
 
 	// Send email
 	if err := d.DialAndSend(m); err != nil {
-		log.Println("Failed to send email:", err)
+		log.Printf("Failed to send email to %s: %v\n", recipientEmail, err)
 		return err
 	}
 
