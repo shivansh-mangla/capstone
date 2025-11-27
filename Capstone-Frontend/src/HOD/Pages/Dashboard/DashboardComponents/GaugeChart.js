@@ -25,7 +25,7 @@ const GaugeChart = ({ approved, pending, rejected }) => {
         },
       },
     },
-    colors: ["#8ef9aeff", "#b69dd4ff", "#a4cbd7ff"], // approved, pending, rejected
+    colors: ["#ef5959ff", "#e0e785ff", "#ae673dff"], // approved, pending, rejected
     dataLabels: {
       enabled: false,
     },

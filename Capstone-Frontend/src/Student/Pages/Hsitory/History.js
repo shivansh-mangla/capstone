@@ -37,6 +37,9 @@ export default function History() {
             <h1>Your Applications</h1>
             <Logout />
           </div>
+          <div className='student-history-message'>
+            <p >You have to download the application form and the fee receipt along with a copy of this timetable, and then submit them to the Academic Department.</p>
+          </div>
           <div className='student-history-main'>
               <div className='student-history-tiles-area'>
                 {applicationData && applicationData.length > 0 ? (

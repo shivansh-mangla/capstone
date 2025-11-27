@@ -14,6 +14,7 @@ const GaugeChart = ({ approved, pending, rejected }) => {
     chart: {
       type: "donut",
     },
+    labels: ["Approved", "Pending", "Rejected"],
     plotOptions: {
       pie: {
         startAngle: -90,

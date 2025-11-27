@@ -128,7 +128,7 @@ const CourseImprovement = () => {
 
     console.log(data);
     
-    axios.post("http://127.0.0.1:3001", data)
+    axios.post("https://capstone-flask-gofl.onrender.com", data)
       .then((res) => {
         console.log(res.data);
         setChoices(res.data.choices);
@@ -355,6 +355,33 @@ const CourseImprovement = () => {
                     
 
                     <Timetable data={combinedList} ed={student.electiveData}/>
+
+                    <div className="timetable-legend">
+                      <div className='timetable-legend-inner'>
+                        <div className='timetable-legend-circle' style={{backgroundColor: 'white'}}></div>
+                        <p>Free Slots</p>
+                      </div>
+                      <div className='timetable-legend-inner'>
+                        <div className='timetable-legend-circle' style={{backgroundColor: '#FFD700'}}></div>
+                        <p>Lectures</p>
+                      </div>
+                      <div className='timetable-legend-inner'>
+                        <div className='timetable-legend-circle' style={{backgroundColor: '#90EE90'}}></div>
+                        <p>Labs</p>
+                      </div>
+                      <div className='timetable-legend-inner'>
+                        <div className='timetable-legend-circle' style={{backgroundColor: '#ADD8E6'}}></div>
+                        <p>Tutorials</p>
+                      </div>
+                      <div className='timetable-legend-inner'>
+                        <div className='timetable-legend-circle' style={{backgroundColor: 'pink'}}></div>
+                        <p>Electives</p>
+                      </div>
+                      <div className='timetable-legend-inner'>
+                        <div className='timetable-legend-circle' style={{backgroundColor: 'red'}}></div>
+                        <p>Added Slots</p>
+                      </div>
+                    </div>
 
                     <button className='finalize-btn' onClick={()=> {handleSubmit3(val, combinedList)}}>Finalize option {index+1}</button>
                   </div>
