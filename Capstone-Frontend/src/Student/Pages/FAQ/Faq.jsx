@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './faq.css';
 import StudentSidebar from '../../Components/Sidebar';
 import Logout from '../../Components/Logout';
+import NotificationBox from '../../Components/NotificationBox';
 
 const faqs = [
   {
@@ -59,6 +60,7 @@ const Faq = () => {
           ))}
         </div>
       </div>
+      <NotificationBox message={"NotificationBox message NotificationBox message NotificationBox message NotificationBox message NotificationBox message NotificationBox message NotificationBox message NotificationBox message"}/>
     </div>
   );
 };

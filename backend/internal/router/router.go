@@ -51,6 +51,7 @@ func SetupRoutes() *fiber.App {
 	coordinator.Post("/update-password", coordinatorHandler.UpdateCoordinatorPassword)
 	coordinator.Post("/update-application", coordinatorHandler.UpdateApplication)
 	coordinator.Post("/update-all-applications", coordinatorHandler.UpdateAllApplication)
+	coordinator.Post("/post-notification", utilsHandler.AddNotification)
 
 	//doaa routes
 	doaa := api.Group("/doaa")
@@ -71,5 +72,6 @@ func SetupRoutes() *fiber.App {
 	api.Post("reject-application", utilsHandler.RejectApplicationById)
 	api.Post("/get-application-status", utilsHandler.GetApplicationStatusById)
 	api.Get("/get-all-applications", utilsHandler.GetAllApplications)
+	api.Get("/get-notification", utilsHandler.GetNotificationHandler)
 	return app
 }

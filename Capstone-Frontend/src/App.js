@@ -20,6 +20,8 @@ import CoordinatorDashboard from './Coordinator/Pages/Dashboard/Dashboard.js'
 import CoordinatorAccount from './Coordinator/Pages/Account/Account.js'
 import CoordinatorAcademicInformation from './Coordinator/Pages/AcademicInformation/AcademicInformation.js'
 import CoordinatorTimeTable from './Coordinator/Pages/TimeTable/TimeTable.js'
+import Notifications from "./Coordinator/Pages/Notifications/Notifications.jsx";
+
 
 import HODDashboard from './HOD/Pages/Dashboard/Dashboard.js'
 import HODCoordinators from './HOD/Pages/Coordinators/Coordinators.js'
@@ -67,6 +69,7 @@ function App() {
             <Route path="/coordinator/account" element={<ProtectedRouteCoordinator><CoordinatorAccount /></ProtectedRouteCoordinator>} />
             <Route path="/coordinator/academic-information" element={<ProtectedRouteCoordinator><CoordinatorAcademicInformation /></ProtectedRouteCoordinator>} />
             <Route path="/coordinator/time-table" element={<ProtectedRouteCoordinator><CoordinatorTimeTable /></ProtectedRouteCoordinator>} />
+            <Route path="/coordinator/notification" element={<ProtectedRouteCoordinator><Notifications /></ProtectedRouteCoordinator>} />
 
             {/* HOD routes */}
             <Route path="/hod/dashboard" element={<ProtectedRouteHod><HODDashboard /></ProtectedRouteHod>} />
