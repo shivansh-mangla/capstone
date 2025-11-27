@@ -22,19 +22,48 @@ const CourseImprovement = () => {
   const [newTimeTable, setNewTimeTable] = useState([]);
   const [emptyChoices, setEmptyChoices] = useState(false);
 
+  const [cgpa, setCgpa] = useState("");
+  const [IEEFile, setIEEFile] = useState(null);
+
+  const [active, setActive] = useState(true);
+
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    console.log(student);
-    axios.get("http://127.0.0.1:5000/api/get-course-list")
+    if (!student) return; // wait until student is available
+
+    console.log("Student data:", student);
+
+    if (student.ongoing_application) {
+      // 1️⃣ Fetch application details
+      axios.post("http://127.0.0.1:5000/api/get-application-details", {
+        application_id: student.ongoing_application
+      })
+      .then((res) => {
+        console.log("Application details:", res);
+
+        const stage = res.data?.["Application Data"]?.["stage"];
+        if (stage === 5 || stage === 10 || stage === -1) {
+          setActive(false);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching application details:", err);
+        setActive(false); 
+      });
+
+      // 2️⃣ Fetch course list
+      axios.get("http://127.0.0.1:5000/api/get-course-list")
       .then((res) => {
         setCourseData(res.data);
       })
       .catch(() => {
         toast.error("Failed to fetch data");
-      })
-  }, [])
+      });
+    }
+
+  }, [student]); 
 
   const handleSubmit1 = (e) => {
     e.preventDefault();
@@ -46,6 +75,10 @@ const CourseImprovement = () => {
 
       console.log(foundCourse);
       if (foundCourse) {
+        if(selectedCourseData.length === 3){
+          toast.error("Can Select Maximum of 3 Courses");
+          return;
+        }
         console.log(foundCourse.subjectCode);
         setSelectedCourseData([
           ...selectedCourseData,
@@ -64,6 +97,10 @@ const CourseImprovement = () => {
         (course) => course.data["course name"].toLowerCase() === selectedCourseName.toLowerCase()
       );
       if (foundCourse) {
+        if(selectedCourseData.length === 3){
+          toast.error("Can Select Maximum of 3 Courses");
+          return;
+        }
         setSelectedCourseData(prevData => [
           ...prevData,
           {
@@ -88,8 +125,10 @@ const CourseImprovement = () => {
       selectedCourseData : selectedCourseData,
       studentData: student
     }
+
+    console.log(data);
     
-    axios.post("https://capstone-flask-gofl.onrender.com", data)
+    axios.post("http://127.0.0.1:3001", data)
       .then((res) => {
         console.log(res.data);
         setChoices(res.data.choices);
@@ -113,8 +152,32 @@ const CourseImprovement = () => {
 
   }
 
+  const handleCgpaChange = (e) => {
+    setCgpa(e.target.value);
+  };
+
+  const handleIEEFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+    if (file.size > maxSize) {
+      toast.error("Upload File Smaller Than 2MB");
+      setIEEFile(null);
+      return;
+    }
+
+    setIEEFile(file);
+  };
+
+
   const handleSubmit3 = (choice, newTimeTable) =>{
     const arr = Object.entries(choice);
+
+    if(cgpa.trim() === ''){
+      toast.error("Must enter the CGPA");
+      return;
+    };
     
     const data = {
       "email": student.thapar_email,
@@ -122,8 +185,21 @@ const CourseImprovement = () => {
       "message": "",
       "clashing": false,
       "new_time_table": newTimeTable,
-      "elective_data": student.electiveData
+      "elective_data": student.electiveData,
+      "cgpa": cgpa
     };
+
+    if(arr.length === 1 && arr[0][0] === 'UCS405' && student.subgroup === '4C2G'){
+      data['clashing'] = true;
+    }
+
+    const formData = new FormData();
+    formData.append("mainData", data);
+    formData.append("IEEPdf", IEEFile);
+
+    //need to add IEE pdf upload functionality
+
+    console.log(data);
 
     const confirmed = window.confirm(`Application once submitted can't be taken back. \n\nAre you sure you want to pick these courses with these subgroups ?`);
     if (!confirmed) return;
@@ -174,100 +250,120 @@ const CourseImprovement = () => {
           <Logout />
         </div>
 
-        <div className="student-main-course-improvement-top2">
-          <h3>Guidelines: </h3>
-          <h5>- Please choose maximum of 3 courses to pick.</h5>
-          <h5>- Generate options by clicking on "Generate options" button.</h5>
-          <h5>- Select one of the available options.</h5>
-          <h5>- Wait for the Ongoing Application to be Accepted/Rejected before making new request.</h5>
-        </div>
-
-        <div className="student-main-course-improvement-bottom">
-          <div className="student-main-course-improvement-bottom-left">
-            <h5>Selected Courses for Improvement</h5>
-            <div className="student-main-course-improvement-bottom-left-t1">
-              {selectedCourseData.map((course) =>(
-                <div className="student-main-course-improvement-bottom-left-t2" key={course.subjectCode}>
-                  <h6>{course.subjectName}</h6>
-                  <p>{course.subjectCode}</p>
-                  <p>Course Credits: {course.subjectCredits}</p>
-                  <p>L: {course.subjectL} T: {course.subjectT} P: {course.subjectP}</p>
-                  <p onClick={() => handleRemoveCourse(course.subjectCode)} className='remove-x'>X</p>
-                </div>
-              ))}
-            </div>
-            <form>
-              <p>Present CGPA</p>
-              <input type="text" placeholder='Ex: 9.00'/>
-
-              <p>Upload IEE Signed Document</p>
-              <input type="file" />
-            </form>
-          </div>
-
-          <div className="student-main-course-improvement-bottom-right">
-            <h5>Search Courses for Improvement</h5>
-            <form onSubmit={handleSubmit1}>
-              <label style={{ color: 'whitesmoke' }}>Search by Course Code</label>
-              <input
-                list="courseCodes"
-                value={selectedCourseCode}
-                onChange={(e) => {
-                  setSelectedCourseCode(e.target.value);
-                  setSelectedCourseName('');
-                }}
-                placeholder="Ex: UCS401"
-              />
-              <datalist id="courseCodes">
-                {courseData.map((course) => (
-                  <option key={course.subjectCode} value={course.subjectCode} />
-                ))}
-              </datalist>
-
-              <div style={{ textAlign: 'center', color: 'red', fontWeight: 'bold', margin: '10px 0' }}>OR</div>
-
-              <label style={{ color: 'whitesmoke' }}>Search by Course Name</label>
-              <input
-                list="courseNames"
-                value={selectedCourseName}
-                onChange={(e) => {
-                  setSelectedCourseName(e.target.value);
-                  setSelectedCourseCode('');
-                }}
-                placeholder="Ex: Applied Physics"
-              />
-              <datalist id="courseNames">
-                {courseData.map((course) => (
-                  <option key={course.subjectCode} value={course.data["course name"]} />
-                ))}
-              </datalist>
-
-              <button type="submit" style={{ marginTop: '10px' }}>Submit</button>
-            </form>
-          </div>
-        </div>
-
-        <button className='generate-options-btn' onClick={handleSubmit2}>Generate Options</button>
-
-        <div className="student-course-improvement-choices-div">
-          {choices.length > 0 ? <h1>Plz Choose from one of these options:</h1> : ""}
-          {emptyChoices ? <h1>No Options Found</h1> : ""}
-          {choices.map((val, index) => {
-            const combinedList = [...student.timeTableData, ...newTimeTable[index]];
-            return (
-              <div className='student-course-improvement-individual-choices-div' key={index}>
-                <h2>Option {index+1}</h2>
-                {Object.entries(val).map(([key, value]) => (
-                  <h4 key={key}>{key} with: {value}</h4>
-                ))}
-
-                <Timetable data={combinedList} ed={student.electiveData}/>
-
-                <button className='finalize-btn' onClick={()=> {handleSubmit3(val, combinedList)}}>Finalize option {index+1}</button>
+        {active 
+          ? <h1 className='course-improvement-wait-heading'>Please Wait for the Ongoing Application to be Accepted/Rejected</h1>
+          : <>
+              <div className="student-main-course-improvement-top2">
+                <h3>Guidelines: </h3>
+                <h5>- Generate options by clicking on "Generate options" button.</h5>
+                <h5>- Select one of the available options.</h5>
+                <h5>- Wait for the Ongoing Application to be Accepted/Rejected before making new request.</h5>
               </div>
-            );
-          })}
-        </div>
+
+            <div className="student-main-course-improvement-bottom">
+              <div className="student-main-course-improvement-bottom-left">
+                <h5>Selected Courses for Improvement</h5>
+                <div className="student-main-course-improvement-bottom-left-t1">
+                  {selectedCourseData.map((course) =>(
+                    <div className="student-main-course-improvement-bottom-left-t2" key={course.subjectCode}>
+                      <h6>{course.subjectName}</h6>
+                      <p>{course.subjectCode}</p>
+                      <p>Course Credits: {course.subjectCredits}</p>
+                      <p>L: {course.subjectL} T: {course.subjectT} P: {course.subjectP}</p>
+                      <p onClick={() => handleRemoveCourse(course.subjectCode)} className='remove-x'>X</p>
+                    </div>
+                  ))}
+                </div>
+                <form>
+                  <p>Present CGPA <span style={{color:'red'}}>*</span></p>
+                  <input type="text" placeholder='Ex: 8.00' required value={cgpa} onChange={handleCgpaChange}/>
+
+                  <p>Upload IEE Signed Document (Mandatory for 8th sem students)</p>
+                  <input type="file" />
+                </form>
+              </div>
+
+              <div className="student-main-course-improvement-bottom-right">
+                <h5>Search Courses for Improvement</h5>
+                <form onSubmit={handleSubmit1}>
+                  <label style={{ color: 'whitesmoke' }}>Search by Course Code</label>
+                  <input
+                    list="courseCodes"
+                    value={selectedCourseCode}
+                    onChange={(e) => {
+                      setSelectedCourseCode(e.target.value);
+                      setSelectedCourseName('');
+                    }}
+                    placeholder="Ex: UCS401"
+                  />
+                  <datalist id="courseCodes">
+                    {courseData.map((course) => (
+                      <option key={course.subjectCode} value={course.subjectCode} />
+                    ))}
+                  </datalist>
+
+                  <div style={{ textAlign: 'center', color: 'red', fontWeight: 'bold', margin: '10px 0' }}>OR</div>
+
+                  <label style={{ color: 'whitesmoke' }}>Search by Course Name</label>
+                  <input
+                    list="courseNames"
+                    value={selectedCourseName}
+                    onChange={(e) => {
+                      setSelectedCourseName(e.target.value);
+                      setSelectedCourseCode('');
+                    }}
+                    placeholder="Ex: Applied Physics"
+                  />
+                  <datalist id="courseNames">
+                    {courseData.map((course) => (
+                      <option key={course.subjectCode} value={course.data["course name"]} />
+                    ))}
+                  </datalist>
+
+                  <button type="submit" style={{ marginTop: '10px' }}>Submit</button>
+                </form>
+              </div>
+            </div>
+
+            <button className='generate-options-btn' onClick={handleSubmit2}>Generate Options</button>
+
+            <div className="student-course-improvement-choices-div">
+              {choices.length > 0 ? <h1>Plz Choose from one of these options:</h1> : ""}
+              {emptyChoices ? <h1>No Options Found</h1> : ""}
+              {choices.map((val, index) => {
+                const combinedList = [...student.timeTableData, ...newTimeTable[index]];
+                const arr = Object.entries(choices);
+
+                return (
+                  <div className='student-course-improvement-individual-choices-div' key={index}>
+                    <h2>Option {index+1}</h2>
+                    {Object.entries(val).map(([key, value]) => (
+                      <h4 key={key}>{key} with: {value}</h4>
+                    ))}
+
+                    {Object.entries(val).map(([key, value]) => {
+                      if(key === 'UCS405')
+                        return(
+                          <h4>Clashes : YES</h4>
+                        )
+                      else
+                        return(
+                          <h4>Clashes : NO</h4>
+                        )
+                    })}
+
+                    
+
+                    <Timetable data={combinedList} ed={student.electiveData}/>
+
+                    <button className='finalize-btn' onClick={()=> {handleSubmit3(val, combinedList)}}>Finalize option {index+1}</button>
+                  </div>
+                );
+              })}
+            </div>
+            </>
+          
+        }
       </div>
     </div>
   );

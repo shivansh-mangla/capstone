@@ -1,9 +1,9 @@
 
 .stat-card {
     /* width: 10%; */
-    max-width: 300px;
+    width: 100%;
     min-width: 220px;
-    min-height: 140px;
+    flex: 1;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -38,9 +38,8 @@
     }
 
     .stat-card {
-        max-width: none;
         min-width: 40%;
-        width: fit-content;
+        width: 100%;
         min-height: 0;
         padding: 10px;
         display: flex;

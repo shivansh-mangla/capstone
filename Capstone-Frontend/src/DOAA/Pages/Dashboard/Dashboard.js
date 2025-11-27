@@ -5,6 +5,7 @@ import StatCardMain from './DashboardComponents/StatCardMain';
 import RequestList from './DashboardComponents/RequestList';
 import Logout from '../../Components/Logout'
 import './Dashboard.css';
+import GaugeChart from '../../../Coordinator/Pages/Dashboard/DashboardComponents/GaugeChart';
 
 // const approvedData = {
 //     CSED: [
@@ -101,16 +102,22 @@ const Dashboard = () => {
                     <div className="doaa-header-top">
                         <div className="doaa-welcome-text">
                             <h4>Welcome !</h4>
-                            <p>DR. Maninder Singh</p>
+                            <p>Dr. Shruti Sharma</p>
                             <h3>Applications</h3>
                         </div>
                     </div>
 
                     <div className="doaa-stats-section">
-                        <StatCardMain type="Approved" count="{}" color="#D9FCE3" icon="✅" onClick={() => {setSelectedType('Approved'); setSelectedData(approvedData)}} />
-                        <StatCard type="Approved" count={approvedData.length} color="#D9FCE3" icon="✅" onClick={() => {setSelectedType('Approved'); setSelectedData(approvedData)}} />
-                        <StatCard type="Pending" count={pendingData.length} color="#F3E9FF" icon="⏸️" onClick={() => {setSelectedType('Pending'); setSelectedData(pendingData)}} />
-                        <StatCard type="Rejected" count={rejectedData.length} color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
+                        <GaugeChart
+                            approved={approvedData.length}
+                            pending={pendingData.length}
+                            rejected={rejectedData.length}
+                        />
+                        <div className="doaa-stats-section-right">
+                            <StatCard type="Approved" count={approvedData.length} color="#D9FCE3" icon="✅" onClick={() => {setSelectedType('Approved'); setSelectedData(approvedData)}} />
+                            <StatCard type="Pending" count={pendingData.length} color="#F3E9FF" icon="⏸️" onClick={() => {setSelectedType('Pending'); setSelectedData(pendingData)}} />
+                            <StatCard type="Rejected" count={rejectedData.length} color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
+                        </div>
                     </div>
                 </div>
 

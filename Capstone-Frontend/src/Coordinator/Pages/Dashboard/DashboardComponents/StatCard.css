@@ -1,8 +1,5 @@
 
 .coordinator-stat-card {
-    /* width: 10%; */
-    max-width: 300px;
-    min-width: 220px;
     min-height: 140px;
     padding: 20px;
     border-radius: 20px;
@@ -38,10 +35,7 @@
     }
 
     .coordinator-stat-card {
-        max-width: none;
-        min-width: 40%;
-        width: fit-content;
-        min-height: 0;
+        width: 100%;
         padding: 10px;
         display: flex;
         justify-content: center;

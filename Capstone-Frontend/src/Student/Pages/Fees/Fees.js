@@ -37,19 +37,19 @@ const StudentFees = () => {
   }, [student]);
 
   const handleFileChange = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const maxSize = 2 * 1024 * 1024; // 2MB in bytes
-  if (file.size > maxSize) {
-    setUploadStatus("File size exceeds 2MB. Please upload a smaller PDF.");
-    setPdfFile(null);
-    return;
-  }
+    const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+    if (file.size > maxSize) {
+      setUploadStatus("File size exceeds 2MB. Please upload a smaller PDF.");
+      setPdfFile(null);
+      return;
+    }
 
-  setPdfFile(file);
-  setUploadStatus(""); // Clear any previous error
-};
+    setPdfFile(file);
+    setUploadStatus(""); // Clear any previous error
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,8 +94,10 @@ const StudentFees = () => {
       if(applicationDetails.stage === 4){
         return(
           <div className="student-main-fees">
-            <h1>Fees Section</h1>
-            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top-row">
+              <h1>Fees Section</h1>
+              <Logout/>
+            </div>
             <div className="student-main-fees-top">
               <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
               <div className="fees-breakdown-table">
@@ -123,8 +125,10 @@ const StudentFees = () => {
       else if(applicationDetails.stage === 3){
         return(
           <div className="student-main-fees">
-            <h1>Fees Section</h1>
-            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top-row">
+              <h1>Fees Section</h1>
+              <Logout/>
+            </div>
             <div className="student-main-fees-top">
               <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
               <div className="fees-breakdown-table">
@@ -140,7 +144,7 @@ const StudentFees = () => {
                 <p className='fees-breakdown-table-cell'>Rs. {courseDetails.length * 8000}</p>
               </div>
             </div>
-            <h2>You have to pay Rs. {courseDetails.length * 8000}</h2>
+            <h2 className='you-have-to-pay-h'>You have to pay Rs. {courseDetails.length * 8000}</h2>
             <div className="student-main-fees-middle">
               <div className="student-main-fees-middle-left">
                 <p>Pay using UPI by scanning this QR code</p>
@@ -153,7 +157,7 @@ const StudentFees = () => {
               </div>
             </div>
             <div className="student-main-fees-bottom">
-              <h2>Upload Fees Receipt here in PDF form (max 2MB)</h2>
+              <h2>Upload Fees Receipt here in PDF format (max 2MB)</h2>
               <form onSubmit={handleSubmit}>
                 <input type="file" accept="application/pdf" onChange={handleFileChange} />
                 <button type="submit" className='student-main-fees-bottom-submit-btn'>Submit</button>
@@ -174,8 +178,10 @@ const StudentFees = () => {
       else if(applicationDetails.stage === 1 || applicationDetails.stage === 2){
         return(
           <div className="student-main-fees">
-            <h1>Fees Section</h1>
-            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top-row">
+              <h1>Fees Section</h1>
+              <Logout/>
+            </div>
             <div className="student-main-fees-top">
               <h2>Application ID: #{applicationDetails?.application_id || "Loading"}</h2>
               <div className="fees-breakdown-table">
@@ -203,8 +209,10 @@ const StudentFees = () => {
       else{
         return(
           <div className="student-main-fees">
-            <h1>Fees Section</h1>
-            <h4>Pay your fees here</h4>
+            <div className="student-main-fees-top-row">
+              <h1>Fees Section</h1>
+              <Logout/>
+            </div>
             <h1>No ongoing Applications</h1>
           </div>
         )
@@ -213,6 +221,10 @@ const StudentFees = () => {
     else
       return(
         <div className="student-main-fees">
+          <div className="student-main-fees-top-row">
+              <h1>Fees Section</h1>
+              <Logout/>
+            </div>
           <h1>No ongoing Applications</h1>
         </div>
       )
@@ -222,7 +234,6 @@ const StudentFees = () => {
   return (
     <div>
       <StudentSidebar />
-      <Logout />
       {renderFeesPage()}
     </div>
   );

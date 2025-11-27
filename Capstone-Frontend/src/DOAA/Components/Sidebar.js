@@ -15,7 +15,7 @@ export default function Sidebar() {
     { name: 'Dashboard', path: '/doaa/dashboard', icon: <FaHome /> },
     { name: 'Coordinators', path: '/doaa/coordinators', icon: <FaBook /> },
     { name: 'Clashing Requests', path: '/doaa/clashing-requests', icon: <FaUser /> },
-    { name: 'Clashing Stats', path: '/doaa/clashing-stats', icon: <FaMoneyCheckAlt /> },
+    // { name: 'Clashing Stats', path: '/doaa/clashing-stats', icon: <FaMoneyCheckAlt /> },
     { name: 'Account', path: '/doaa/account', icon: <FaUser /> }
     
   ];

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import StatCard from './DashboardComponents/StatCard';
 import StatCardMain from './DashboardComponents/StatCardMain';
@@ -6,6 +6,9 @@ import RequestList from './DashboardComponents/RequestList';
 import Logout from '../../Components/Logout'
 import './Dashboard.css';
 
+
+import { UserContext } from '../../../UserContext';
+import GaugeChart from './DashboardComponents/GaugeChart';
 const Dashboard = () => {
   const [allApplications, setAllApplications] = useState('');
   const [pendingData, setPendingData] = useState('');
@@ -13,6 +16,8 @@ const Dashboard = () => {
   const [approvedData, setApprovedData] = useState('');
   const [selectedType, setSelectedType] = useState('Approved'); 
   const [selectedData, setSelectedData] = useState(approvedData);
+
+  const {coordinator} = useContext(UserContext);
 
   useEffect(() =>{
           const fetchApplications = async () =>{
@@ -67,16 +72,23 @@ const Dashboard = () => {
             <div className="coordinator-header-top">
               <div className="coordinator-welcome-text">
                 <h4>Welcome!</h4>
-                <p>Dr. Anjula Mehto</p>
+                <p>{coordinator?.name || "Loading"}</p>
                 <h3>Applications</h3>
               </div>
             </div>
 
             <div className="coordinator-stats-section">
-            <StatCardMain type="Approved" count="{}" color="#D9FCE3" icon="✅" onClick={() => { setSelectedType('Approved'); setSelectedData(approvedData) }} />
-            <StatCard type="Approved" count={approvedData.length} color="#D9FCE3" icon="✅" onClick={() => { setSelectedType('Approved'); setSelectedData(approvedData) }} />
-            <StatCard type="Pending" count={pendingData.length} color="#F3E9FF" icon="⏸️" onClick={() => { setSelectedType('Pending'); setSelectedData(pendingData) }} />
-            <StatCard type="Rejected" count={rejectedData.length} color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
+              <GaugeChart
+                approved={approvedData.length}
+                pending={pendingData.length}
+                rejected={rejectedData.length}
+              />
+              <div className="coordinator-stats-section-right">
+                <StatCard type="Approved" count={approvedData.length} color="#D9FCE3" icon="✅" onClick={() => { setSelectedType('Approved'); setSelectedData(approvedData) }} />
+                
+                <StatCard type="Pending" count={pendingData.length} color="#F3E9FF" icon="⏸️" onClick={() => { setSelectedType('Pending'); setSelectedData(pendingData) }} />
+                <StatCard type="Rejected" count={rejectedData.length} color="#E2F8FF" icon="🚫" onClick={() => { setSelectedType('Rejected'); setSelectedData(rejectedData) }} />
+              </div>
 
             </div>
           </div>

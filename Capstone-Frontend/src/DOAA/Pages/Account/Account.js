@@ -22,7 +22,7 @@ const notifySuccessPassword = () => {
 
 
 export default function Account() {
-const [displayName, setDisplayName] = useState('Dr. Maninder Singh'); // get this name from dashboard page
+const [displayName, setDisplayName] = useState('Dr. Shruti Sharma'); // get this name from dashboard page
 const [nameDraft, setNameDraft] = useState('');
 const [oldPw, setOldPw] = useState('');
 const [newPw, setNewPw] = useState('');

@@ -230,3 +230,11 @@ form input{
   color: #697565;
   font-weight: bolder;
 }
+
+.course-improvement-wait-heading{
+  margin: auto;
+  font-weight: bold;
+  color: rgb(237, 94, 94);
+  align-self: center;
+  text-align: center;
+}

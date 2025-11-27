@@ -19,10 +19,21 @@ import { UserContext } from '../../../UserContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Logout from '../../Components/Logout';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+
+  const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 
 export default function Account() {
 
   const navigate = useNavigate();
+
 
   const {student, setStudent} = React.useContext(UserContext);
   const [subgroupList, setSubgroupList] = React.useState([]);
@@ -141,7 +152,9 @@ const handleSave = () => {
 // 3. Last mein ek Save button hai jo data console mein print karta hai
 
   return (
-    <Box alignItems="flex-start">
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Box alignItems="flex-start">
       <StudentSidebar/>
       <Logout />
       <Container >
@@ -209,5 +222,7 @@ const handleSave = () => {
       </Box>
     </Container>
     </Box>
+    </ThemeProvider>
+    
   );
 }

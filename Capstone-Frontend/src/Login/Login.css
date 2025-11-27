@@ -26,6 +26,11 @@
     width: 80px;
 }
 
+.icmp-register-link{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 @media (max-width: 480px) {
     .icmp_login_logo {
         position: static;

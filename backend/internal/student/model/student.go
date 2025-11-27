@@ -32,6 +32,7 @@ type ApplicationRequest struct {
 	Clashing     bool             `json:"clashing" bson:"clashing"`
 	NewTimeTable []TimeTableEntry `json:"new_time_table" bson:"new_time_table"`
 	ElectiveData []string         `json:"elective_data" bson:"elective_data"`
+	CGPA            string           `json:"cgpa" bson:"cgpa"`
 }
 
 type TimeTableEntry struct {
@@ -64,6 +65,7 @@ type Application struct {
 	FeeReceiptLink  string           `json:"fee_receipt_link" bson:"fee_receipt_link"`
 	NewTimeTable    []TimeTableEntry `json:"new_time_table" bson:"new_time_table"`
 	ElectiveData    []string         `json:"elective_data" bson:"elective_data"`
+	CGPA            string           `json:"cgpa" bson:"cgpa"`
 }
 
 type ApplicationList struct {

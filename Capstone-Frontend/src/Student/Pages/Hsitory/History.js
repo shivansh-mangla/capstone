@@ -5,6 +5,7 @@ import Logout from '../../Components/Logout'
 import HistoryTile from './HistoryComponents/HistoryTile'
 import { UserContext } from '../../../UserContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 export default function History() {
@@ -18,6 +19,9 @@ export default function History() {
         .then((res) => {
           console.log(res.data.Applications);
           setApplicationData(res.data.Applications);
+        })
+        .catch((error) =>{
+          toast.error("Some error in fetching data!!");
         })
       
     }

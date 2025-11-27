@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import CoordinatorSidebar from '../../Components/Sidebar';
 import './TimeTable.css';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const TimeTable = () => {
   const [timetableUploads, setTimetableUploads] = useState([
     { name: 'TIMETABLEJULYTODEC25.xlsx', year: '2025-2026', size: '1.24 MB', date: '7 August, 2025', status: 'Implemented' },
   ]);
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -25,6 +26,19 @@ const TimeTable = () => {
     };
 
     setTimetableUploads((prev) => [...prev, newUpload]);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await axios.post("http://127.0.0.1:3001/upload", formData);
+
+    } catch (err) {
+      console.error(err);
+      toast.error("Error uploading or processing the file");
+    }
+
+
     toast.success("File uploaded successfully. Changes will be applied shortly");
   };
 
@@ -34,7 +48,7 @@ const TimeTable = () => {
       <div className="coordinator-main-timetable">
         <div className="coordinator-timetable-section">
           <h2 className="coordinator-timetable-title">Time Table</h2>
-          <table className="coordinator-timetable-table">
+          {/* <table className="coordinator-timetable-table">
             <thead>
               <tr>
                 <th>Uploads</th>
@@ -60,7 +74,7 @@ const TimeTable = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table> */}
 
           <div className="timetable-upload-area">
             {/* Hidden file input */}

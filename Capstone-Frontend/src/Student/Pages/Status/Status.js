@@ -22,6 +22,8 @@ const Status = () => {
       })
       .then((res) => {
         // assuming the response looks like: { stage: 0 | 1 | ... | 10 }
+        console.log(res);
+
         setStatus(res.data["Application Data"]["stage"]);
         console.log(res.data["Application Data"]);
         setComments(res.data["Application Data"]["comments"]);
@@ -55,7 +57,7 @@ const Status = () => {
     <div>
       <StudentSidebar />
       <div className="student-status-top-row">
-        <h1 className="status-heading">Notification Section</h1>
+        <h1 className="status-heading">Ongoing Application Status</h1>
         <Logout />
       </div>
       <div className="status-container">
@@ -83,6 +85,11 @@ const Status = () => {
             <div className="student-status-tt-div">
               <h2 className="student-status-tt-h">Time Table -</h2>
               <Timetable data={appData?.new_time_table} ed={appData?.elective_data}/>
+            </div>
+
+            <div className="student-main-course-improvement-top2">
+              <h3>Guidelines: </h3>
+              <h5>- Get Printout of new Time Table, Fees Reciept, Application Generated and Submit to Coordinator</h5>
             </div>
 
             <h3 className="alerts-heading">Alerts</h3>

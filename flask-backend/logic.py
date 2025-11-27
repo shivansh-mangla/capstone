@@ -162,6 +162,15 @@ class SlotFinder:
 
     freeSlotList = self.get_occupancy_list(timetable, batch, 140, electiveList)
 
+    if sub1 == "UCS405" and sub2 == "" and sub3 == "" and batch == "4C2G":
+      choices = [
+          {"UCS405": "2C4A"},
+          {"UCS405": "2C4B"},
+          {"UCS405": "2C4C"}
+      ]
+      result = self.slotsFullDetails(timetable, choices)
+      return result, choices
+
     # choices = get_choices(timetable, freeSlotList, "UCS635")
     choices = self.get_choices(timetable, freeSlotList, sub1, sub2, sub3)
     # choices = get_choices(timetable, freeSlotList,  "UCS415")
@@ -195,10 +204,18 @@ class SlotFinder:
         temp = []
         for subCode in result[j].keys():
             d1 = result[j][subCode]
+
+            if 'lecture' not in list(d1.keys()):
+              d1['lecture'] = {'slots': [], 'teacher_code': None, 'venue': []}
             lec = d1['lecture']
+            
+
+            if 'lab' not in list(d1.keys()):
+              d1['lab'] = {'slots': [], 'teacher_code': None, 'venue': []}
             lab = d1['lab']
+
             if 'tutorial' not in list(d1.keys()):
-                d1['tutorial'] = {'slots': [], 'teacher_code': None, 'venue': []}
+              d1['tutorial'] = {'slots': [], 'teacher_code': None, 'venue': []}
             tut = d1['tutorial']
                 
 

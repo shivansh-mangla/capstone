@@ -2,16 +2,19 @@ package service
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"log"
 	"mime/multipart"
 	"os"
+	"time"
 
 	"github.com/cloudinary/cloudinary-go"
 	"github.com/cloudinary/cloudinary-go/api/uploader"
 	"github.com/gofiber/fiber/v2"
 	"github.com/shivansh-mangla/capstone/backend/internal/database"
+	utilsModel "github.com/shivansh-mangla/capstone/backend/internal/utils/model"
 	"github.com/shivansh-mangla/capstone/backend/internal/utils/repository"
 	"gopkg.in/mail.v2"
 )
@@ -28,6 +31,7 @@ func SendVerificationEmail(recipientEmail, token string) error {
 	m.SetHeader("To", recipientEmail)
 	m.SetHeader("Subject", "Please Verify Your Email Address - Improvement Course Management Portal")
 	verificationLink := fmt.Sprintf("http://127.0.0.1:5000/verify?token=%s", token)
+
 	m.SetBody("text/html", fmt.Sprintf(`
 		<!DOCTYPE html>
 		<html>
@@ -62,10 +66,12 @@ func SendVerificationEmail(recipientEmail, token string) error {
 
 	// Set up dialer
 	d := mail.NewDialer(smtpHost, smtpPort, from, password)
+	d.Timeout = 10 * time.Second // prevent hanging
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: false}
 
 	// Send email
 	if err := d.DialAndSend(m); err != nil {
-		log.Println("Failed to send email:", err)
+		log.Printf("Failed to send email to %s: %v\n", recipientEmail, err)
 		return err
 	}
 
@@ -194,4 +200,35 @@ func GetAllApplications(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"Error": err})
 	}
 	return c.Status(200).JSON(fiber.Map{"data": allApplications})
+}
+
+func AddNotification(c *fiber.Ctx) error {
+	var req utilsModel.Notification
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid body"})
+	}
+
+	notification, err := repository.PostANotification(req)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	return c.JSON(notification)
+}
+
+func GetNotificationHandler(c *fiber.Ctx) error {
+	notification, err := repository.GetNotification()
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	if notification.Title == "" && notification.Message == "" {
+		return c.JSON(fiber.Map{
+			"message": "No notification found",
+		})
+	}
+
+	return c.JSON(notification)
 }
