@@ -37,7 +37,7 @@ const CourseImprovement = () => {
 
     if (student.ongoing_application) {
       // 1️⃣ Fetch application details
-      axios.post("https://capstone-5dsm.onrender.com/api/get-application-details", {
+      axios.post("http://127.0.0.1:5000/api/get-application-details", {
         application_id: student.ongoing_application
       })
       .then((res) => {
@@ -54,7 +54,7 @@ const CourseImprovement = () => {
       });
 
       // 2️⃣ Fetch course list
-      axios.get("https://capstone-5dsm.onrender.com/api/get-course-list")
+      axios.get("http://127.0.0.1:5000/api/get-course-list")
       .then((res) => {
         setCourseData(res.data);
       })
@@ -128,7 +128,7 @@ const CourseImprovement = () => {
 
     console.log(data);
     
-    axios.post("https://capstone-flask-gofl.onrender.com", data)
+    axios.post("http://127.0.0.1:3001", data)
       .then((res) => {
         console.log(res.data);
         setChoices(res.data.choices);
@@ -209,7 +209,7 @@ const CourseImprovement = () => {
     setChoices([]);
     setNewTimeTable([]);
     
-    axios.post("https://capstone-5dsm.onrender.com/api/student/generate-application", data, {
+    axios.post("http://127.0.0.1:5000/api/student/generate-application", data, {
           headers: {
             Authorization: `Bearer ${token}`
           },
@@ -254,12 +254,11 @@ const CourseImprovement = () => {
           ? <h1 className='course-improvement-wait-heading'>Please Wait for the Ongoing Application to be Accepted/Rejected</h1>
           : <>
               <div className="student-main-course-improvement-top2">
-              <h3>Guidelines: </h3>
-              <h5>- Please choose maximum of 3 courses to pick.</h5>
-              <h5>- Generate options by clicking on "Generate options" button.</h5>
-              <h5>- Select one of the available options.</h5>
-              <h5>- Wait for the Ongoing Application to be Accepted/Rejected before making new request.</h5>
-            </div>
+                <h3>Guidelines: </h3>
+                <h5>- Generate options by clicking on "Generate options" button.</h5>
+                <h5>- Select one of the available options.</h5>
+                <h5>- Wait for the Ongoing Application to be Accepted/Rejected before making new request.</h5>
+              </div>
 
             <div className="student-main-course-improvement-bottom">
               <div className="student-main-course-improvement-bottom-left">

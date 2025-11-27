@@ -28,7 +28,7 @@ export default function StudentSidebar() {
     { name: "Accounts", path: "/student/account", icon: <FaUser /> },
     { name: "Fees Payment", path: "/student/fees", icon: <FaMoneyCheckAlt /> },
     { name: "History", path: "/student/history", icon: <FaHistory /> },
-    { name: "Notification/Status", path: "/student/status", icon: <FaBell /> },
+    { name: "Status", path: "/student/status", icon: <FaBell /> },
     { name: "FAQs", path: "/student/faq", icon: <FaCog /> },
   ];
 

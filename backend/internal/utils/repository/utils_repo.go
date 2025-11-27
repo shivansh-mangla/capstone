@@ -7,7 +7,9 @@ import (
 
 	"github.com/shivansh-mangla/capstone/backend/internal/database"
 	"github.com/shivansh-mangla/capstone/backend/internal/student/model"
+	utilsModel "github.com/shivansh-mangla/capstone/backend/internal/utils/model"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -95,4 +97,52 @@ func GetAllApplicationsinDB() ([]model.Application, error) {
 	}
 
 	return applications, nil
+}
+
+func PostANotification(notification utilsModel.Notification) (utilsModel.Notification, error) {
+	collection := database.MongoDB.Collection("notificationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	notification.CreatedAt = time.Now()
+
+	filter := bson.M{}
+	update := bson.M{"$set": notification}
+	opts := options.Update().SetUpsert(true)
+
+	_, err := collection.UpdateOne(ctx, filter, update, opts)
+	if err != nil {
+		return utilsModel.Notification{}, err
+	}
+
+	var updated utilsModel.Notification
+	if err := collection.FindOne(ctx, bson.M{}).Decode(&updated); err != nil {
+		if err == mongo.ErrNoDocuments {
+			return utilsModel.Notification{}, nil
+		}
+		return utilsModel.Notification{}, err
+	}
+
+	return updated, nil
+}
+
+func GetNotification() (utilsModel.Notification, error) {
+	collection := database.MongoDB.Collection("notificationDetails")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	var notification utilsModel.Notification
+	err := collection.FindOne(ctx, bson.M{}).Decode(&notification)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			// No notification found, return empty struct (not an error)
+			return utilsModel.Notification{}, nil
+		}
+		return utilsModel.Notification{}, err
+	}
+
+	return notification, nil
 }

@@ -31,7 +31,7 @@ const TimeTable = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await axios.post("https://capstone-flask-gofl.onrender.com/upload", formData);
+      const res = await axios.post("http://127.0.0.1:3001/upload", formData);
 
     } catch (err) {
       console.error(err);

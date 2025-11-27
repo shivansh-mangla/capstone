@@ -8,6 +8,7 @@ import {
   FaClipboardList,
   FaCalendarAlt,
   FaCog,
+  FaBell 
 } from 'react-icons/fa';
 
 export default function CoordinatorSidebar() {
@@ -18,6 +19,7 @@ export default function CoordinatorSidebar() {
     { name: 'Accounts', path: '/coordinator/account', icon: <FaUserTie /> },
     { name: 'Academic Information', path: '/coordinator/academic-information', icon: <FaUserTie /> },
     { name: 'Time Table', path: '/coordinator/time-table', icon: <FaCalendarAlt /> },
+    { name: 'Notification', path: '/coordinator/notification', icon: <FaBell /> },
   ];
 
   return (
