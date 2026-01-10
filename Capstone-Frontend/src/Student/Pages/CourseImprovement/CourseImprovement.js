@@ -241,6 +241,9 @@ const CourseImprovement = () => {
   };
 
 
+  const currentMonth = new Date().getMonth();
+  const showUpload = currentMonth >= 0 && currentMonth <= 4; // Jan or Feb
+
   return (
     <div>
       <StudentSidebar />
@@ -277,9 +280,14 @@ const CourseImprovement = () => {
                 <form>
                   <p>Present CGPA <span style={{color:'red'}}>*</span></p>
                   <input type="text" placeholder='Ex: 8.00' required value={cgpa} onChange={handleCgpaChange}/>
-
-                  <p>Upload IEE Signed Document (Mandatory for 8th sem students)</p>
-                  <input type="file" />
+                  
+                  {showUpload && (
+                    <>
+                    <p>Upload IEE Signed Document (Mandatory for 8th sem students)</p>
+                    <input type="file" />
+                    </>
+                  )}
+                  
                 </form>
               </div>
 
