@@ -162,14 +162,6 @@ class SlotFinder:
 
     freeSlotList = self.get_occupancy_list(timetable, batch, 140, electiveList)
 
-    if sub1 == "UCS405" and sub2 == "" and sub3 == "" and batch == "4C2G":
-      choices = [
-          {"UCS405": "2C4A"},
-          {"UCS405": "2C4B"},
-          {"UCS405": "2C4C"}
-      ]
-      result = self.slotsFullDetails(timetable, choices)
-      return result, choices
 
     # choices = get_choices(timetable, freeSlotList, "UCS635")
     choices = self.get_choices(timetable, freeSlotList, sub1, sub2, sub3)
